@@ -1,0 +1,4 @@
+Chickens spawn as ememies
+shoot fireballs
+chest spawn around centered from player spawn and portal spawn
+riesen troll den man ueber erdkruemmung sieht

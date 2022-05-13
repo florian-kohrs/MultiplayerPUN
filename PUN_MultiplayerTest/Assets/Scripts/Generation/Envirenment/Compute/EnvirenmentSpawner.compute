@@ -1,0 +1,60 @@
+#pragma kernel EnvirenmentSpawner
+
+#include "/Includes/BiomEnvirenment.compute"
+#include "/Includes/InstanceProperty.compute"
+#include "/Includes/Triangle.compute"
+#include "Assets/Scripts/ComputeIncludes/ZipData.compute"
+
+#define PI 3.14159265358979323846
+#define DegToRad 0.0174532924
+
+static const int numThreads = 4;
+static const int MAX_ANGLES_FOR_TREES = 35;
+static const int NUM_VOXELS_PER_AXIS = 32;
+
+RWStructuredBuffer<float> minAngleAtCubeIndex;
+AppendStructuredBuffer<uint> entitiesAtCube;
+
+int3 anchorPosition;
+
+int indexFromCoord(int x, int y, int z)
+{
+	return z * NUM_VOXELS_PER_AXIS * NUM_VOXELS_PER_AXIS + y * NUM_VOXELS_PER_AXIS + x;
+}
+
+
+[numthreads(numThreads, numThreads, numThreads)]
+void EnvirenmentSpawner(uint3 id : SV_DispatchThreadID/*, uint groupIndex : SV_GroupIndex*/)
+{ 
+	int index = indexFromCoord(id.x, id.y, id.z);
+	if (minAngleAtCubeIndex[index] <= 0 || minAngleAtCubeIndex[index] > MAX_ANGLES_FOR_TREES)
+		return;
+
+	//TODO: spawn trees for lod of 2
+
+	float averageTreesPerSqrMeter = 0.1f;
+	float treeChance = Noise01(id);
+
+	if (treeChance < averageTreesPerSqrMeter) 
+	{
+		int entityType = 0;
+		uint entityData = zipData(id.x, id.y, id.z, entityType);
+
+		entitiesAtCube.Append(entityData);
+		minAngleAtCubeIndex[index] = 0;
+	}
+
+
+	/*GroupMemoryBarrierWithGroupSync();
+	for (size_t x = -MIN_TREE_DISTANCE; x <= MIN_TREE_DISTANCE; x++)
+	{
+		for (size_t y = -MIN_TREE_DISTANCE; y <= MIN_TREE_DISTANCE; y++)
+		{
+			for (size_t z = -MIN_TREE_DISTANCE; z <= MIN_TREE_DISTANCE; z++)
+			{
+				int3 newCoord = coord + int3(x, y, z);
+				if(newCoord != coord && data[newCoord])
+			}
+		}
+	}*/
+}

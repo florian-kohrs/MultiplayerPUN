@@ -1,0 +1,48 @@
+﻿#pragma kernel MarchPrepare
+#include "/Includes/BaseMarchingCubes.compute" 
+
+static const int numThreads = 4;
+
+AppendStructuredBuffer<int3> chunkLocations;
+int lod;
+float3 anchorPosition;
+
+
+int indexFromCoord(int x, int y, int z)
+{
+	return (z * numPointsPerAxis * numPointsPerAxis + y * numPointsPerAxis + x) * pointSpacing;
+}
+
+
+float GetHeightDataFrom(int x, int y, int z)
+{
+	return points[indexFromCoord(x, y, z)];
+}
+
+
+[numthreads(numThreads, numThreads, numThreads)]
+void MarchPrepare(uint3 id : SV_DispatchThreadID)
+{
+	int numMinus = numPointsPerAxis - 1;
+	if (id.x >= numMinus || id.y >= numMinus || id.z >= numMinus)
+		return;
+
+	int cubeIndex = 0;
+
+	cubeIndex |= (GetHeightDataFrom(id.x, id.y, id.z) < SURFACE_LEVEL) * 1;
+	cubeIndex |= (GetHeightDataFrom(id.x + 1, id.y, id.z) < SURFACE_LEVEL) * 2;
+	cubeIndex |= (GetHeightDataFrom(id.x + 1, id.y, id.z + 1) < SURFACE_LEVEL) * 4;
+	cubeIndex |= (GetHeightDataFrom(id.x, id.y, id.z + 1) < SURFACE_LEVEL) * 8;
+	cubeIndex |= (GetHeightDataFrom(id.x, id.y + 1, id.z) < SURFACE_LEVEL) * 16;
+	cubeIndex |= (GetHeightDataFrom(id.x + 1, id.y + 1, id.z) < SURFACE_LEVEL) * 32;
+	cubeIndex |= (GetHeightDataFrom(id.x + 1, id.y + 1, id.z + 1) < SURFACE_LEVEL) * 64;
+	cubeIndex |= (GetHeightDataFrom(id.x, id.y + 1, id.z + 1) < SURFACE_LEVEL) * 128;
+
+	if (triangulation[cubeIndex][0] != -1)
+	{
+		//chunkLocations.Append(zipData(0, id.x, id.y, id.z));
+		chunkLocations.Append(anchorPosition + id * lod);
+	}
+
+
+}
