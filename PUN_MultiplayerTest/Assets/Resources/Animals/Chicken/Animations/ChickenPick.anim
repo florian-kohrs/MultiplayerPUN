@@ -307,7 +307,7 @@ AnimationClip:
   - time: 0.016666668
     functionName: EnableDamageCollider
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 3555373476690735447, guid: 3473ba7c4ee04ea4b9e525374b0e4c7d, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

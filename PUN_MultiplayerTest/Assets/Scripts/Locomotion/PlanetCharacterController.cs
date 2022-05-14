@@ -25,7 +25,7 @@ public class PlanetCharacterController : PunLocalBehaviour
     protected float groundDetectionRayStartingPoint = 0.5f;
 
     [SerializeField]
-    protected float minimumDistanceDeededToBeginFall = 0.66f;
+    protected float minimumDistanceNeededToBeginFall = 1f;
 
     [SerializeField]
     protected float groundDirectionRayDistance = 0.2f;
@@ -111,10 +111,7 @@ public class PlanetCharacterController : PunLocalBehaviour
         //origin = origin - down * (groundDirectionRayDistance);
 
         float nextFrameFallDistance = Vector3.Scale(down, body.velocity).magnitude * Time.deltaTime;
-        nextFrameFallDistance = Mathf.Max(nextFrameFallDistance, minimumDistanceDeededToBeginFall) * transform.lossyScale.y;
-
-        Vector3 pos = transform.position;
-        Debug.DrawRay(origin, down * nextFrameFallDistance, Color.red, 0.1f, false);
+        nextFrameFallDistance = Mathf.Max(nextFrameFallDistance, minimumDistanceNeededToBeginFall) * transform.lossyScale.y;
 
         if (Physics.Raycast(origin, down, out hit, nextFrameFallDistance, ignoreForGroundCheck))
         {
@@ -145,6 +142,14 @@ public class PlanetCharacterController : PunLocalBehaviour
     {
         t.rotation = Quaternion.LookRotation(t.position - center, -t.forward);
         t.Rotate(new Vector3(90, 0, 0), Space.Self);
+    }
+
+    public static Quaternion GetRotationToPlanetGravity(Vector3 pos, Vector3 center)
+    {
+        Vector3 forward = Random.insideUnitSphere;
+        Vector3 up = pos - center;
+        forward = Vector3.Cross(up, forward);
+        return Quaternion.LookRotation(forward, up);
     }
 
 }

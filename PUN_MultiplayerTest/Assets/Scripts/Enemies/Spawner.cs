@@ -14,6 +14,8 @@ public class Spawner : PunLocalBehaviour
 
     public float massSpawnEnemyNumbers = 10;
 
+    protected Transform enemyParent;
+
     [SerializeField]
     protected GameObject enemyPrefab;
 
@@ -21,6 +23,7 @@ public class Spawner : PunLocalBehaviour
 
     protected override void OnStart()
     {
+        enemyParent = new GameObject("Enemies").transform;
         enemyPool = new PoolOf<GameObject>(SpawnEnemy);
         StartCoroutine(SpawnEnemies());
         //StartCoroutine(FloodWithEnemies());
@@ -41,7 +44,7 @@ public class Spawner : PunLocalBehaviour
     {
         yield return new WaitForSeconds(enemyInterval);
         SpawnEnemyFromPool();
-        //yield return SpawnEnemies();
+        yield return SpawnEnemies();
     }
 
     protected void SpawnEnemyFromPool()
@@ -63,7 +66,7 @@ public class Spawner : PunLocalBehaviour
             enemy = Instantiate(enemyPrefab);
         }
         enemy.transform.localScale *= 2;
-        enemy.transform.parent = transform;
+        enemy.transform.parent = enemyParent;
         return enemy;
     }
 

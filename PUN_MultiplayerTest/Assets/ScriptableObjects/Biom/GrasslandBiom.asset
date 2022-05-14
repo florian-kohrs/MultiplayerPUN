@@ -15,7 +15,7 @@ MonoBehaviour:
   biomName: GrassLand
   biom:
     amplitude: 25.25
-    lacunarity: 2.1
+    lacunarity: 1.8
     persistence: 0.518
     frequency: 2.05
     scale: 18.5

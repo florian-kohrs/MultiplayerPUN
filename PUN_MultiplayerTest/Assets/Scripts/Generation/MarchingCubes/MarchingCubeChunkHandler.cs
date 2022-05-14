@@ -1028,7 +1028,7 @@ namespace MarchingCubes
 
         public int GetLodPower(float distance)
         {
-            return (int)Mathf.Max(DEFAULT_MIN_CHUNK_LOD_POWER, lodPowerForDistances.Evaluate(distance));
+            return 0;// (int)Mathf.Max(DEFAULT_MIN_CHUNK_LOD_POWER, lodPowerForDistances.Evaluate(distance));
         }
 
         public int GetLodPowerAt(Vector3 pos)
@@ -1038,7 +1038,7 @@ namespace MarchingCubes
 
         public int GetSizePowerForDistance(float distance)
         {
-            return (int)chunkSizePowerForDistances.Evaluate(distance);
+            return 0;// (int)chunkSizePowerForDistances.Evaluate(distance);
         }
 
 
