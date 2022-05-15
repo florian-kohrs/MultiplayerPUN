@@ -128,7 +128,7 @@ namespace MarchingCubes
             forShader.SetVector("anchor", anchor);
             forShader.SetFloat("spacing", chunk.LOD);
             forShader.SetInt("numPointsPerAxis", pointsPerAxis);
-            forShader.SetInt("length", numTris);
+            forShader.SetInt("count", numTris);
 
             forShader.SetInt("pointSpacing", chunk.PointSpacing);
         }

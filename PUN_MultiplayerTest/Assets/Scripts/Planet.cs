@@ -43,7 +43,7 @@ public class Planet : MarchingCubes.MarchingCubeChunkHandler
     {
         PortalCreator portal = GameObject.FindObjectOfType<PortalCreator>();
         Transform t;
-        Vector3 pos = GetStartPosInYDirection(false, 2);
+        Vector3 pos = GetStartPosInYDirection(false);
         Quaternion rotation = PlanetCharacterController.GetRotationToPlanetGravity(pos, transform.position);
         if (PhotonNetwork.IsConnected)
             t = PhotonNetwork.Instantiate(portal.prefab.name, pos, rotation).transform;
