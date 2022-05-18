@@ -28,7 +28,7 @@ int maxSteepness;
 
 float3 anchor;
 float spacing;
-uint length;
+uint count;
 
 bool storeMinDegrees;
 
@@ -153,7 +153,7 @@ RWStructuredBuffer<uint> colors;
 void ChunkDataFromPrepared(uint3 id : SV_DispatchThreadID)
 {
 	uint threadXID = id.x;
-	if (threadXID >= length)
+	if (threadXID >= count)
 		return;
 
 	Triangle t = GetTriangleFromThreadId(id);

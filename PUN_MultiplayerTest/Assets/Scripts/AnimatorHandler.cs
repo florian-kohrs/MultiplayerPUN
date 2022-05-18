@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,6 +47,8 @@ public class AnimatorHandler : PunLocalBehaviour
         anim.SetFloat(this.vertical, v, 0.1f, Time.deltaTime);
         anim.SetFloat(this.horizontal, h, 0.1f, Time.deltaTime);
     }
+
+
 
     public void PlayTargetAnimation(string targetAnimName, bool isInteracting, float transitionTime = 0.2f)
     {

@@ -13,6 +13,8 @@ public class PlanetCharacterController : PunLocalBehaviour
     [SerializeField]
     protected float moveSpeed = 10;
 
+    public float moveSpeedScale = 1;
+
     [SerializeField]
     protected float rotationSpeed;
 
@@ -75,7 +77,7 @@ public class PlanetCharacterController : PunLocalBehaviour
     {
         if (IsGrounded && !HasObstacleInFrontOfHim())
         {
-            body.velocity = moveDir * moveSpeed;
+            body.velocity = moveDir * moveSpeed * moveSpeedScale;
         }
     }
 
@@ -112,7 +114,7 @@ public class PlanetCharacterController : PunLocalBehaviour
 
         float nextFrameFallDistance = Vector3.Scale(down, body.velocity).magnitude * Time.deltaTime;
         nextFrameFallDistance = Mathf.Max(nextFrameFallDistance, minimumDistanceNeededToBeginFall) * transform.lossyScale.y;
-
+        Debug.DrawRay(origin, down, Color.red, 0);
         if (Physics.Raycast(origin, down, out hit, nextFrameFallDistance, ignoreForGroundCheck))
         {
             //transform.position = Vector3.Lerp(transform.position, hit.point, fallingSpeed * Time.deltaTime);

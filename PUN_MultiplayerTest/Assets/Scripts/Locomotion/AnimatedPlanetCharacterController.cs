@@ -11,12 +11,12 @@ public class AnimatedPlanetCharacterController : PlanetCharacterController
     protected override void OnStart()
     {
         base.OnStart();
-        animHandler.Initialize();
+        animHandler?.Initialize();
     }
 
     protected override void OnAfterUpdate()
     {
-        animHandler.UpdateAnimatorValues(moveDir.x, moveDir.y);
+        animHandler?.UpdateAnimatorValues(moveDir.x, moveDir.y);
     }
 
 }

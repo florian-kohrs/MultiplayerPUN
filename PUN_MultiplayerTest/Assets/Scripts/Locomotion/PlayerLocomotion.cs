@@ -17,6 +17,13 @@ public class PlayerLocomotion : PunLocalBehaviour, IVector2InputListener
 
     public AnimatorHandler animHandler;
 
+    protected float moveScale = 1;
+
+    public void SetMoveScale(float scale)
+    {
+        moveScale = scale;
+    }
+
     protected override void OnStart()
     {
         body = GetComponent<Rigidbody>();
@@ -34,7 +41,7 @@ public class PlayerLocomotion : PunLocalBehaviour, IVector2InputListener
         Vector3 moveDirection = transform.TransformDirection(new Vector3(moveDir.x, 0, moveDir.y));
         moveDirection.Normalize();
         //Vector3 projectedVel = Vector3.ProjectOnPlane(moveDirection, Vector3.up);
-        body.velocity = moveDirection * moveSpeed;
+        body.velocity = moveDirection * moveSpeed * moveScale;
 
         animHandler.UpdateAnimatorValues(moveDir.x, moveDir.y);
     }

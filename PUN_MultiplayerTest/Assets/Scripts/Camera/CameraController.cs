@@ -6,6 +6,8 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
     public float sensitivity = 20.0f;
     public float smoothing = 5.0f;
 
+    protected const float IS_IN_FPP_AT = 0.85f;
+
     public Transform followTarget;
 
     public Transform horizontalRotate;
@@ -14,7 +16,7 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
 
     public float mouseMaxSpeedPerFrame = 10;
 
-    private Vector2 mouseLook;
+    public Vector2 mouseLook;
     private Vector2 smoothedMouseLook;
 
     public float maxDownRotation = -30;
@@ -25,12 +27,16 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
 
     public Transform minCameraScrollAnchor;
 
-    public float scrollSpeed = 10;
+    public Transform cameraTransform;
+
+    public float scrollSpeed = 0.01f;
 
     public float scrollZoomValue = 0;
 
 
     protected Vector2 mouseInput;
+
+    protected bool IsInFPP => scrollZoomValue > IS_IN_FPP_AT;
 
     protected override void OnStart()
     {
@@ -44,6 +50,8 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
         mouseLook = new Vector2(horizontalRotate.localEulerAngles.y, startZEuler);
         smoothedMouseLook = mouseLook;
         GameManager.InputHandler.AddMouseListener(this);
+        GameManager.InputHandler.RegisterEvent((i) =>
+            i.PlayerMovement.CameraScroll.performed += input => ScrollCamera(input.ReadValue<Vector2>().y));
     }
 
 
@@ -53,10 +61,22 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
     }
 
 
-    private void ScrollCamera()
+    private void ScrollCamera(float delta)
     {
-        scrollZoomValue = Mathf.Clamp01(scrollZoomValue + Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed);
-        transform.position = Vector3.Lerp(maxCameraScrollAnchor.position, minCameraScrollAnchor.position, scrollZoomValue);
+        scrollZoomValue = Mathf.Clamp01(scrollZoomValue + delta * Time.deltaTime * scrollSpeed);
+        //if (delta < 0 && IsInFPP)
+        //    scrollZoomValue = IS_IN_FPP_AT;
+        //else if (delta > 0 && IsInFPP)
+        //    scrollZoomValue = 1;
+
+        float z = 1 - Mathf.Cos(scrollZoomValue / 2 * Mathf.PI);
+        float y = Mathf.Sin(scrollZoomValue / 2 * Mathf.PI);
+
+        float newZPos = Mathf.Lerp(minCameraScrollAnchor.localPosition.z, maxCameraScrollAnchor.localPosition.z, z);
+        float newYPos = Mathf.Lerp(minCameraScrollAnchor.localPosition.y, maxCameraScrollAnchor.localPosition.y, y);
+
+        cameraTransform.localPosition = new Vector3(0, newYPos, newZPos);
+        cameraTransform.rotation = Quaternion.Lerp(minCameraScrollAnchor.rotation, maxCameraScrollAnchor.rotation, scrollZoomValue);
     }
 
     private void LateUpdate()
@@ -68,6 +88,7 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
     public void UpdateCamera()
     {
         RotateCamera();
+        //ScrollCamera();
         //transform.position = followTarget.position;
     }
 

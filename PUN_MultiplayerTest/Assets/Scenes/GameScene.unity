@@ -382,18 +382,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1271649143, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1271649143, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 1271649143, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -27.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6191078838065638657, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
       propertyPath: m_Name
       value: NetworkGameManager
@@ -444,21 +432,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
---- !u!1 &6191078838389567601 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6191078838065638657, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
-  m_PrefabInstance: {fileID: 6191078838389567600}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6191078838389567602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6191078838389567601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28763b11346f3d84cbf4e95f47d31cff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 4420013849565751603, guid: 810e5cddf8f34d549b325cc2bb6efd6d, type: 3}

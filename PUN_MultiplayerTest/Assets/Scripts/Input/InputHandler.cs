@@ -33,6 +33,16 @@ public class InputHandler : PunLocalBehaviour
     }
 
 
+    public void RegisterEvent(Action<PlayerInputActions> input)
+    {
+        input.Invoke(this.input);
+    }
+
+    protected void ScrollTest(Vector2 scroll)
+    {
+        Debug.Log("Scrolled: " + scroll.x + ", " + scroll.y);
+    }
+
     public void AddMovementListener(IVector2InputListener listener)
     {
         movementListeners.Add(listener);
