@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomsScriptable:
-  - {fileID: 11400000, guid: bdea404d9ecc5374e94031b229150c7c, type: 2}
+  - {fileID: 11400000, guid: 9c80e1a169bfef64c982baea7f819166, type: 2}
   - {fileID: 11400000, guid: 9c80e1a169bfef64c982baea7f819166, type: 2}
   minDegree: 15
   maxDegree: 50
@@ -54,7 +54,7 @@ MonoBehaviour:
   radius: 50
   octaves: 9
   offset: {x: 0, y: 0, z: 0}
-  seed: -33
+  seed: 22
 --- !u!1 &6549260125919897762
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +240,7 @@ MonoBehaviour:
   buildAroundDistance: 4000
   grass: {fileID: 0}
   environmentSpawner: {fileID: 6549260126895278794}
+  gravity: -4
 --- !u!114 &6549260125919897774
 MonoBehaviour:
   m_ObjectHideFlags: 0

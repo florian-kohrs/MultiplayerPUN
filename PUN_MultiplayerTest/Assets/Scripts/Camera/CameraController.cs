@@ -36,7 +36,7 @@ public class CameraController : PunLocalBehaviour, IVector2InputListener
 
     protected Vector2 mouseInput;
 
-    protected bool IsInFPP => scrollZoomValue > IS_IN_FPP_AT;
+    public bool IsInFPP => scrollZoomValue > IS_IN_FPP_AT;
 
     protected override void OnStart()
     {

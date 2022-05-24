@@ -7,7 +7,7 @@ public class PlanetCharacterController : PunLocalBehaviour
 {
 
     [SerializeField]
-    protected static Transform planet;
+    protected Transform planet;
 
     [Header("Movement Stats")]
     [SerializeField]
@@ -22,7 +22,6 @@ public class PlanetCharacterController : PunLocalBehaviour
     protected float fallingSpeed = 45;
 
     [Header("Ground detection")]
-
     [SerializeField]
     protected float groundDetectionRayStartingPoint = 0.5f;
 
@@ -41,7 +40,7 @@ public class PlanetCharacterController : PunLocalBehaviour
 
     protected bool IsInAir => inAirTime > 0;
 
-    protected bool IsGrounded => !IsInAir;
+    protected bool IsGrounded => !IsInAir && noLandUntil <= 0;
 
     protected Rigidbody body;
 
@@ -49,6 +48,12 @@ public class PlanetCharacterController : PunLocalBehaviour
 
     protected Vector3 MoveDir => new Vector3(moveDir.x, 0, moveDir.y);
 
+    public void SendFlying(int flyDuration)
+    {
+        noLandUntil = flyDuration;
+    }
+
+    protected float noLandUntil;
 
     protected float colliderWidth = 0.5f;
 
@@ -63,6 +68,7 @@ public class PlanetCharacterController : PunLocalBehaviour
 
     protected void FixedUpdate()
     {
+        noLandUntil -= Time.deltaTime;
         Vector3 moveDir = transform.TransformDirection(MoveDir);
         Vector3 down = (planet.transform.position - transform.position).normalized;
         ApplyRotationToPlanetGravity(transform);
@@ -103,8 +109,11 @@ public class PlanetCharacterController : PunLocalBehaviour
             body.AddForce(moveDir * fallingSpeed / 10f);
         }
 
-       
-        CheckForGround(origin, down);
+        if (noLandUntil <= 0)
+        {
+            CheckForGround(origin, down);
+        }
+        
     }
 
     protected void CheckForGround(Vector3 origin, Vector3 down)

@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 824142239373037545}
   - component: {fileID: 2889852619086045360}
   - component: {fileID: 7655746164377781602}
+  - component: {fileID: 7882116058521929174}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -162,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383fedf72b7f60f4abad26879f1dc529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planet: {fileID: 0}
   moveSpeed: 10
   moveSpeedScale: 1
   rotationSpeed: 0
@@ -186,7 +188,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &7655746164377781602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,11 +201,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0364d0c0de2f0448a9d92cbcdfb0caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nosePrefab: {fileID: 2337872997275198524, guid: 521ee0c94ec277d4881f7de5ad6989c3, type: 3}
+  nosePrefab: {fileID: 5075113273565051220, guid: 753e98805da68b94d838271fac701a99, type: 3}
   activeNose: {fileID: 5889052666665543911}
   defaultNoseScale: {x: 0.1561515, y: 0.1561515, z: 0.7200561}
   attackMaxScale: {x: 0.2393809, y: 0.2393809, z: 1.103849}
   attackMinScale: {x: 0.1878971, y: 0.1878971, z: 0.8664435}
+  cameraController: {fileID: 8430048715708529912}
+--- !u!114 &7882116058521929174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603006272707944887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00b48abc6fd578429a6e3923a895ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2248300877030032227
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +440,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2889852619086045360}
+  - {fileID: 8432818767589001046}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -702,6 +718,7 @@ GameObject:
   - component: {fileID: 5889052666665543911}
   - component: {fileID: 7455901186492732762}
   - component: {fileID: 20960917858886917}
+  - component: {fileID: 8432818767589001046}
   m_Layer: 0
   m_Name: NoseProjetile
   m_TagString: Untagged
@@ -774,6 +791,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8432818767589001046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479816359938688987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!1001 &8030852491107038197
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,14 @@ using UnityEngine;
 public class PlayerPlanetCharakterController : AnimatedPlanetCharacterController, IVector2InputListener
 {
 
+    protected override void OnNotMine()
+    {
+        Collider[] c = GetComponentsInChildren<Collider>();
+        for (int i = 0; i < c.Length; i++)
+            Destroy(c[i]);
+        base.OnNotMine();
+    }
+
     public void OnVector2Input(Vector2 moveDir)
     {
         this.moveDir = moveDir;

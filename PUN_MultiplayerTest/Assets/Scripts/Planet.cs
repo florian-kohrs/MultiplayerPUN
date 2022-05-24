@@ -11,6 +11,10 @@ public class Planet : MarchingCubes.MarchingCubeChunkHandler
 
     protected const int MESH_COLLIDER_LAYERMASK = 1 << MESH_COLLIDER_LAYER;
 
+    protected float gravity = -1f;
+
+    public float Gravity => gravity;
+
     public static Planet PlanetRef { get; private set; }
 
     public override void OnAwake()
