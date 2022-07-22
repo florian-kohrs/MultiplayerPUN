@@ -4,3 +4,7 @@ chest spawn around centered from player spawn and portal spawn
 riesen troll den man ueber erdkruemmung sieht
 
 Metin like stones (towers?) fall from sky -> spawn enemies when attack mass spawn
+
+
+subnautica online - players are in the same u boot, one drives, other fires or something like that
+start with u boot and controlls and u boot fire gun. add caves later using marching cubes (propably)

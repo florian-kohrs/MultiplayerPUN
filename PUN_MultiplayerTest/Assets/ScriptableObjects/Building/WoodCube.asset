@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7354e219ed013a4797eba676d2826b6, type: 3}
   m_Name: WoodCube
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1729569910437863740, guid: d56e2492a2b5bcb46ad77dc4efd7ad06, type: 3}
+  prefab: {fileID: 6555900473171233107, guid: a9726f1137cf90840803f2eba2a5f34c, type: 3}
+  dockingBoxSize: {x: 0, y: 0, z: 0}

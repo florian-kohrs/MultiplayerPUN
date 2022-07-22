@@ -39,6 +39,16 @@ namespace MarchingCubes
 
         protected WorldUpdater chunkUpdater;
 
+        protected WorldUpdater ChunkUpdater
+        {
+            get
+            {
+                if(chunkUpdater == null)
+                    chunkUpdater = GameManager.GetPlayerComponentInChildren<WorldUpdater>();
+                return chunkUpdater;
+            }
+        }
+
         protected ChunkLodCollider chunkSimpleCollider;
 
         public const int MAX_TRIANGLES_PER_MESH = 65000;
@@ -122,9 +132,6 @@ namespace MarchingCubes
 
         public ChunkLodCollider ChunkSimpleCollider { set { chunkSimpleCollider = value; } }
 
-        public WorldUpdater ChunkUpdater { set { chunkUpdater = value; } }
-
-
         public ComputeBuffer minDegreeBuffer;
 
         public ComputeBuffer MinDegreeBuffer { get { return minDegreeBuffer; } set { minDegreeBuffer = value; } }
@@ -177,18 +184,18 @@ namespace MarchingCubes
                 }
                 if (targetLodPower > lodPower)
                 {
-                    chunkUpdater.lowerChunkLods.Add(this);
-                    chunkUpdater.increaseChunkLods.Remove(this);
+                    ChunkUpdater.lowerChunkLods.Add(this);
+                    ChunkUpdater.increaseChunkLods.Remove(this);
                 }
                 else if (targetLodPower == lodPower)
                 {
-                    chunkUpdater.lowerChunkLods.Remove(this);
-                    chunkUpdater.increaseChunkLods.Remove(this);
+                    ChunkUpdater.lowerChunkLods.Remove(this);
+                    ChunkUpdater.increaseChunkLods.Remove(this);
                 }
                 else
                 {
-                    chunkUpdater.increaseChunkLods.Add(this);
-                    chunkUpdater.lowerChunkLods.Remove(this);
+                    ChunkUpdater.increaseChunkLods.Add(this);
+                    ChunkUpdater.lowerChunkLods.Remove(this);
                 }
             }
         }
@@ -340,7 +347,7 @@ namespace MarchingCubes
   
         public virtual void PrepareDestruction()
         {
-            chunkUpdater.RemoveLowerLodChunk(this);
+            ChunkUpdater.RemoveLowerLodChunk(this);
             if (Leaf != null)
             {
                 Leaf.RemoveLeaf(this);

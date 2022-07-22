@@ -7,15 +7,14 @@ using UnityEngine;
 public class InputHandler : PunLocalBehaviour
 {
 
-    protected PlayerInputActions input;
-
-    [SerializeField]
-    protected CameraController cameraHandler;
+    public PlayerInputActions input;
 
 
     public bool isAttacking;
 
     public bool isInteracting;
+
+    protected bool isJumping = false;
 
     private void OnEnable()
     {
@@ -31,7 +30,6 @@ public class InputHandler : PunLocalBehaviour
         }
         input.Enable();
     }
-
 
     public void RegisterEvent(Action<PlayerInputActions> input)
     {
@@ -87,5 +85,6 @@ public class InputHandler : PunLocalBehaviour
     {
         input?.Disable();
     }
+
 
 }

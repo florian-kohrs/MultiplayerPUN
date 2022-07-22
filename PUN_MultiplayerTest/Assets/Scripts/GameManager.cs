@@ -94,6 +94,11 @@ public class GameManager
         return Player?.GetComponent<T>();
     }
 
+    public static T GetPlayerComponentInChildren<T>() where T : Component
+    {
+        return Player?.GetComponentInChildren<T>();
+    }
+
     public static void FreezeCamera()
     {
         GM.isCameraBlocked = true;

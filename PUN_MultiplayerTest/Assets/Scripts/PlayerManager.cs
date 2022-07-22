@@ -6,6 +6,9 @@ using UnityEngine;
 public class PlayerManager : PunLocalBehaviour
 {
 
+    public Transform increaseLOD;
+    public Transform decreaseLOD;
+
     protected override void OnNotMine()
     {
         gameObject.tag = "OtherPlayers";

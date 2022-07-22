@@ -26,7 +26,7 @@ namespace MarchingCubes
             GameObject g = new GameObject();
             g.transform.SetParent(colliderParent, true);
             //TODO:maybe have layer for each lod level
-            g.layer = 6;
+            g.layer = 11;
 
             SphereCollider sphere = g.AddComponent<SphereCollider>();
             sphere.radius = 1;

@@ -22,4 +22,11 @@ public class AssetMenue : MonoBehaviour
         AssetCreator.CreateAsset<BiomScriptableObject>(BASE_FOLDER_NAME + "Biom");
     }
 
+
+    [MenuItem("Assets/Create/Custom/MapOccupation")]
+    public static void NewMapOccupation()
+    {
+        AssetCreator.CreateAsset<MapOccupationObject>(BASE_FOLDER_NAME + "MapOccupation");
+    }
+
 }

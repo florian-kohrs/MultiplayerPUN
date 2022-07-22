@@ -139,8 +139,17 @@
             "actions": [
                 {
                     "name": "DefaultAttack",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "00a776d6-a664-4ff2-aba7-a49cfa183a55",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RotateObject",
+                    "type": "Button",
+                    "id": "49db017a-aa0c-46f2-850c-b9e39728f934",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -158,6 +167,39 @@
                     "action": "DefaultAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "fe819e4d-e610-48b3-a3bf-f1e4e1e0ccb5",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateObject",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "310e76d0-6fcd-47a3-a635-a4b94913e895",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateObject",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "49425c87-8147-4360-9df3-fc3c5e7180f0",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateObject",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

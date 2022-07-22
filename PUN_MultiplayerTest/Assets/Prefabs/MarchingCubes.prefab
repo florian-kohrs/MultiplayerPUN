@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomsScriptable:
-  - {fileID: 11400000, guid: 9c80e1a169bfef64c982baea7f819166, type: 2}
+  - {fileID: 11400000, guid: bdea404d9ecc5374e94031b229150c7c, type: 2}
   - {fileID: 11400000, guid: 9c80e1a169bfef64c982baea7f819166, type: 2}
   minDegree: 15
   maxDegree: 50
   biomSize: 600
   biomSpacing: 14
-  radius: 50
+  radius: 500
   octaves: 9
   offset: {x: 0, y: 0, z: 0}
   seed: 22
@@ -65,7 +65,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6549260125919897763}
   - component: {fileID: 1203947051179096256}
-  - component: {fileID: 6549260125919897774}
   - component: {fileID: 6549260125919897768}
   - component: {fileID: 6549260125919897773}
   - component: {fileID: 6549260125919897775}
@@ -100,7 +99,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6549260125919897762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d90aa941d965ae40a55375111e64e45, type: 3}
+  m_Script: {fileID: 11500000, guid: 22f3db87ed53fbc4baac6a5e47c73dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontSaveScriptValues: 0
@@ -118,83 +117,23 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: -0
-      outSlope: 0.000021660506
+      outSlope: 0.01
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1524.4343
-      value: 0.03302002
-      inSlope: 0.000021660506
+      time: 100
+      value: 1
+      inSlope: 0.01
       outSlope: 0.005
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1724.4343
-      value: 1.03302
-      inSlope: 0.005
-      outSlope: 0.002
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2224.4343
-      value: 2.03302
-      inSlope: 0.002
-      outSlope: 0.0016666667
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2824.4343
-      value: 3.03302
-      inSlope: 0.0016666667
-      outSlope: 0.0016666667
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 3424.4343
-      value: 4.03302
-      inSlope: 0.0016666667
-      outSlope: 0
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  chunkSizePowerForDistances:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+      time: 300
       value: 2
-      inSlope: -0
-      outSlope: 0.00001269703
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1672.8506
-      value: 2.0212402
-      inSlope: 0.00001269703
-      outSlope: 0.005
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1872.8506
-      value: 3.0212402
       inSlope: 0.005
       outSlope: 0.002
       tangentMode: 69
@@ -202,8 +141,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2372.8506
-      value: 4.02124
+      time: 800
+      value: 3
       inSlope: 0.002
       outSlope: 0.0016666667
       tangentMode: 69
@@ -211,8 +150,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2972.8506
-      value: 5.02124
+      time: 1400
+      value: 4
       inSlope: 0.0016666667
       outSlope: 0.0016666667
       tangentMode: 69
@@ -220,8 +159,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3572.8506
-      value: 6.02124
+      time: 2000
+      value: 5
       inSlope: 0.0016666667
       outSlope: 0
       tangentMode: 69
@@ -232,48 +171,14 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   totalTriBuild: 0
-  worldUpdater: {fileID: 6549260125919897774}
-  colliderParent: {fileID: 6549260126562854783}
+  colliderParent: {fileID: 0}
+  useTerrainNoise: 0
   deactivateAfterDistance: 40
   chunkMaterial: {fileID: 2100000, guid: 97d2f9aa8d16b8241a90494b8d616c04, type: 2}
   player: {fileID: 0}
-  buildAroundDistance: 4000
+  buildAroundDistance: 2
   grass: {fileID: 0}
-  environmentSpawner: {fileID: 6549260126895278794}
-  gravity: -4
---- !u!114 &6549260125919897774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6549260125919897762}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e2bdfbd44892348a426b99b226067a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chunkHandler: {fileID: 0}
-  lastUpdatePosition: {x: 0, y: 0, z: 0}
-  player: {fileID: 0}
-  updateClosestAfterDistance: 16
-  maxFrameTime: 15
-  estimatedTimeReduce: 1
-  estimatedTimeIncrease: 4
-  increaseTriggerParent: {fileID: 0}
-  decreaseTriggerParent: {fileID: 0}
-  lodPowerAtDistance:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reduceChunkAtCorrectSizeDist: 0.25
-  increaseChunkAtCorrectSizeDist: 0.25
-  maxMillisecondsPerFrame: 30
-  stopReducingChunksAtMillisecond: 28
-  stopGeneratingChunksAtMillisecond: 12
-  stopIncreasingChunkLodsAtMillisecond: 16
+  environmentSpawner: {fileID: 0}
 --- !u!114 &6549260125919897768
 MonoBehaviour:
   m_ObjectHideFlags: 0

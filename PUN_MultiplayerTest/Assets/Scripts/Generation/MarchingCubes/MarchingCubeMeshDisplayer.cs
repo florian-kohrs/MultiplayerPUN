@@ -65,8 +65,6 @@ namespace MarchingCubes
             }
         }
 
-
-
         public MarchingCubeMeshDisplayer(GameObject g, MeshFilter filter, MeshRenderer renderer, Mesh mesh, MeshCollider collider = null)
         {
             this.g = g;
@@ -76,7 +74,6 @@ namespace MarchingCubes
             this.renderer = renderer;
             this.filter = filter;
             this.filter.mesh = mesh;
-            this.g.layer = Planet.MESH_COLLIDER_LAYER;
         }
 
         public void Reset()

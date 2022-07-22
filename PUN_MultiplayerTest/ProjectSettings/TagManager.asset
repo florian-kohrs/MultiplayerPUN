@@ -18,9 +18,9 @@ TagManager:
   - Player
   - Planet
   - Enemies
-  - 
-  - 
-  - 
+  - LodIncrease
+  - LodDecrease
+  - PlanetSimpleCollider
   - 
   - 
   - 

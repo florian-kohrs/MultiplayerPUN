@@ -9,11 +9,9 @@ namespace MarchingCubes
 	public struct BiomNoiseData
 	{
 		public float amplitude;
-		[Min(0.0001f)]
 		public float lacunarity;
 		[Range(0, 1)]
 		public float persistence;
-
 		[Range(0.001f, 100)]
 		public float scale;
 		public float heightOffset;

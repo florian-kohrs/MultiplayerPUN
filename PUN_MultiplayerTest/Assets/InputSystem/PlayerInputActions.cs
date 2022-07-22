@@ -161,8 +161,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""DefaultAttack"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""00a776d6-a664-4ff2-aba7-a49cfa183a55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RotateObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""49db017a-aa0c-46f2-850c-b9e39728f934"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -180,6 +189,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""DefaultAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""fe819e4d-e610-48b3-a3bf-f1e4e1e0ccb5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateObject"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""310e76d0-6fcd-47a3-a635-a4b94913e895"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""49425c87-8147-4360-9df3-fc3c5e7180f0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -195,6 +237,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // PlayerActions
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_DefaultAttack = m_PlayerActions.FindAction("DefaultAttack", throwIfNotFound: true);
+        m_PlayerActions_RotateObject = m_PlayerActions.FindAction("RotateObject", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,11 +355,13 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerActions;
     private IPlayerActionsActions m_PlayerActionsActionsCallbackInterface;
     private readonly InputAction m_PlayerActions_DefaultAttack;
+    private readonly InputAction m_PlayerActions_RotateObject;
     public struct PlayerActionsActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActionsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @DefaultAttack => m_Wrapper.m_PlayerActions_DefaultAttack;
+        public InputAction @RotateObject => m_Wrapper.m_PlayerActions_RotateObject;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -329,6 +374,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DefaultAttack.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDefaultAttack;
                 @DefaultAttack.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDefaultAttack;
                 @DefaultAttack.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnDefaultAttack;
+                @RotateObject.started -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateObject;
+                @RotateObject.performed -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateObject;
+                @RotateObject.canceled -= m_Wrapper.m_PlayerActionsActionsCallbackInterface.OnRotateObject;
             }
             m_Wrapper.m_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -336,6 +384,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DefaultAttack.started += instance.OnDefaultAttack;
                 @DefaultAttack.performed += instance.OnDefaultAttack;
                 @DefaultAttack.canceled += instance.OnDefaultAttack;
+                @RotateObject.started += instance.OnRotateObject;
+                @RotateObject.performed += instance.OnRotateObject;
+                @RotateObject.canceled += instance.OnRotateObject;
             }
         }
     }
@@ -350,5 +401,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IPlayerActionsActions
     {
         void OnDefaultAttack(InputAction.CallbackContext context);
+        void OnRotateObject(InputAction.CallbackContext context);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MeshGPUInstanciation;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -93,8 +94,6 @@ namespace MarchingCubes
 
         public AnimationCurve lodPowerForDistances;
 
-        public AnimationCurve chunkSizePowerForDistances;
-
         protected MeshDisplayerPool displayerPool;
 
         protected InteractableMeshDisplayPool interactableDisplayerPool;
@@ -112,23 +111,19 @@ namespace MarchingCubes
 
         public int totalTriBuild;
 
-        public WorldUpdater worldUpdater;
-
         public Transform colliderParent;
 
         private BufferPool minDegreesAtCoordBufferPool;
 
         public ChunkGenerationPipelinePool chunkPipelinePool;
 
+        protected WorldUpdater worldUpdater;
+
+        public bool useTerrainNoise;
 
         public int deactivateAfterDistance = 40;
 
         public Material chunkMaterial;
-
-        public Transform player;
-
-        //protected Vector3 StartPoint => player.position;
-        protected Vector3 StartPoint => new Vector3(0,noiseData.radius,0);
 
         public int buildAroundDistance = 2;
 
@@ -147,7 +142,7 @@ namespace MarchingCubes
 
         public static object neighbourTaskLocker = new object();
 
-        public float Radius => noiseData.radius;
+
 
         protected int chunkInAsync = 0;
 
@@ -161,6 +156,24 @@ namespace MarchingCubes
             }
         }
 
+
+        protected void OnMarchingCubesDone()
+        {
+            SpawnPlayer();
+            InitializeWorldUpdater();
+        }
+
+        protected void InitializeWorldUpdater()
+        {
+            worldUpdater = GameManager.GetPlayerComponentInChildren<WorldUpdater>();
+            worldUpdater.Initialize(this);
+        }
+
+        protected void SpawnPlayer()
+        {
+            NetworkGameManager gameManager = FindObjectOfType<NetworkGameManager>();
+            gameManager.InstantiatePlayer();
+        }
 
 
         public bool NoWorkOnMainThread =>
@@ -205,12 +218,7 @@ namespace MarchingCubes
 
         private void Start()
         {
-            //Generate();
-            this.DoDelayed(1, Generate);
-        }
-
-        public void Generate()
-        {
+            SpawnPlayer();
             neighbourFinder = new AsynchronNeighbourFinder(this);
             ChunkNeighbourTask.chunkGroup = chunkGroup;
 
@@ -228,7 +236,7 @@ namespace MarchingCubes
 
             watch.Start();
             buildAroundSqrDistance = (long)buildAroundDistance * buildAroundDistance;
-            startPos = StartPoint;
+            startPos = new Vector3(0,noiseData.radius,0);
 
 
             //CompressedMarchingCubeChunk chunk = FindNonEmptyChunkAround(player.position);
@@ -260,7 +268,7 @@ namespace MarchingCubes
         protected Vector3Int[] ScanForNonEmptyChunks()
         {
             ChunkGenerationGPUData.ApplyStaticShaderProperties(FindNonEmptyChunksShader);
-            Vector3 startPosition = GlobalPositionToDefaultAnchorPosition(StartPoint);
+            Vector3 startPosition = GlobalPositionToDefaultAnchorPosition(startPos);
             Vector3Int[] nonEmptyPositions = chunkGPURequest.ScanForNonEmptyChunksAround(startPosition, DEFAULT_CHUNK_SIZE_POWER + 2, DEFAULT_CHUNK_SIZE_POWER);
             ChunkGenerationGPUData.FreeStaticInitialData();
             return nonEmptyPositions;
@@ -270,15 +278,16 @@ namespace MarchingCubes
         {
             Vector3Int[] positions = ScanForNonEmptyChunks();
             hasFoundInitialChunk = positions.Length > 0;
-            if (hasFoundInitialChunk)
-            {
-                BuildAllChunksAsync(positions);
-                StartCoroutine(WaitTillAsynGenerationDone());
-            }
-            else
+            //if (hasFoundInitialChunk)
+            //{
+            //    BuildAllChunksAsync(positions);
+            //    StartCoroutine(WaitTillAsynGenerationDone());
+            //}
+            //else
             {
                 FindNonEmptyChunkAroundAsync(startPos, (chunk) =>
                 {
+                    Time.timeScale = 1;
                     mainCam.enabled = true;
                     BuildNeighbourChunks(new bool[] { true, true, true, true, true, true }, chunk.ChunkSize, chunk.CenterPos);
                     StartCoroutine(WaitTillAsynGenerationDone());
@@ -328,8 +337,8 @@ namespace MarchingCubes
 
         protected IEnumerator WaitTillAsynGenerationDone()
         {
-            if(mainCam != null)
-                mainCam.enabled = false;
+            Time.timeScale = 0;
+            mainCam.enabled = false;
 
             bool repeat = true;
             List<Exception> x = CompressedMarchingCubeChunk.xs;
@@ -368,9 +377,8 @@ namespace MarchingCubes
                 if (neighbourFinder.InitializationDone)
                 {
                     repeat= false;
-                    //Reset Player or spawn Player
-                    if (mainCam != null)
-                        mainCam.enabled = true;
+                    Time.timeScale = 1;
+                    mainCam.enabled = true;
 
                     watch.Stop();
                     Debug.Log("Total millis: " + watch.Elapsed.TotalMilliseconds);
@@ -380,14 +388,12 @@ namespace MarchingCubes
                     }
                     Debug.Log("Total triangles: " + totalTriBuild);
                     StartCoroutine(CreateEmptyChunks());
-                    OnPlanetDone();
+                    OnMarchingCubesDone();
                 }
                 yield return null;
             }
         }
 
-
-        protected virtual void OnPlanetDone() { }
 
         //Todo: try do this work on compute shader already
         private void BuildRelevantChunksWithAsyncGpuAround()
@@ -450,8 +456,7 @@ namespace MarchingCubes
                 Debug.Log("Aborted");
             }
             Debug.Log("Total triangles: " + totalTriBuild);
-            OnPlanetDone();
-
+            OnMarchingCubesDone();
             // Debug.Log($"Number of chunks: {ChunkGroups.Count}");
         }
 
@@ -571,6 +576,7 @@ namespace MarchingCubes
 
         protected void FindNonEmptyChunkAroundAsync(Vector3 pos, Action<CompressedMarchingCubeChunk> callback)
         {
+            Time.timeScale = 0;
             mainCam.enabled = false;
             FindNonEmptyChunkAroundAsync(pos, callback, 0);
         }
@@ -682,7 +688,6 @@ namespace MarchingCubes
             ChunkGroupRoot chunkGroupRoot = chunkGroup.GetOrCreateGroupAtGlobalPosition(VectorExtension.ToArray(position));
             chunk.ChunkHandler = this;
             chunk.ChunkSizePower = chunkSizePower;
-            chunk.ChunkUpdater = worldUpdater;
             chunk.Material = chunkMaterial;
             chunk.LODPower = lodPower;
 
@@ -700,7 +705,6 @@ namespace MarchingCubes
                 CompressedMarchingCubeChunk chunk = new CompressedMarchingCubeChunk();
                 chunk.ChunkHandler = this;
                 chunk.ChunkSizePower = CHUNK_GROUP_SIZE_POWER;
-                chunk.ChunkUpdater = worldUpdater;
                 chunk.LODPower = MAX_CHUNK_LOD_POWER + 1;
 
                 chunk.IsSpawner = true;
@@ -1028,7 +1032,7 @@ namespace MarchingCubes
 
         public int GetLodPower(float distance)
         {
-            return 0;// (int)Mathf.Max(DEFAULT_MIN_CHUNK_LOD_POWER, lodPowerForDistances.Evaluate(distance));
+            return (int)Mathf.Max(DEFAULT_MIN_CHUNK_LOD_POWER, lodPowerForDistances.Evaluate(distance));
         }
 
         public int GetLodPowerAt(Vector3 pos)
@@ -1038,7 +1042,7 @@ namespace MarchingCubes
 
         public int GetSizePowerForDistance(float distance)
         {
-            return 0;// (int)chunkSizePowerForDistances.Evaluate(distance);
+            return (int)lodPowerForDistances.Evaluate(distance) + 2;
         }
 
 

@@ -9,8 +9,6 @@ public class Archer : MonoBehaviour
 
     public AnimatorHandler animator;
 
-    public PlayerPlanetCharakterController playerLocomotion;
-
     protected bool isAiming;
 
     protected float aimTime = 0;
@@ -32,14 +30,12 @@ public class Archer : MonoBehaviour
     {
         isAiming = true;
         animator.anim.SetBool(AIMING_ANIMATION_PARAMATER_NAME, true);
-        playerLocomotion.moveSpeedScale = 0.4f;
     }
 
     protected void EndDraw()
     {
         isAiming = false;
         animator.anim.SetBool(AIMING_ANIMATION_PARAMATER_NAME, false);
-        playerLocomotion.moveSpeedScale = 1f;
     }
 
 }

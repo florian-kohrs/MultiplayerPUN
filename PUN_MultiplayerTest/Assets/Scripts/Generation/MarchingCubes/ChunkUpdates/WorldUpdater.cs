@@ -15,6 +15,9 @@ namespace MarchingCubes
 
         public float updateClosestAfterDistance = 16;
 
+        protected const int INCREASE_LAYER = 9;
+        protected const int DECREASE_LAYER = 10;
+
         public float maxFrameTime = 15;
 
         public float estimatedTimeReduce = 1;
@@ -54,11 +57,12 @@ namespace MarchingCubes
         protected bool isInDecreasingChunkIteration;
 
 
-        private void Awake()
+        public void Initialize(MarchingCubeChunkHandler chunkHandler)
         {
-            //lodPowerAtDistance = chunkHandler.lodPowerForDistances;
+            this.chunkHandler = chunkHandler;
+            lodPowerAtDistance = chunkHandler.lodPowerForDistances;
             //GenerateTriggers();
-            ////StartCoroutine(UpdateChunkSizes());
+            //StartCoroutine(UpdateChunkSizes());
         }
 
         protected void GenerateTriggers()
@@ -72,21 +76,21 @@ namespace MarchingCubes
                 float timeDiff = f.time - last.time;
                 float extraTime = timeDiff * distThreshold;
 
-                CreateTriggerOfTypeForLod<ChunkLodIncreaseTrigger>(i - 1, f.time - extraTime, increaseTriggerParent);
-                CreateTriggerOfTypeForLod<ChunkLodDecreaseTrigger>(i, f.time + extraTime, decreaseTriggerParent);
+                CreateTriggerOfTypeForLod<ChunkLodIncreaseTrigger>(i - 1, f.time - extraTime, increaseTriggerParent,INCREASE_LAYER);
+                CreateTriggerOfTypeForLod<ChunkLodDecreaseTrigger>(i, f.time + extraTime, decreaseTriggerParent, DECREASE_LAYER);
 
                 last = f;
             }
             float chunkDeactivateDist = chunkHandler.buildAroundDistance * (1 + distThreshold);
-            CreateTriggerOfTypeForLod<ChunkLodIncreaseTrigger>(MarchingCubeChunkHandler.MAX_CHUNK_LOD_POWER, chunkHandler.buildAroundDistance, increaseTriggerParent);
-            CreateTriggerOfTypeForLod<ChunkLodDecreaseTrigger>(MarchingCubeChunkHandler.MAX_CHUNK_LOD_POWER + 1, chunkDeactivateDist, decreaseTriggerParent);
-            CreateTriggerOfTypeForLod<ChunkLodDecreaseTrigger>(MarchingCubeChunkHandler.DESTROY_CHUNK_LOD, chunkDeactivateDist + MarchingCubeChunkHandler.CHUNK_GROUP_SIZE, decreaseTriggerParent);
+            CreateTriggerOfTypeForLod<ChunkLodIncreaseTrigger>(MarchingCubeChunkHandler.MAX_CHUNK_LOD_POWER, chunkHandler.buildAroundDistance, increaseTriggerParent, INCREASE_LAYER);
+            CreateTriggerOfTypeForLod<ChunkLodDecreaseTrigger>(MarchingCubeChunkHandler.MAX_CHUNK_LOD_POWER + 1, chunkDeactivateDist, decreaseTriggerParent, DECREASE_LAYER);
+            CreateTriggerOfTypeForLod<ChunkLodDecreaseTrigger>(MarchingCubeChunkHandler.DESTROY_CHUNK_LOD, chunkDeactivateDist + MarchingCubeChunkHandler.CHUNK_GROUP_SIZE, decreaseTriggerParent, DECREASE_LAYER);
         }
 
-        protected void CreateTriggerOfTypeForLod<T>(int lod, float radius, Transform parent) where T : BaseChunkLodTrigger
+        protected void CreateTriggerOfTypeForLod<T>(int lod, float radius, Transform parent, int layer) where T : BaseChunkLodTrigger
         {
             GameObject g = new GameObject();
-            g.layer = 7;
+            g.layer = layer;
             g.transform.SetParent(parent, false);
             T trigger = g.AddComponent<T>();
             trigger.lod = lod;

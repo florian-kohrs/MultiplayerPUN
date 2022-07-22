@@ -305,6 +305,16 @@ public static class VectorExtension
         return (x * size.x * size.y + y * size.y + z);
     }
 
+    public static Vector2 ToVector2(this Vector2Int v2)
+    {
+        return new Vector2(v2.x, v2.y);
+    }
+
+    public static Vector3 LiftVectorOnXY(this Vector2 v2)
+    {
+        return new Vector3(v2.x, v2.y, 0);
+    }
+
     public static Vector3Int ToVector(int i, Vector3Int size)
     {
         return new Vector3Int
