@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySlot : MonoBehaviour
+public class OccupationObjectRef : MonoBehaviour
 {
 
     public MapOccupationObject mapObject;
 
-    public Action OnMouseClick;
+    public int index;
 
 }

@@ -15,6 +15,8 @@ public class MapOccupationObject : ScriptableObject
 
     public GameObject prefab;
 
+    public bool destroyable = true;
+
     [Tooltip("Dont add default value (0,0) here")]
     public List<Vector2Int> localOccupationSpots;
 

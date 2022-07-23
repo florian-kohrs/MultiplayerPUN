@@ -8,6 +8,8 @@ public class Locomotion2D : MonoBehaviour, IVector2InputListener
 
     protected Rigidbody2D body;
 
+    public Player player;
+
     public float fallMultiplier = 1.5f;
 
     public float lowJumpMultiplier = 2f;
@@ -27,6 +29,8 @@ public class Locomotion2D : MonoBehaviour, IVector2InputListener
     protected bool isHoldingJump;
 
     protected Vector2 inputDir = Vector2.zero;
+
+    public bool IsAlive => player.IsAlive;
 
     // Start is called before the first frame update
     void Start()
@@ -53,15 +57,18 @@ public class Locomotion2D : MonoBehaviour, IVector2InputListener
     // Update is called once per frame
     void Update()
     {
-        body.velocity = new Vector2(inputDir.x * moveSpeed, body.velocity.y);
-        if(IsFalling)
+        if (IsFalling)
         {
             body.velocity += Time.deltaTime * Physics2D.gravity.y * fallMultiplier * Vector2.up;
         }
-        else if(IsJumping && !isHoldingJump)
+        else if (IsJumping && !isHoldingJump && IsAlive)
         {
             body.velocity += Time.deltaTime * Physics2D.gravity.y * lowJumpMultiplier * Vector2.up;
         }
+
+        if (IsAlive)
+            body.velocity = new Vector2(inputDir.x * moveSpeed, body.velocity.y);
+        
     }
 
     public void OnVector2Input(Vector2 input)

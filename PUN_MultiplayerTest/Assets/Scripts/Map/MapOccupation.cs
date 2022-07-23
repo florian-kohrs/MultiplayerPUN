@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapOccupation
 {
 
-    public MapOccupation(MapOccupationObject occupationObject, Vector2Int origin, int orientation)
+    public MapOccupation(MapOccupationObject occupationObject, Vector2Int origin, int orientation, bool destroyable = true)
     {
         this.occupationObject = occupationObject;
         this.origin = origin;
@@ -17,6 +17,8 @@ public class MapOccupation
     public Vector2Int origin;
 
     protected int orientation;
+
+    public bool destroyable;
 
     public int Orientation
     {

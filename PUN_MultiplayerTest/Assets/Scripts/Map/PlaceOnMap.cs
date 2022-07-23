@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlaceOnMap : PunLocalBehaviour
+public class PlaceOnMap : MonoBehaviour
 {
 
     public BaseMap map;
@@ -24,7 +24,11 @@ public class PlaceOnMap : PunLocalBehaviour
         }
     }
 
-    
+    private void Start()
+    {
+        enabled = false;
+    }
+
     //protected override void OnStart()
     //{
     //    BeginPlace(activeObject);
@@ -58,54 +62,40 @@ public class PlaceOnMap : PunLocalBehaviour
 
         UpdateObjectPreview();
 
-        Vector3 worldSpace = GetCameraWorldSpace();
+        Vector3 worldSpace = GetMouseWorldSpace();
         Vector2Int mapIndex = map.PositionToIndex(worldSpace);
 
         if (Mouse.current.leftButton.isPressed)
         {
             if (map.Place(activeObject, mapIndex, activeRotation))
             {
-                Spawn(MapIndexToGlobalPosition(mapIndex));
                 RemovePreview();
                 enabled = false;
             }
         }
     }
 
-    protected void Spawn(Vector3 pos)
-    {
-        Quaternion activeRotation = GetObjectRotation();
-        NetworkInstantiation.Instantiate(activeObject.prefab, pos, activeRotation);
-    }
 
     protected Vector3 GlobalPositionFromMouse()
     {
-        Vector3 worldSpace = GetCameraWorldSpace();
+        Vector3 worldSpace = GetMouseWorldSpace();
         Vector2Int mapIndex = map.PositionToIndex(worldSpace);
-        return MapIndexToGlobalPosition(mapIndex);
+        return map.MapIndexToGlobalPosition(mapIndex);
     }
 
     protected void UpdateObjectPreview()
     {
         previewObject.transform.position = GlobalPositionFromMouse();
-        previewObject.transform.rotation = GetObjectRotation();
+        previewObject.transform.rotation = map.GetObjectRotation(activeRotation);
     }
 
-    protected Quaternion GetObjectRotation()
-    {
-        return Quaternion.Euler(0, 0, activeRotation * 90);
-    }
 
-    protected Vector3 MapIndexToGlobalPosition(Vector2Int index)
-    {
-        return map.transform.position + (index.ToVector2() * BaseMap.MAP_FIELD_SPACING).LiftVectorOnXY();
-    }
-
-    protected Vector3 GetCameraWorldSpace()
+    protected Vector3 GetMouseWorldSpace()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = Camera.main.nearClipPlane;
         Vector3 worldSpace = Camera.main.ScreenToWorldPoint(mousePos);
-        return worldSpace;
+        return worldSpace + new Vector3(BaseMap.HALF_SPACING, BaseMap.HALF_SPACING,0);
     }
+
 }
