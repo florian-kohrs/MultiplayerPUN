@@ -8,11 +8,9 @@ public class FinishCollision : PunLocalBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player p = collision.gameObject.GetComponentInChildren<Player>();
-        if (p != null)
+        if (p != null && p.SetPlayerReachedTarget())
         {
-            p.HasReachedTarget = true;
             Debug.Log($"Player {p.playerName} reached target");
-            //TODO: Broadcast to others
         }
     }
 

@@ -13,7 +13,7 @@ public class MapGenerator : MonoBehaviour
 
     public BaseMap map;
 
-    private void Start()
+    public void Generate()
     {
         for (int i = 0; i < map.dimensions.x; i++)
         {
@@ -21,7 +21,6 @@ public class MapGenerator : MonoBehaviour
         }
         SetStart();
         SetFinish();
-
     }
 
     protected void SetStart()

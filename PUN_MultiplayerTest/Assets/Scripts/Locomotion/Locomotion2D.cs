@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Locomotion2D : MonoBehaviour, IVector2InputListener
 {
-
-    protected Rigidbody2D body;
+    
+    [HideInInspector]
+    public Rigidbody2D body;
 
     public Player player;
 
@@ -30,7 +31,7 @@ public class Locomotion2D : MonoBehaviour, IVector2InputListener
 
     protected Vector2 inputDir = Vector2.zero;
 
-    public bool IsAlive => player.IsAlive;
+    public bool CanMove => player.CanPlayerMove;
 
     // Start is called before the first frame update
     void Start()
@@ -61,12 +62,12 @@ public class Locomotion2D : MonoBehaviour, IVector2InputListener
         {
             body.velocity += Time.deltaTime * Physics2D.gravity.y * fallMultiplier * Vector2.up;
         }
-        else if (IsJumping && !isHoldingJump && IsAlive)
+        else if (IsJumping && !isHoldingJump && CanMove)
         {
             body.velocity += Time.deltaTime * Physics2D.gravity.y * lowJumpMultiplier * Vector2.up;
         }
 
-        if (IsAlive)
+        if (CanMove)
             body.velocity = new Vector2(inputDir.x * moveSpeed, body.velocity.y);
         
     }

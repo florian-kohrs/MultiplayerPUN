@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,16 @@ public class SelectItemToPlace : MonoBehaviour
     {
         layerMask = LayerMask.NameToLayer("ObjectSelection");
         enabled = false;
-        DetermineNextRotation();
+        //DetermineNextRotation();
+    }
+
+    protected Action<MapOccupationObject> objectSelectedCallback;
+
+    public void StartSelection(Action<MapOccupationObject> onDone)
+    {
+        //DetermineNextRotation();
+        onDone(allOccupationObjects.GrabOne());
+        objectSelectedCallback = onDone;
     }
 
     public void DetermineNextRotation()

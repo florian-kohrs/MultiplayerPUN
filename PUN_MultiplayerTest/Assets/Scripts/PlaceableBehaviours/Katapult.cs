@@ -52,11 +52,13 @@ public class Katapult : ProjectileDispenser
     protected void UpdateKatapult(float progress)
     {
         float rotation = Mathf.Lerp(0, rotateDegree, progress);
-        rotateAnchor.rotation = startRotation * Quaternion.Euler(0, 0, -rotation);
+        rotateAnchor.rotation = startRotation * Quaternion.Euler(0, 0, -rotation * Mathf.Sign(transform.localScale.x));
     }
 
     protected void ReleaseProjectile()
     {
+        if (projectile == null)
+            return;
         Rigidbody2D body = projectileInstance.GetComponent<Rigidbody2D>();
         projectileInstance.transform.parent = null;
         body.AddForce(projectileParent.up * dispensePower, ForceMode2D.Impulse);

@@ -5,18 +5,20 @@ using UnityEngine;
 public class DeathCollision : PunLocalBehaviour
 {
 
+    public float impactForce = 5;
+
+    public bool breakOnCollision;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Player p = collision.gameObject.GetComponentInChildren<Player>();
-        if (p != null)
-        {
-            p.IsAlive = false;
-            if (!p.IsAlive)
-            {
-                collision.rigidbody.AddForce(collision.relativeVelocity * 2, ForceMode2D.Impulse);
-                Debug.Log($"Player {p.name} has died");
-            }
+        if (p != null && !p.KillPlayer())
+        { 
+            collision.rigidbody.AddForce(collision.relativeVelocity * impactForce, ForceMode2D.Impulse);
+            Debug.Log($"Player {p.playerName} has died");
         }
+        if (breakOnCollision)
+            Destroy(gameObject);
     }
 
 }

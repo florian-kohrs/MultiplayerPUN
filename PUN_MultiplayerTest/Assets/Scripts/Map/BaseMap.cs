@@ -26,16 +26,14 @@ public class BaseMap : MonoBehaviour
     public void SetStartPoint(Vector2Int start, MapOccupationObject startArea)
     {
         startPoint = start;
-        PositionPlayers();
         if (!Place(startArea, start, 0, false))
             throw new Exception("Start Area must be able to spawn!");
 
     }
 
-    protected void PositionPlayers()
+    public void PositionPlayers(List<Player> players)
     {
-       Player[] ps = FindObjectsOfType<Player>();
-       foreach(Player p in ps)
+        foreach (Player p in players)
             p.transform.position = MapIndexToGlobalPosition(startPoint) + PlayerOffset;
     }
 
@@ -51,16 +49,23 @@ public class BaseMap : MonoBehaviour
         {
             MapOccupation mapOccupation = new MapOccupation(occupation,origin,rotationIndex, destroyable);
             OccupySpace(mapOccupation);
-            Quaternion rotation = GetObjectRotation(rotationIndex);
-            Spawn(occupation, MapIndexToGlobalPosition(origin), rotation);
+            Quaternion rotation = Quaternion.identity;
+            Vector3 scale = Vector3.one;
+
+            if(occupation.mirrorInsteadOfRotate)
+                scale = new Vector3(Mathf.Pow(-1, rotationIndex), 1, 1);
+            else
+                rotation = GetObjectRotation(rotationIndex);
+
+            Spawn(occupation, MapIndexToGlobalPosition(origin), rotation, scale);
         }
         return result;
     }
 
 
-    protected void Spawn(MapOccupationObject occupation, Vector3 pos, Quaternion rotation)
+    protected void Spawn(MapOccupationObject occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
     {
-        NetworkInstantiation.Instantiate(occupation.prefab, pos, rotation);
+        NetworkInstantiation.Instantiate(occupation.prefab, pos, rotation, scale);
     }
 
 

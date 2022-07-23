@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class NetworkInstantiation : MonoBehaviour
 {
-    public static GameObject Instantiate(GameObject instantiate, Vector3 position, Quaternion rotation)
+    public static GameObject Instantiate(GameObject instantiate, Vector3 position, Quaternion rotation, Vector3 scale)
     {
         GameObject result;
+
         if (PhotonNetwork.IsConnected)
-            result = PhotonNetwork.Instantiate(instantiate.name, position, rotation);
+            result = PhotonNetwork.Instantiate("MapObstacles/" + instantiate.name, position, rotation);
         else
-            result = Object.Instantiate(instantiate, position, rotation);
+            result = Instantiate(instantiate, position, rotation);
+
+        result.transform.localScale = scale;
         return result;
     }
 

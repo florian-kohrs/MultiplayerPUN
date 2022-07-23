@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Katapult
   m_EditorClassIdentifier: 
   prefab: {fileID: 8465183281590610998, guid: 5fd5f448a2b437d46886fa8f49b32f19, type: 3}
+  destroyable: 1
+  mirrorInsteadOfRotate: 1
   localOccupationSpots: []

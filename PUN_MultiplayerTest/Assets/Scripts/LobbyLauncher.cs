@@ -99,7 +99,7 @@ public class LobbyLauncher : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel("ChickenHorse");
     }
 
     public override void OnJoinedRoom()

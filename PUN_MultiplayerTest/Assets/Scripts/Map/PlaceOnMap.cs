@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ public class PlaceOnMap : MonoBehaviour
 
     protected int activeRotation;
 
+    protected Action onDone;
+
     protected int ActiveRotation
     {
         get { return activeRotation; }
@@ -27,6 +30,12 @@ public class PlaceOnMap : MonoBehaviour
     private void Start()
     {
         enabled = false;
+        GameManager.InputHandler.input.PlayerActions.RotateObject.performed +=
+            input =>
+            {
+                if (enabled)
+                    ActiveRotation += (int)input.ReadValue<float>();
+            };
     }
 
     //protected override void OnStart()
@@ -35,8 +44,10 @@ public class PlaceOnMap : MonoBehaviour
     //    GameManager.InputHandler.input.PlayerActions.RotateObject.performed += (val) => { ActiveRotation += (int)val.ReadValue<float>(); };
     //}
 
-    protected void BeginPlace(MapOccupationObject mapObject)
+    public void BeginPlace(MapOccupationObject mapObject, Action onDone)
     {
+        ActiveRotation = 0;
+        this.onDone = onDone;
         RemovePreview();
         activeObject = mapObject;
         previewObject = Instantiate(mapObject.prefab);
@@ -71,6 +82,7 @@ public class PlaceOnMap : MonoBehaviour
             {
                 RemovePreview();
                 enabled = false;
+                onDone();
             }
         }
     }
@@ -86,7 +98,17 @@ public class PlaceOnMap : MonoBehaviour
     protected void UpdateObjectPreview()
     {
         previewObject.transform.position = GlobalPositionFromMouse();
-        previewObject.transform.rotation = map.GetObjectRotation(activeRotation);
+
+        if(activeObject.mirrorInsteadOfRotate)
+        {
+            Vector3 localScale = previewObject.transform.localScale;
+            previewObject.transform.localScale = new Vector3(Mathf.Pow(-1, ActiveRotation) * Mathf.Abs(localScale.x), localScale.y, localScale.z);
+        }
+        else
+        {
+            previewObject.transform.rotation = map.GetObjectRotation(activeRotation);
+        }
+
     }
 
 

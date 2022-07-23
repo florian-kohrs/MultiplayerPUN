@@ -17,6 +17,8 @@ public class MapOccupationObject : ScriptableObject
 
     public bool destroyable = true;
 
+    public bool mirrorInsteadOfRotate = false;
+
     [Tooltip("Dont add default value (0,0) here")]
     public List<Vector2Int> localOccupationSpots;
 
