@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: LShape
   m_EditorClassIdentifier: 
   prefab: {fileID: 8225868996810518040, guid: 30b3a91b61baab7499b3fee9a0d3eb28, type: 3}
-  localOccupationSpots: []
+  destroyable: 1
+  mirrorInsteadOfRotate: 0
+  localOccupationSpots:
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 1, y: 1}

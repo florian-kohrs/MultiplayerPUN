@@ -10,13 +10,15 @@ public class PlaceOnMap : MonoBehaviour
 
     public BaseMap map;
 
-    public MapOccupationObject activeObject;
+    public int activeObjectIndex;
 
     public GameObject previewObject;
 
     protected int activeRotation;
 
     protected Action onDone;
+
+    protected List<MapOccupationObject> AllMapOccupations => map.randomReceivableMapOccupationObjects;
 
     protected int ActiveRotation
     {
@@ -44,13 +46,13 @@ public class PlaceOnMap : MonoBehaviour
     //    GameManager.InputHandler.input.PlayerActions.RotateObject.performed += (val) => { ActiveRotation += (int)val.ReadValue<float>(); };
     //}
 
-    public void BeginPlace(MapOccupationObject mapObject, Action onDone)
+    public void BeginPlace(int mapObjectIndex, Action onDone)
     {
         ActiveRotation = 0;
         this.onDone = onDone;
         RemovePreview();
-        activeObject = mapObject;
-        previewObject = Instantiate(mapObject.prefab);
+        activeObjectIndex = mapObjectIndex;
+        previewObject = NetworkInstantiation.Instantiate(AllMapOccupations[activeObjectIndex].prefab);
         previewObject.GetComponentsInChildren<Behaviour>().ToList().ForEach((b) => b.enabled = false);
         UpdateObjectPreview();
         enabled = true;
@@ -67,7 +69,7 @@ public class PlaceOnMap : MonoBehaviour
 
     void Update()
     {
-        if (activeObject == null)
+        if (activeObjectIndex < 0)
             return;
 
 
@@ -78,7 +80,7 @@ public class PlaceOnMap : MonoBehaviour
 
         if (Mouse.current.leftButton.isPressed)
         {
-            if (map.Place(activeObject, mapIndex, activeRotation))
+            if (map.PlaceDuringRounds(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation))
             {
                 RemovePreview();
                 enabled = false;
@@ -98,6 +100,7 @@ public class PlaceOnMap : MonoBehaviour
     protected void UpdateObjectPreview()
     {
         previewObject.transform.position = GlobalPositionFromMouse();
+        MapOccupationObject activeObject = AllMapOccupations[activeObjectIndex];
 
         if(activeObject.mirrorInsteadOfRotate)
         {

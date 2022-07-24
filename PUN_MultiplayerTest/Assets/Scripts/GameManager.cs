@@ -42,7 +42,7 @@ public class GameManager
         get 
         {
             if (inputHandler == null)
-                inputHandler = GetPlayerComponent<InputHandler>();
+                inputHandler = Object.FindObjectOfType<InputHandler>();
 
             return inputHandler;
         } 

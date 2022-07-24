@@ -13,7 +13,7 @@ public abstract class ProjectileDispenser : BasePlaceableBehaviours
 
     public float dispensePower = 5;
 
-    protected override void OnStart()
+    protected void Start()
     {
         StartCoroutine(DispenseCoroutine());
     }

@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PunMasterBehaviour :  Photon.Pun.MonoBehaviourPun
+public abstract class PunMasterBehaviour : MonoBehaviourPun
 {
 
     protected void Start()
     {
         if (!PhotonNetwork.IsMasterClient && PhotonNetwork.IsConnected)
         {
-            OnNotMine();
+            OnNotMaster();
         }
         else
         {
@@ -20,6 +20,6 @@ public class PunMasterBehaviour :  Photon.Pun.MonoBehaviourPun
 
     protected virtual void OnStart() { }
 
-    protected virtual void OnNotMine() { Destroy(this); }
+    protected virtual void OnNotMaster() { Destroy(this); }
 
 }

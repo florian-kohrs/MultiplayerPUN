@@ -39,6 +39,18 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - PlaceDuringRounds
+  - PlaceGeneration
+  - PlayerDonePlacing
+  - PlayerDoneRunning
+  - PlayerDoneSelecting
+  - StartGame
+  - PlayerDied
+  - PlayerArrived
+  - InstantiateOnMap
+  - Place
+  - StartGameBroadCast
+  - StartGameBroadcast
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

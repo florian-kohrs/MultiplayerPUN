@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,12 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
 
-    public MapOccupationObject floorObject;
+    protected int floorObjectIndex = 2;
 
     public MapOccupationObject finishObject;
 
-    public MapOccupationObject startArea;
+    public int startAreaIndex = 0;
+    public int finishAreaIndex = 1;
 
     public BaseMap map;
 
@@ -17,32 +19,34 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < map.dimensions.x; i++)
         {
-            map.Place(floorObject, new Vector2Int(i, 0), 0, false);
+            map.PlaceGeneration(floorObjectIndex, i, 0, 0);
         }
         SetStart();
         SetFinish();
     }
 
+
     protected void SetStart()
     {
-        map.SetStartPoint(DetermineStartPoint(), startArea);
+        map.SetStartPoint(DetermineStartPoint(), startAreaIndex);
     }
 
     protected void SetFinish()
     {
-        if (!map.Place(finishObject, DetermineFinishPoint(), 0))
+        Vector2Int finishPoint = DetermineFinishPoint();
+        if (!map.PlaceGeneration(finishAreaIndex, finishPoint.x, finishPoint.y, 0))
             throw new System.Exception("End Object must be able to Spawn!");
     }
 
 
     protected Vector2Int DetermineStartPoint()
     {
-        return new Vector2Int(2, 1);
+        return new Vector2Int(3, 1);
     }
 
     protected Vector2Int DetermineFinishPoint()
     {
-        return new Vector2Int(map.dimensions.x - 3, 1);
+        return new Vector2Int(map.dimensions.x - 4, 1);
     }
 
 }

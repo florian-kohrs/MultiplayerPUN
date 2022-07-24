@@ -12,6 +12,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
 
+    public GameCycle gameCycle;
+
     #region Photon Callbacks
 
 
@@ -59,10 +61,15 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     #region Public Methods
 
-    //private void Start()
-    //{
-    //    InstantiatePlayer();
-    //}
+    private void Start()
+    {
+        InstantiatePlayer();
+    }
+
+    public void StartGame()
+    {
+        gameCycle.StartGame(10, 0);
+    }
 
     public GameObject InstantiatePlayer()
     {
@@ -78,7 +85,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
                 Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
                 // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
                 if(PhotonNetwork.IsConnected)
-                    player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 75f, 0f), Quaternion.identity);
+                    player = PhotonNetwork.Instantiate("Player/" + playerPrefab.name, new Vector3(0f, 75f, 0f), Quaternion.identity);
                 else
                     player = Instantiate(playerPrefab, new Vector3(0f, 75f, 0f), Quaternion.identity);
 

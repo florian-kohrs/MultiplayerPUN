@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun
 {
 
     public static List<Player> players = new List<Player>();
@@ -22,15 +23,24 @@ public class Player : MonoBehaviour
         players.Add(this);
     }
 
+    public Transform GetActualPlayer() => transform.GetChild(0);
+
+
     public bool KillPlayer()
     {
         if (!hasReachedTarget && isAlive)
         {
             isAlive = false;
-            GameCycle.instance.PlayerDoneRunning(this);
-            Broadcast(/*Died*/);
+            Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerDied), RpcTarget.All, PlayerDied);
         }
         return isAlive;
+    }
+
+    [PunRPC]
+    protected void PlayerDied()
+    {
+        isAlive = false;
+        GameCycle.instance.PlayerDoneRunning();
     }
 
     public void RevivePlayer()
@@ -58,16 +68,18 @@ public class Player : MonoBehaviour
         {
             hasReachedTarget = true;
             body.velocity = default;
-            GameCycle.instance.PlayerDoneRunning(this);
-            Broadcast(/*Arrived?*/);
+            Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerArrived), RpcTarget.All, PlayerArrived);
             return true;
         }
         return false;
     }
 
-    public void ResetReachedTarget()
+    [PunRPC]
+    protected void PlayerArrived()
     {
-        hasReachedTarget = false;
+        hasReachedTarget = true;
+        body.velocity = default;
+        GameCycle.instance.PlayerDoneRunning();
     }
 
     public bool HasReachedTarget
@@ -75,9 +87,5 @@ public class Player : MonoBehaviour
         get { return hasReachedTarget;}
     }
 
-    protected void Broadcast()
-    {
-
-    }
 
 }

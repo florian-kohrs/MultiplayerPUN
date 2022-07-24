@@ -9,9 +9,11 @@ public class SelectItemToPlace : MonoBehaviour
 
     public PlaceOnMap placeOnMap;
 
-    public List<MapOccupationObject> allOccupationObjects;
+    public BaseMap baseMap;
 
-    protected List<MapOccupationObject> availableRotation;
+    protected List<int> availableRotation;
+
+    protected List<MapOccupationObject> MapOccupationObjects => baseMap.randomReceivableMapOccupationObjects;
 
     public const int NUMBER_ITEMS = 4;
 
@@ -26,22 +28,22 @@ public class SelectItemToPlace : MonoBehaviour
         //DetermineNextRotation();
     }
 
-    protected Action<MapOccupationObject> objectSelectedCallback;
+    protected Action<int> objectSelectedCallback;
 
-    public void StartSelection(Action<MapOccupationObject> onDone)
+    public void StartSelection(Action<int> onDone)
     {
         //DetermineNextRotation();
-        onDone(allOccupationObjects.GrabOne());
+        onDone(MapOccupationObjects.RandomIndex());
         objectSelectedCallback = onDone;
     }
 
     public void DetermineNextRotation()
     {
-        availableRotation = new List<MapOccupationObject>(NUMBER_ITEMS);
+        availableRotation = new List<int>(NUMBER_ITEMS);
         for (int i = 0; i < NUMBER_ITEMS; i++)
         {
-            availableRotation.Add(allOccupationObjects.GrabOne());
-            Display(availableRotation[i], i);
+            availableRotation.Add(MapOccupationObjects.RandomIndex());
+            Display(MapOccupationObjects[availableRotation[i]], i);
         }
         enabled = true;
     }

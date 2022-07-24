@@ -14,11 +14,11 @@ public class Katapult : ProjectileDispenser
 
     protected Quaternion startRotation;
 
-    protected override void OnStart()
+    protected new void Start()
     {
         CreateProjectile();
         startRotation = rotateAnchor.rotation;
-        base.OnStart();
+        base.Start();
     }
 
     protected void CreateProjectile()
@@ -57,7 +57,7 @@ public class Katapult : ProjectileDispenser
 
     protected void ReleaseProjectile()
     {
-        if (projectile == null)
+        if (projectileInstance == null)
             return;
         Rigidbody2D body = projectileInstance.GetComponent<Rigidbody2D>();
         projectileInstance.transform.parent = null;

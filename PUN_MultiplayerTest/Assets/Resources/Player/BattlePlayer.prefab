@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3478119857043556779}
   - component: {fileID: 1736881011063340002}
   - component: {fileID: 5349143328973770059}
-  m_Layer: 20
+  - component: {fileID: 8271965730896895617}
+  m_Layer: 6
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2645203970803824905}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1736881011063340002
 SphereCollider:
@@ -62,6 +63,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8271965730896895617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684864741301775453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be6f0bb9267a4e40babb8578b7e14d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881337606681198382
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +86,7 @@ GameObject:
   - component: {fileID: 3066919147368922353}
   - component: {fileID: 3754245462455579879}
   - component: {fileID: 6677378512546854574}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EyeBrown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,37 +158,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2226602236528335160
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1770799880853469956}
-  m_Layer: 15
-  m_Name: TriggerRange
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1770799880853469956
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2226602236528335160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2645203970803824905}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4058682629433310418
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +169,7 @@ GameObject:
   - component: {fileID: 4803784691923860432}
   - component: {fileID: 1584070453034198640}
   - component: {fileID: 4726833693075883381}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +253,7 @@ GameObject:
   - component: {fileID: 8671672519443871411}
   - component: {fileID: 6689044312931576575}
   - component: {fileID: 8421598977689653118}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,8 +338,8 @@ GameObject:
   - component: {fileID: 1495497103}
   - component: {fileID: 1495497098}
   - component: {fileID: 1495497102}
-  - component: {fileID: 1654640231968855250}
-  m_Layer: 14
+  - component: {fileID: 6582184384061328504}
+  m_Layer: 6
   m_Name: BattlePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +359,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4803784691923860432}
-  - {fileID: 1770799880853469956}
   - {fileID: 3478119857043556779}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -540,7 +521,7 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &1654640231968855250
+--- !u!114 &6582184384061328504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -549,11 +530,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6125984584506448665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3072cd08ff41a54ebea5bcd40f216b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 1495497103}
-  playerName: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 2
 --- !u!1 &6528980659735664446
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,7 +548,7 @@ GameObject:
   - component: {fileID: 4330655381782765058}
   - component: {fileID: 85757476540661529}
   - component: {fileID: 8822426775698841143}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,7 +629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4423275861304706614}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +666,7 @@ GameObject:
   - component: {fileID: 3040929368789200726}
   - component: {fileID: 2347498769716790506}
   - component: {fileID: 5612146245899133997}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EyeBrown (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

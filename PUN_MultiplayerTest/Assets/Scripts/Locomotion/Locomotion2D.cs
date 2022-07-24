@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Locomotion2D : MonoBehaviour, IVector2InputListener
+public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
 {
     
     [HideInInspector]
@@ -34,13 +34,13 @@ public class Locomotion2D : MonoBehaviour, IVector2InputListener
     public bool CanMove => player.CanPlayerMove;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void OnStart()
     {
         body = GetComponentInChildren<Rigidbody2D>();
         GameManager.InputHandler.input.PlayerMovement.Jump.performed += _ =>
         {
             JumpPressed();
-        };
+        };        
         GameManager.InputHandler.input.PlayerMovement.Jump.canceled += _ => { isHoldingJump = false; };
         GameManager.InputHandler.AddMovementListener(this);
     }

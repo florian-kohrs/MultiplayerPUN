@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathCollision : PunLocalBehaviour
+public class DeathCollision : MonoBehaviour
 {
 
     public float impactForce = 5;
@@ -11,7 +11,7 @@ public class DeathCollision : PunLocalBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Player p = collision.gameObject.GetComponentInChildren<Player>();
+        Player p = collision.gameObject.GetComponentInParent<Player>();
         if (p != null && !p.KillPlayer())
         { 
             collision.rigidbody.AddForce(collision.relativeVelocity * impactForce, ForceMode2D.Impulse);

@@ -1,15 +1,28 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class BaseMap : MonoBehaviour
+public class BaseMap : MonoBehaviourPun
 {
 
     public const float MAP_FIELD_SPACING = 1;
     public const float HALF_SPACING = MAP_FIELD_SPACING / 2;
+
+    protected PhotonView view;
+
+    protected PhotonView View
+    {
+        get 
+        {
+            if (view == null)
+                view = PhotonView.Get(this);
+            return view;
+        }
+    }
 
     public Vector3 Anchor => transform.position;
 
@@ -19,14 +32,19 @@ public class BaseMap : MonoBehaviour
 
     public MapOccupation[,] occupationMap;
 
-    public Vector2Int startPoint;
+    [SerializeField]
+    protected List<MapOccupationObject> allMapOccupationObjects;
+
+    public List<MapOccupationObject> randomReceivableMapOccupationObjects;
+
+    protected Vector2Int startPoint;
 
     protected readonly Vector3 PlayerOffset = new Vector3(0, 0.5f, 0);
 
-    public void SetStartPoint(Vector2Int start, MapOccupationObject startArea)
+    public void SetStartPoint(Vector2Int start, int startAreaIndex)
     {
         startPoint = start;
-        if (!Place(startArea, start, 0, false))
+        if (!PlaceGeneration(startAreaIndex, start.x, start.y, 0))
             throw new Exception("Start Area must be able to spawn!");
 
     }
@@ -34,7 +52,7 @@ public class BaseMap : MonoBehaviour
     public void PositionPlayers(List<Player> players)
     {
         foreach (Player p in players)
-            p.transform.position = MapIndexToGlobalPosition(startPoint) + PlayerOffset;
+            p.GetActualPlayer().position = MapIndexToGlobalPosition(startPoint) + PlayerOffset;
     }
 
     private void Awake()
@@ -42,9 +60,53 @@ public class BaseMap : MonoBehaviour
         occupationMap = new MapOccupation[dimensions.x,dimensions.y];
     }
 
-    public bool Place(MapOccupationObject occupation, Vector2Int origin, int rotationIndex, bool destroyable = true)
+    private void Start()
     {
-        bool result = IsInBounds(origin) && IsSpaceNotOccupied(occupation,origin,rotationIndex);
+        view = PhotonView.Get(this);
+    }
+
+    protected List<MapOccupationObject> ListFromIndex(int index)
+    {
+        if (index == 0)
+            return allMapOccupationObjects;
+        else
+            return randomReceivableMapOccupationObjects;
+    }
+
+    protected enum OccupationList { All = 0, OnlyRandomRotation = 1}
+
+    public bool PlaceGeneration(int occupationIndex, int originX, int originY, int rotationIndex)
+    {
+        //Broadcast.SafeRPC(view, nameof(Place))
+        return Place(occupationIndex, originX, originY, rotationIndex, OccupationList.All, false);
+    }
+
+    
+    public bool PlaceDuringRounds(int occupationIndex, int originX, int originY, int rotationIndex)
+    {
+        bool canPlace = CanPlace(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation);
+        if (canPlace)
+        {
+            Broadcast.SafeRPC(View, nameof(Place), RpcTarget.All,
+                () => { Place(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true); },
+                occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true);
+        }
+        return canPlace;
+    }
+
+    protected bool CanPlace(int occupationIndex, int originX, int originY, int rotationIndex, OccupationList listIndex)
+    {
+        MapOccupationObject occupation = ListFromIndex((int)listIndex)[occupationIndex];
+        Vector2Int origin = new Vector2Int(originX, originY);
+        return AreAllInBounds(origin, rotationIndex, occupation) && IsSpaceNotOccupied(occupation, origin, rotationIndex);
+    }
+
+    [PunRPC]
+    protected bool Place(int occupationIndex, int originX, int originY, int rotationIndex, OccupationList listIndex, bool destroyable)
+    {
+        MapOccupationObject occupation = ListFromIndex((int)listIndex)[occupationIndex];
+        Vector2Int origin = new Vector2Int(originX, originY);
+        bool result = AreAllInBounds(origin, rotationIndex, occupation) && IsSpaceNotOccupied(occupation,origin,rotationIndex);
         if(result)
         {
             MapOccupation mapOccupation = new MapOccupation(occupation,origin,rotationIndex, destroyable);
@@ -65,7 +127,8 @@ public class BaseMap : MonoBehaviour
 
     protected void Spawn(MapOccupationObject occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
     {
-        NetworkInstantiation.Instantiate(occupation.prefab, pos, rotation, scale);
+        GameObject g = Instantiate(occupation.prefab, pos, rotation);
+        g.transform.localScale = scale;
     }
 
 
@@ -77,7 +140,21 @@ public class BaseMap : MonoBehaviour
 
     public Quaternion GetObjectRotation(int rotation)
     {
-        return Quaternion.Euler(0, 0, rotation * 90);
+        return Quaternion.Euler(0, 0, -rotation * 90);
+    }
+
+    protected bool AreAllInBounds(Vector2Int pos, int rotation, MapOccupationObject mapObject)
+    {
+        bool result = true;
+        foreach (var spot in mapObject.GetAllOccupations(pos, rotation))
+        {
+            if (!IsInBounds(spot))
+            {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 
     protected bool IsInBounds(Vector2Int pos)

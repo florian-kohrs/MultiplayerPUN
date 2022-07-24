@@ -4,15 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputHandler : PunLocalBehaviour
+public class InputHandler : MonoBehaviour
 {
 
     public PlayerInputActions input;
 
-
     public bool isAttacking;
-
-    public bool isInteracting;
 
     protected bool isJumping = false;
 

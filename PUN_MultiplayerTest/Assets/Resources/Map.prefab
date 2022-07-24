@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8059518751559146158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8059518751559146160}
+  - component: {fileID: 8059518751559146159}
+  - component: {fileID: 8059518751559146161}
+  - component: {fileID: 8059518751559146162}
+  - component: {fileID: 8059518751559146163}
+  - component: {fileID: 8059518751559146164}
+  - component: {fileID: 2051217795190718742}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8059518751559146160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8059518751559146159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2802e72603a1834398b0ee345936963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dimensions: {x: 20, y: 20}
+  allMapOccupationObjects:
+  - {fileID: 11400000, guid: 4926dbdcd1a98e24485620de4258ad1a, type: 2}
+  - {fileID: 11400000, guid: bad12720d762c6c4db6af28868c737d3, type: 2}
+  - {fileID: 11400000, guid: 1799849a0f186f14f91d91b70513ca0a, type: 2}
+  - {fileID: 11400000, guid: b19afdd55c37be948b6ce58a02154831, type: 2}
+  - {fileID: 11400000, guid: 0268ca1fec134f54fa5b06684f11c0eb, type: 2}
+  - {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
+  randomReceivableMapOccupationObjects:
+  - {fileID: 11400000, guid: b19afdd55c37be948b6ce58a02154831, type: 2}
+  - {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
+  - {fileID: 11400000, guid: 0268ca1fec134f54fa5b06684f11c0eb, type: 2}
+--- !u!114 &8059518751559146161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24165b663b57f7489093d0b7bdd22eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 8059518751559146159}
+  activeObjectIndex: 0
+  previewObject: {fileID: 0}
+--- !u!114 &8059518751559146162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c03494ba304fcc4e8cf2ada1bc95b3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeOnMap: {fileID: 8059518751559146161}
+  baseMap: {fileID: 8059518751559146159}
+  inventorySlot: {fileID: 0}
+--- !u!114 &8059518751559146163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2feae9aaa793e2743a29722db67dce5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finishObject: {fileID: 11400000, guid: bad12720d762c6c4db6af28868c737d3, type: 2}
+  startAreaIndex: 0
+  finishAreaIndex: 1
+  map: {fileID: 8059518751559146159}
+--- !u!114 &8059518751559146164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb242e1db77687c4d84227f850e9f295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 8059518751559146159}
+  placeOnMap: {fileID: 8059518751559146161}
+  mapGenerator: {fileID: 8059518751559146163}
+  selectItem: {fileID: 8059518751559146162}
+--- !u!114 &2051217795190718742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
