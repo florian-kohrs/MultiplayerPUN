@@ -10,6 +10,8 @@ public class Player : MonoBehaviourPun
 
     public Rigidbody2D body;
 
+    public CameraMover camMover;
+
     public string playerName;
 
     protected bool isAlive = true;
@@ -53,7 +55,10 @@ public class Player : MonoBehaviourPun
 
     protected void SwitchCameras()
     {
-
+        if(camMover != null)
+        {
+            camMover.SetToSpectateView();
+        }
     }
 
     [PunRPC]

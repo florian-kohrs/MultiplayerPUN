@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 8445196267180830574}
   - component: {fileID: 1513665899}
   - component: {fileID: 6475957916394319782}
+  - component: {fileID: 1997145625412938058}
   m_Layer: 6
   m_Name: BasePlayer
   m_TagString: Player
@@ -260,6 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 1121690301493637880}
+  camMover: {fileID: 1997145625412938058}
   playerName: Bodo
 --- !u!114 &1513665899
 MonoBehaviour:
@@ -318,6 +320,24 @@ MonoBehaviour:
   parent: {fileID: 2037032351}
   distanceBetween: -65
   startPos: {x: 5, y: 0}
+--- !u!114 &1997145625412938058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353445318996786297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40587e6d2e7d6f4c9d500901b77cb8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  defaultDistance: 6
+  placingDistance: 10
+  placingPosition: {x: 10, y: 8, z: -1}
+  gamePosition: {x: 0, y: 0, z: 0}
+  gameParent: {fileID: 5854378502484955852}
 --- !u!1 &643023949808899444
 GameObject:
   m_ObjectHideFlags: 0

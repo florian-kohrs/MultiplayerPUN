@@ -59,8 +59,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
   randomReceivableMapOccupationObjects:
   - {fileID: 11400000, guid: b19afdd55c37be948b6ce58a02154831, type: 2}
+  - {fileID: 11400000, guid: 74563350d9c336242b76514605c701d2, type: 2}
   - {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
   - {fileID: 11400000, guid: 0268ca1fec134f54fa5b06684f11c0eb, type: 2}
+  - {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
+  - {fileID: 11400000, guid: eeeaf2d6c88c031428980cc4caaf15a5, type: 2}
 --- !u!114 &8059518751559146161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24165b663b57f7489093d0b7bdd22eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camMover: {fileID: 0}
   map: {fileID: 8059518751559146159}
   activeObjectIndex: 0
   previewObject: {fileID: 0}
@@ -90,7 +94,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeOnMap: {fileID: 8059518751559146161}
   baseMap: {fileID: 8059518751559146159}
-  inventorySlot: {fileID: 0}
+  itemSelectionPrefab: {fileID: 9198365650102773848, guid: fc4ef86a8057cff498a53946dd765be8, type: 3}
+  itemSelectionParent: {fileID: 0}
+  startPosition: {x: 0, y: 0}
+  itemOffset: {x: 120, y: 0}
 --- !u!114 &8059518751559146163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +130,7 @@ MonoBehaviour:
   placeOnMap: {fileID: 8059518751559146161}
   mapGenerator: {fileID: 8059518751559146163}
   selectItem: {fileID: 8059518751559146162}
+  startGameButton: {fileID: 0}
 --- !u!114 &2051217795190718742
 MonoBehaviour:
   m_ObjectHideFlags: 0

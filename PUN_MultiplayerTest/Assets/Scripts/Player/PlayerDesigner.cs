@@ -23,8 +23,9 @@ public class PlayerDesigner : MonoBehaviourPun
 
     protected void Start()
     {
-        StartDesigner(photonView.IsMine);
-        if (photonView.IsMine)
+        bool show = !PhotonNetwork.IsConnected || photonView.IsMine;
+        StartDesigner(show);
+        if (show)
         {
             GameCycle.AddGameStartCallback(HideDesigners);
         }

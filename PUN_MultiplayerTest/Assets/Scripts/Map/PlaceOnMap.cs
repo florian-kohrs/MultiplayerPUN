@@ -8,15 +8,15 @@ using UnityEngine.InputSystem;
 public class PlaceOnMap : MonoBehaviour
 {
 
-    public Camera placingCamera;
-    public Camera mainCamera;
-    public Camera MainCamera
+    protected CameraMover camMover;
+
+    public CameraMover CamMover
     {
         get
         {
-            if (mainCamera == null)
-                mainCamera = Camera.main;
-            return mainCamera;
+            if (camMover == null)
+                camMover = GameManager.GetPlayerComponent<CameraMover>();
+            return camMover;
         }
     }
 
@@ -43,8 +43,6 @@ public class PlaceOnMap : MonoBehaviour
 
     private void Start()
     {
-        mainCamera = Camera.main;
-        placingCamera.enabled = false;
         enabled = false;
         GameManager.InputHandler.input.PlayerActions.RotateObject.performed +=
             input =>
@@ -62,8 +60,6 @@ public class PlaceOnMap : MonoBehaviour
 
     public void BeginPlace(int mapObjectIndex, Action onDone)
     {
-        MainCamera.enabled = false;
-        placingCamera.enabled = true;
         ActiveRotation = 0;
         this.onDone = onDone;
         RemovePreview();
@@ -98,9 +94,8 @@ public class PlaceOnMap : MonoBehaviour
         {
             if (map.PlaceDuringRounds(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation))
             {
-                RemovePreview();    
-                mainCamera.enabled = true;
-                placingCamera.enabled = false;
+                RemovePreview();
+                CamMover.SetToGameView();
                 enabled = false;
                 onDone();
             }
@@ -136,8 +131,8 @@ public class PlaceOnMap : MonoBehaviour
     protected Vector3 GetMouseWorldSpace()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
-        mousePos.z = placingCamera.nearClipPlane;
-        Vector3 worldSpace = placingCamera.ScreenToWorldPoint(mousePos);
+        mousePos.z = Camera.main.nearClipPlane;
+        Vector3 worldSpace = Camera.main.ScreenToWorldPoint(mousePos);
         return worldSpace + new Vector3(BaseMap.HALF_SPACING, BaseMap.HALF_SPACING,0);
     }
 

@@ -30,8 +30,8 @@ public class SelectItemButton : MonoBehaviourPun
     {
         if (canBeClicked)
         {
-            callback(objectIndex);
             Broadcast.SafeRPC(photonView, nameof(Destroy), RpcTarget.All, Destroy);
+            callback(objectIndex);
         }
     }
 

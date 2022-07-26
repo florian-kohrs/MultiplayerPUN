@@ -67,7 +67,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        gameCycle.StartGame(10, 0);
+        gameCycle.StartGame(10, Random.Range(0,999999));
     }
 
     public GameObject InstantiatePlayer()

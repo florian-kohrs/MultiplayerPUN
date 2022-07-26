@@ -32,8 +32,7 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     private void Start()
     {
-        layerMask = LayerMask.NameToLayer("ObjectSelection");
-        enabled = false;
+        //StartSelection(null, new System.Random());
         //DetermineNextRotation();
     }
 
@@ -48,11 +47,11 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     public void DestroyButton(int index)
     {
-        if(buttons[index] != null)
-        {
-            Destroy(buttons[index].gameObject);
-            buttons[index] = null;
-        }
+        if (index >= buttons.Count || buttons[index] == null)
+            return;
+
+        Destroy(buttons[index].gameObject);
+        buttons[index] = null;
     }
 
     public void DestroyAllButtons()
@@ -97,8 +96,11 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     protected void PlayerSelectedItem(int index)
     {
-        foreach(SelectItemButton button in buttons)
-            button.canBeClicked = false;
+        foreach (SelectItemButton button in buttons)
+        {
+            if(button != null)
+                button.canBeClicked = false;
+        }
         objectSelectedCallback(index);
     }
 
@@ -108,20 +110,20 @@ public class SelectItemToPlace : MonoBehaviourPun
         t.localPosition = new Vector3(pos.x,pos.y,0);
     }
 
-    private void Update()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Ray2D ray2D = new Ray2D(ray.origin, ray.direction);
-        RaycastHit2D hit = Physics2D.Raycast(ray2D.origin, ray2D.direction, 100, layerMask);
-        if (hit.point != default)
-        {
-            Debug.Log(hit.transform.name);
-            Debug.Log("hit");
-            if(Mouse.current.leftButton.isPressed)
-            {
-                Debug.Log("Selected" + hit.transform.name);
-                ClearChildren();
-            }
-        }
-    }
+    //private void Update()
+    //{
+    //    Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+    //    Ray2D ray2D = new Ray2D(ray.origin, ray.direction);
+    //    RaycastHit2D hit = Physics2D.Raycast(ray2D.origin, ray2D.direction, 100, layerMask);
+    //    if (hit.point != default)
+    //    {
+    //        Debug.Log(hit.transform.name);
+    //        Debug.Log("hit");
+    //        if(Mouse.current.leftButton.isPressed)
+    //        {
+    //            Debug.Log("Selected" + hit.transform.name);
+    //            ClearChildren();
+    //        }
+    //    }
+    //}
 }
