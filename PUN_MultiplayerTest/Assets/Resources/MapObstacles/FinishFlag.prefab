@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6110906549547288567}
   - component: {fileID: 7643070649579916330}
   - component: {fileID: 500249399549238340}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 6172914213526017663, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
       propertyPath: m_Name
       value: FinishFlag
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172914213526017663, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8726316243504433620, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
       propertyPath: m_RootOrder

@@ -18,9 +18,23 @@ public class Player : MonoBehaviourPun
 
     public bool FreezePlayer => !IsAlive || HasReachedTarget;
 
+    public static int playerCount;
+
     private void Awake()
     {
+        playerCount++;
         players.Add(this);
+    }
+
+    ~Player(){ players.Remove(this); playerCount--; }
+    
+    private void Start()
+    {
+        transform.position = Vector3.zero;
+        if(photonView.IsMine)
+        {
+            transform.GetChild(0).Translate(new Vector3(playerCount, 0, 0));
+        }
     }
 
     public Transform GetActualPlayer() => transform.GetChild(0);
@@ -31,9 +45,15 @@ public class Player : MonoBehaviourPun
         if (!hasReachedTarget && isAlive)
         {
             isAlive = false;
+            SwitchCameras();
             Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerDied), RpcTarget.All, PlayerDied);
         }
         return isAlive;
+    }
+
+    protected void SwitchCameras()
+    {
+
     }
 
     [PunRPC]
@@ -66,6 +86,7 @@ public class Player : MonoBehaviourPun
     {
         if (isAlive && !hasReachedTarget)
         {
+            SwitchCameras();
             hasReachedTarget = true;
             body.velocity = default;
             Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerArrived), RpcTarget.All, PlayerArrived);

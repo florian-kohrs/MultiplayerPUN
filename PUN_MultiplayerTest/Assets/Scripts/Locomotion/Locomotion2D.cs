@@ -9,6 +9,8 @@ public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
     [HideInInspector]
     public Rigidbody2D body;
 
+    protected Vector3 Origin => body.position;
+
     public Player player;
 
     public float fallMultiplier = 1.5f;
@@ -29,14 +31,40 @@ public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
 
     protected bool isHoldingJump;
 
+    protected const float SLIDING_VELOCITY = 2;
+
     protected Vector2 inputDir = Vector2.zero;
 
+    protected bool didSlidingJump = false;
+
     public bool CanMove => player.CanPlayerMove;
+
+    protected IEnumerator slidingReset;
+
+    protected bool canJump = true;
+
+    public void EnterGrounded()
+    {
+        canJump = true;
+        didSlidingJump = false;
+        if(slidingReset != null)
+            StopCoroutine(slidingReset);
+    }
+
+    protected bool isSliding = false;
+
+    [SerializeField]
+    protected BoxCollider2D feetCollider;
+
+    protected LayerMask mapCollisionLayer;
 
     // Start is called before the first frame update
     protected override void OnStart()
     {
+        mapCollisionLayer = LayerMask.NameToLayer("MapOccupation");
         body = GetComponentInChildren<Rigidbody2D>();
+        body.gravityScale = 0;
+        GameCycle.AddGameStartCallback(() => body.gravityScale = 1);
         GameManager.InputHandler.input.PlayerMovement.Jump.performed += _ =>
         {
             JumpPressed();
@@ -46,30 +74,77 @@ public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
     }
 
 
+    protected override void OnNotMine()
+    {
+        body = GetComponentInChildren<Rigidbody2D>();
+        body.gravityScale = 0;
+        base.OnNotMine();
+    }
+
     protected void JumpPressed()
     {
         if (isHoldingJump)
             return;
+
+        
         isHoldingJump = true;
-        //body.AddForce(new Vector2(0, jumpVelocity), ForceMode2D.Impulse); 
+        if (isSliding)
+            ExecuteSlidingJump();
+        else if(canJump)
+            ExecuteNormalJump();
+
+        canJump = false;
+    }
+
+    protected void ExecuteNormalJump()
+    {
         body.velocity = new Vector2(body.velocity.x, jumpVelocity);
+    }
+
+    protected void ExecuteSlidingJump()
+    {
+        if (slidingReset != null)
+        {
+            StopCoroutine(slidingReset);
+        }
+        didSlidingJump = true;
+        slidingReset = this.DoDelayed(0.15f, () => didSlidingJump = false);
+        float jumpDegree = 45;
+        float powerXAxis = Mathf.Sin(Mathf.Deg2Rad * jumpDegree);
+        float powerYAxis = Mathf.Cos(Mathf.Deg2Rad * jumpDegree);
+        body.velocity = new Vector2(powerXAxis * jumpVelocity * -1 * Mathf.Sign(inputDir.x), powerYAxis * jumpVelocity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (IsFalling)
+        if (GameCycle.GameStarted)
         {
-            body.velocity += Time.deltaTime * Physics2D.gravity.y * fallMultiplier * Vector2.up;
+            isSliding = IsSlidingOnWall();
+            if (IsFalling)
+            {
+                if (isSliding)
+                {
+                    body.velocity = new Vector2(body.velocity.x, -SLIDING_VELOCITY);
+                }
+                else
+                {
+                    body.velocity += Time.deltaTime * Physics2D.gravity.y * fallMultiplier * Vector2.up;
+                }
+            }
+            else if (IsJumping && !isHoldingJump && CanMove)
+            {
+                 body.velocity += Time.deltaTime * Physics2D.gravity.y * lowJumpMultiplier * Vector2.up;
+            }
         }
-        else if (IsJumping && !isHoldingJump && CanMove)
+        else 
         {
-            body.velocity += Time.deltaTime * Physics2D.gravity.y * lowJumpMultiplier * Vector2.up;
+            body.velocity = new Vector2(body.velocity.x, 0);
         }
 
-        if (CanMove)
+        ///lock movement for short time after wall jump
+        if (CanMove && !didSlidingJump)
             body.velocity = new Vector2(inputDir.x * moveSpeed, body.velocity.y);
-        
     }
 
     public void OnVector2Input(Vector2 input)
@@ -106,6 +181,25 @@ public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
     {
         isDucking = true;
         Debug.Log("Ducked");
+    }
+
+    protected bool IsSlidingOnWall()
+    {
+        float xDir = inputDir.x;
+        bool result = xDir != 0;
+        ///if no input on x axis is made player doesnt slide on wall
+        if (!result || didSlidingJump)
+            return false;
+
+        xDir = MathF.Sign(xDir);
+        ///if a wall jump was just made ignore wall for sliding player just jumped off
+        if (xDir != Mathf.Sign(body.velocity.x))
+            return false;
+
+
+        RaycastHit2D hit = Physics2D.Raycast(Origin, new Vector2(xDir, 0), 0.55f, 1 << mapCollisionLayer);
+        result = hit.collider != null;
+        return result;
     }
 
 }

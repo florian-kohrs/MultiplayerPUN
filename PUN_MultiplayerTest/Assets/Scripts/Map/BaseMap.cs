@@ -39,7 +39,7 @@ public class BaseMap : MonoBehaviourPun
 
     protected Vector2Int startPoint;
 
-    protected readonly Vector3 PlayerOffset = new Vector3(0, 0.5f, 0);
+    protected readonly Vector3 PlayerOffset = new Vector3(0, 0.666f, 0);
 
     public void SetStartPoint(Vector2Int start, int startAreaIndex)
     {
@@ -52,7 +52,11 @@ public class BaseMap : MonoBehaviourPun
     public void PositionPlayers(List<Player> players)
     {
         foreach (Player p in players)
-            p.GetActualPlayer().position = MapIndexToGlobalPosition(startPoint) + PlayerOffset;
+        {
+            Vector3 pos = MapIndexToGlobalPosition(startPoint) + PlayerOffset;
+            p.GetActualPlayer().position = pos;
+            //p.body.MovePosition(pos);
+        }
     }
 
     private void Awake()
@@ -106,11 +110,14 @@ public class BaseMap : MonoBehaviourPun
     {
         MapOccupationObject occupation = ListFromIndex((int)listIndex)[occupationIndex];
         Vector2Int origin = new Vector2Int(originX, originY);
-        bool result = AreAllInBounds(origin, rotationIndex, occupation) && IsSpaceNotOccupied(occupation,origin,rotationIndex);
+        bool result = AreAllInBounds(origin, rotationIndex, occupation) && (occupation.isBomb || IsSpaceNotOccupied(occupation,origin,rotationIndex));
         if(result)
         {
             MapOccupation mapOccupation = new MapOccupation(occupation,origin,rotationIndex, destroyable);
-            OccupySpace(mapOccupation);
+            if (!occupation.isBomb)
+            {
+                OccupySpace(mapOccupation);
+            }
             Quaternion rotation = Quaternion.identity;
             Vector3 scale = Vector3.one;
 
@@ -119,18 +126,54 @@ public class BaseMap : MonoBehaviourPun
             else
                 rotation = GetObjectRotation(rotationIndex);
 
-            Spawn(occupation, MapIndexToGlobalPosition(origin), rotation, scale);
+            mapOccupation.gameObject = Spawn(mapOccupation, MapIndexToGlobalPosition(origin), rotation, scale);
         }
         return result;
     }
 
 
-    protected void Spawn(MapOccupationObject occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
+    protected GameObject Spawn(MapOccupation occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
     {
-        GameObject g = Instantiate(occupation.prefab, pos, rotation);
+        GameObject g = Instantiate(occupation.occupationObject.prefab, pos, rotation);
         g.transform.localScale = scale;
+        BasePlaceableBehaviours placeableBehaviour = g.GetComponent<BasePlaceableBehaviours>();
+        if (placeableBehaviour != null)
+        {
+            placeableBehaviour.occupation = occupation;
+            placeableBehaviour.OnPlace(this);
+        }
+        return g;
     }
 
+    public void DestroyOccupations(MapOccupation mapObject)
+    {
+        foreach (var spot in mapObject.GetAllOccupations())
+        {
+            if (IsInBounds(spot))
+            {
+                MapOccupation occ = occupationMap[spot.x, spot.y];
+                if (occ == null)
+                    continue;
+
+                ClearOccupation(occ);
+            }
+        }
+    }
+
+    protected void ClearOccupation(MapOccupation occupation)
+    {
+        Destroy(occupation.gameObject);
+        foreach (var spot in occupation.GetAllOccupations())
+        {
+            if (IsInBounds(spot))
+            {
+                if (occupationMap[spot.x, spot.y] == null)
+                    Debug.LogError("Occupation map should have value here!");
+
+                occupationMap[spot.x, spot.y] = null;
+            }
+        }
+    }
 
     public Vector3 MapIndexToGlobalPosition(Vector2Int index)
     {

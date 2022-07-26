@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1578322905083799095}
   - component: {fileID: 3955059760664169853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: r (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1557470702113264563}
   - component: {fileID: 8218409787379996192}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 388745422216775566}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RotateAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8078802332067308186}
   - component: {fileID: 4604981593163043847}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: r (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8273363315885214806}
   - component: {fileID: 255127913193444154}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: r (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6007280448329940725}
   - component: {fileID: 2793910869197888334}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: r (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1294175608779906558}
   - component: {fileID: 1365394006720977096}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 6409580042681706709}
   - component: {fileID: 1390636081737836625}
   - component: {fileID: 6542287467351485322}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Katapult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6194058834554847873}
   - component: {fileID: 8029809785437116339}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 302269578074515065}
   - component: {fileID: 7163334779568308658}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2898394184553864429}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CatapultHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

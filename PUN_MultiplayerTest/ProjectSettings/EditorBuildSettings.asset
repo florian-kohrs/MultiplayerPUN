@@ -9,18 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: 349fb8fea84ac2745818fc4bb64001fb
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: 
-    guid: 35b3c051f76ec6a41b2cc7deedcdb0ef
-  - enabled: 0
-    path: 
-    guid: ddcfb8b0bd31ca3498bdf1e76fbbadda
-  - enabled: 0
-    path: 
-    guid: bcc517d42df751845b3088102d56e7a4
-  - enabled: 1
     path: Assets/Scenes/ChickenHorse.unity
     guid: f57e30e789dcd7d46bab09f81d0f5524
   m_configObjects:

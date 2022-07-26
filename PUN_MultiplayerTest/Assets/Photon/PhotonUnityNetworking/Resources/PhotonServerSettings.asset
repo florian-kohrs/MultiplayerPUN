@@ -51,6 +51,8 @@ MonoBehaviour:
   - Place
   - StartGameBroadCast
   - StartGameBroadcast
+  - UpdatePlayerLooks
+  - Destroy
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

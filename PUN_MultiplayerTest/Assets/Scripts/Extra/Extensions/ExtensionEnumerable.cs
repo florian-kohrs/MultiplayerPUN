@@ -16,6 +16,11 @@ public static class ExtensionEnumerable
         return Random.Range(0, ts.Count);
     }
 
+    public static int RandomIndex<T>(this IList<T> ts, System.Random rand)
+    {
+        return rand.Next(0, ts.Count);
+    }
+
     //public static IEnumerable<T> Combine<T,J>(T t, Func<int, J> getAt, )
 
 }

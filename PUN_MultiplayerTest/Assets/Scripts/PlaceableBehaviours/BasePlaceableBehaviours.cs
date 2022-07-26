@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class BasePlaceableBehaviours : MonoBehaviour
 {
-    
+
+    public MapOccupation occupation;
+
+    public virtual void OnPlace(BaseMap map) { }
+
 }

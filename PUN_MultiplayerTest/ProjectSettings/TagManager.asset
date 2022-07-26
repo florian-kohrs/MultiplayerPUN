@@ -16,11 +16,11 @@ TagManager:
   - Water
   - UI
   - Player
-  - Planet
-  - Enemies
-  - LodIncrease
-  - LodDecrease
-  - PlanetSimpleCollider
+  - MapOccupation
+  - 
+  - 
+  - 
+  - 
   - ObjectSelection
   - 
   - 

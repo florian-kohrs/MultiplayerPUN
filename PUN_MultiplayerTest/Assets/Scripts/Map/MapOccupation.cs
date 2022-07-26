@@ -14,6 +14,10 @@ public class MapOccupation
 
     public MapOccupationObject occupationObject;
 
+    public GameObject gameObject;
+
+    public bool MirrorInstead => occupationObject.mirrorInsteadOfRotate;
+
     public Vector2Int origin;
 
     protected int orientation;

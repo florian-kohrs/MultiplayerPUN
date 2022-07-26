@@ -1,7 +1,0 @@
-﻿struct BiomVisualizationData 
-{
-    uint3 steepRGB; 
-
-    uint3 flatRGB; 
-
-}; 

@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SelectItemToPlace : MonoBehaviour
+public class SelectItemToPlace : MonoBehaviourPun
 {
 
     public PlaceOnMap placeOnMap;
@@ -15,11 +16,19 @@ public class SelectItemToPlace : MonoBehaviour
 
     protected List<MapOccupationObject> MapOccupationObjects => baseMap.randomReceivableMapOccupationObjects;
 
-    public const int NUMBER_ITEMS = 4;
+    public int NumberItems => GameCycle.NumberPlayers + 2;
 
     protected LayerMask layerMask;
 
-    public GameObject inventorySlot;
+    protected List<SelectItemButton> buttons;
+
+    public GameObject itemSelectionPrefab;
+
+    public Transform itemSelectionParent;
+
+    public Vector2Int startPosition;
+    public Vector2Int itemOffset;
+
 
     private void Start()
     {
@@ -30,20 +39,39 @@ public class SelectItemToPlace : MonoBehaviour
 
     protected Action<int> objectSelectedCallback;
 
-    public void StartSelection(Action<int> onDone)
+    public void StartSelection(Action<int> onDone, System.Random rand)
     {
-        //DetermineNextRotation();
-        onDone(MapOccupationObjects.RandomIndex());
+            //onDone(MapOccupationObjects.RandomIndex());
         objectSelectedCallback = onDone;
+        DetermineNextRotation(rand);
     }
 
-    public void DetermineNextRotation()
+    public void DestroyButton(int index)
     {
-        availableRotation = new List<int>(NUMBER_ITEMS);
-        for (int i = 0; i < NUMBER_ITEMS; i++)
+        if(buttons[index] != null)
         {
-            availableRotation.Add(MapOccupationObjects.RandomIndex());
-            Display(MapOccupationObjects[availableRotation[i]], i);
+            Destroy(buttons[index].gameObject);
+            buttons[index] = null;
+        }
+    }
+
+    public void DestroyAllButtons()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            DestroyButton(i);
+        }
+        buttons.Clear();
+    }
+
+    public void DetermineNextRotation(System.Random rand)
+    {
+        buttons = new List<SelectItemButton>();
+        availableRotation = new List<int>(NumberItems);
+        for (int i = 0; i < NumberItems; i++)
+        {
+            availableRotation.Add(MapOccupationObjects.RandomIndex(rand));
+            Display(availableRotation[i], i);
         }
         enabled = true;
     }
@@ -56,21 +84,28 @@ public class SelectItemToPlace : MonoBehaviour
         }
     }
 
-    public GameObject Display(MapOccupationObject mapObject, int index)
+    public GameObject Display(int objectIndex, int index)
     {
-        GameObject itemInstance = Instantiate(mapObject.prefab, transform);
-        OccupationObjectRef objectSelection = itemInstance.AddComponent<OccupationObjectRef>();
-        objectSelection.mapObject = mapObject;
-        objectSelection.index = index;
-        itemInstance.layer = layerMask;
+        GameObject g = Instantiate(itemSelectionPrefab, itemSelectionParent);
+        SelectItemButton button = g.GetComponent<SelectItemButton>();
+        buttons.Add(button);
+        button.CreateItemSelection(this, index, MapOccupationObjects[objectIndex], objectIndex, PlayerSelectedItem);
+        RectTransform rectTransform = g.GetComponent<RectTransform>();
+        PositionImage(rectTransform,index);
+        return g;
+    }
 
-        Vector3 pos = Camera.main.transform.position;
-        pos.z = 0;
-        float progress = index / (float)NUMBER_ITEMS;
-        int spacing = 4;
-        Vector2 relativePos = new Vector2(Mathf.Sin(Mathf.PI * 2 * progress) * spacing, Mathf.Cos(Mathf.PI * 2 * progress) * spacing);
-        itemInstance.transform.position = pos + new Vector3(relativePos.x, relativePos.y, 0);
-        return itemInstance;
+    protected void PlayerSelectedItem(int index)
+    {
+        foreach(SelectItemButton button in buttons)
+            button.canBeClicked = false;
+        objectSelectedCallback(index);
+    }
+
+    protected void PositionImage(RectTransform t, int index)
+    {
+        Vector2Int pos = startPosition + itemOffset * index;
+        t.localPosition = new Vector3(pos.x,pos.y,0);
     }
 
     private void Update()

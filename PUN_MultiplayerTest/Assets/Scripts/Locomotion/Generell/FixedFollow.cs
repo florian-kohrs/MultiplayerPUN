@@ -19,7 +19,7 @@ public class FixedFollow : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         transform.position = target.transform.position - distance;
     }

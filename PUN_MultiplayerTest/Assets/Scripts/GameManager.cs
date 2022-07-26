@@ -1,5 +1,7 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class GameManager
 {
@@ -73,7 +75,9 @@ public class GameManager
         get
         {
             if (GM.player == null)
-                GM.player = GameObject.FindGameObjectWithTag(PLAYER_TAG_NAME);
+            {
+                GM.player = GameObject.FindGameObjectsWithTag(PLAYER_TAG_NAME).Where(g => g.GetComponent<PhotonView>().IsMine).FirstOrDefault();
+            }
             return GM.player;
         }
         set

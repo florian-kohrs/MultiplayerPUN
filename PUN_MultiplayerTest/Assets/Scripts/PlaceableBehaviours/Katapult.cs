@@ -62,6 +62,7 @@ public class Katapult : ProjectileDispenser
         Rigidbody2D body = projectileInstance.GetComponent<Rigidbody2D>();
         projectileInstance.transform.parent = null;
         body.AddForce(projectileParent.up * dispensePower, ForceMode2D.Impulse);
+        projectileInstance.GetComponentInChildren<CircleCollider2D>().enabled = true;
         body.gravityScale = 1;
         Destroy(projectileInstance, 10);
         projectileInstance = null;

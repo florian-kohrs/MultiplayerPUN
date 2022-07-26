@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,16 +23,31 @@ public class GameCycle : MonoBehaviourPun
 
     public GameObject startGameButton;
 
+    public List<Action> OnGameStartCallback = new List<Action>();
+
+    protected bool isInGame = false;
+
     private void Awake()
     {
         instance = this;
     }
+
+
+
+    public static void AddGameStartCallback(Action onStart)
+    {
+        instance.OnGameStartCallback.Add(onStart);
+    }
+
+    public static bool GameStarted => instance.isInGame;
 
     public int MaxPlayers => players.Count;
 
     protected int remainingPlayersInRound;
     protected int remainingSelecting;
     protected int remainingPlacing;
+
+    public static int NumberPlayers => Player.playerCount;
 
     protected int maxRounds;
 
@@ -49,11 +65,19 @@ public class GameCycle : MonoBehaviourPun
     }
 
 
+    protected int seed;
+
+    public System.Random rand;
+
     [PunRPC]
     protected void StartGameBroadcast(int maxRounds, int seed)
     {
+        this.seed = seed;
+        rand = new System.Random(seed);
         this.maxRounds = maxRounds;
         currentRound = 0;
+        isInGame = true;
+        OnGameStartCallback.ForEach(f => f());
         mapGenerator.Generate();
         BeginRound();
     }
@@ -111,11 +135,12 @@ public class GameCycle : MonoBehaviourPun
     {
         players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
         remainingSelecting = MaxPlayers;
-        selectItem.StartSelection(selected => { selectedObjectIndex = selected; CallPlayerDoneSelecting(); });
+        selectItem.StartSelection(selected => { selectedObjectIndex = selected; CallPlayerDoneSelecting(); }, rand);
     }
 
     protected void EnterObjectPlacingPhase()
     {
+        selectItem.DestroyAllButtons();
         players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
         remainingPlacing = MaxPlayers;
         placeOnMap.BeginPlace(selectedObjectIndex, CallPlayerDonePlacing);

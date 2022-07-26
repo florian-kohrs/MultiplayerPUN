@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6838633786221459042}
   - component: {fileID: 2453620565906892419}
   - component: {fileID: 7165912817620515511}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2038216689095428417}
   - component: {fileID: 5458173852208058626}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RotatingThing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febc5b994171f3c48b3b45bde6100eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 300
+  rotateSpeed: 165
 --- !u!1 &3950419119565442094
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6919948556399947242}
   - component: {fileID: 6046643300012352804}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 3950419119565442094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.225, z: 2}
+  m_LocalScale: {x: 2, y: 0.12375, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2038216689095428417}
@@ -271,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 6278015835658065147}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2038216689095428417}
@@ -386,6 +386,10 @@ PrefabInstance:
     - target: {fileID: 6172914213526017663, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
       propertyPath: m_Name
       value: RotatingBlade
+      objectReference: {fileID: 0}
+    - target: {fileID: 6172914213526017663, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8726316243504433620, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
       propertyPath: m_RootOrder

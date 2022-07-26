@@ -15,7 +15,7 @@ public static class Broadcast
         }
         else
         {
-            callIfNotConnected();
+            callIfNotConnected?.Invoke();
         }
     }
 

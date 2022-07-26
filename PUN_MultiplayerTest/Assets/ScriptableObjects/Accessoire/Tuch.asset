@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116bcf2d9dfebd9428a69e879e6e81ed, type: 3}
+  m_Name: Tuch
+  m_EditorClassIdentifier: 
+  itemName: Tuch
+  itemType: 3
+  prefab: {fileID: 5370069989097625614, guid: 7db13ffe7122a314a86e81e48e4d3a43, type: 3}
+  equipLocalPosition: {x: 4.180248e-18, y: 0.005011404, z: 0.01344726}
+  equipLocalEulerAngle: {x: -110.667, y: 0, z: 0}
+  localScale: {x: 53.50245, y: 53.50245, z: 53.50245}
