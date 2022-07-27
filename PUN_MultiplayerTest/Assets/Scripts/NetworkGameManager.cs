@@ -13,6 +13,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     public GameCycle gameCycle;
 
+    public LevelSelection levelSelection;
+
     #region Photon Callbacks
 
 
@@ -67,7 +69,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        gameCycle.StartGame(10, Random.Range(0,999999));
+        gameCycle.StartGame(10, Random.Range(0,999999), levelSelection.SelectedMap);
+        levelSelection.gameObject.SetActive(false);
     }
 
     public GameObject InstantiatePlayer()

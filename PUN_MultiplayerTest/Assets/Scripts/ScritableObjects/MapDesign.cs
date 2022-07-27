@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 public class MapDesign : ScriptableObject, ISerializationCallbackReceiver
@@ -69,6 +72,7 @@ public class MapDesign : ScriptableObject, ISerializationCallbackReceiver
     {
         UnserializeableMap[index.x,index.y] = occupation;
         UpdateSerialzable();
+
         //serializable[index.y * dimensions.x + index.x].Element = occupation;
     }
 
@@ -111,6 +115,9 @@ public class MapDesign : ScriptableObject, ISerializationCallbackReceiver
                     serializable.Add(new Package<MapOccupation>(x, y, UnserializeableMap[x, y]));
                 }
             }
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+#endif
         }
         catch (Exception e)
         {

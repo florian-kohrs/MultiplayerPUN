@@ -58,12 +58,12 @@ public class GameCycle : MonoBehaviourPun
     //TODO: Move Camera when placing 
     //Stop player after reaching target
 
-    public void StartGame(int maxRounds, int seed)
+    public void StartGame(int maxRounds, int seed, int selectedMapIndex)
     {
         startGameButton.SetActive(false);
         Broadcast.SafeRPC(photonView, nameof(StartGameBroadcast), RpcTarget.All, 
-            delegate { StartGameBroadcast(maxRounds, seed,0); }, 
-            maxRounds, seed);
+            delegate { StartGameBroadcast(maxRounds, seed, selectedMapIndex); }, 
+            maxRounds, seed, selectedMapIndex);
     }
 
 

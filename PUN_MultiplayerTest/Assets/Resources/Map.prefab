@@ -176,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2802e72603a1834398b0ee345936963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimensions: {x: 20, y: 20}
   mapOccupations: {fileID: 11400000, guid: 05f28ae64a922b04f898ea99d4fdcd4f, type: 2}
   randomReceivableMapOccupationObjects:
   - {fileID: 11400000, guid: b19afdd55c37be948b6ce58a02154831, type: 2}
@@ -231,6 +230,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finishObject: {fileID: 11400000, guid: bad12720d762c6c4db6af28868c737d3, type: 2}
+  maps:
+  - {fileID: 11400000, guid: fb9b306fa9fd93043b98654f050f5e08, type: 2}
+  - {fileID: 11400000, guid: 1a1803e4ca2935e4587949157b12c067, type: 2}
+  - {fileID: 11400000, guid: 2203a7824a886064ca7343a5ab9aa927, type: 2}
   startAreaIndex: 0
   finishAreaIndex: 1
   map: {fileID: 8059518751559146159}
