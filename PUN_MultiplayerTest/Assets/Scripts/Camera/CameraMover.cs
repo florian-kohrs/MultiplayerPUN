@@ -6,6 +6,7 @@ public class CameraMover : PunLocalBehaviour
 {
 
     public Camera mainCamera;
+
     public Camera MainCamera
     {
         get
@@ -17,9 +18,11 @@ public class CameraMover : PunLocalBehaviour
     }
 
     public int defaultDistance = 6;
-    public int placingDistance = 10;
+    public int PlacingDistance => (GameCycle.MapSize.Max() / 2) + 4;
 
-    public Vector3 placingPosition;
+    public Vector2Int PlaceOffset = new Vector2Int(0, -2);
+
+    public Vector3 PlacingPosition => (GameCycle.MapSize / 2 + PlaceOffset).LiftVectorOnXY(-1);
 
     public Vector3 gamePosition;
 
@@ -45,8 +48,8 @@ public class CameraMover : PunLocalBehaviour
 
         isInGameView = false;
         MainCamera.transform.SetParent(null);
-        MainCamera.transform.position = placingPosition;
-        MainCamera.orthographicSize = placingDistance;
+        MainCamera.transform.position = PlacingPosition;
+        MainCamera.orthographicSize = PlacingDistance;
     }
 
 }

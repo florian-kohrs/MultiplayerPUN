@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: FinishFlag
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 04bc57e57db23cd4f85163c5c31f829e, type: 3}
+  isBomb: 0
+  type: 0
   prefab: {fileID: 401360550580244632, guid: 6481daa3d74b14b47ad8e7ebfadce0ba, type: 3}
-  destroyable: 1
+  mirrorInsteadOfRotate: 0
   localOccupationSpots:
   - {x: 1, y: 0}
   - {x: 0, y: 1}

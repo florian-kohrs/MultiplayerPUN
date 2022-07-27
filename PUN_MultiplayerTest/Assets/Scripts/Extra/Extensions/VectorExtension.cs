@@ -310,9 +310,48 @@ public static class VectorExtension
         return new Vector2(v2.x, v2.y);
     }
 
+
+
+    public static int Max(this Vector2Int v2)
+    {
+        if(v2.x > v2.y)
+            return v2.x;
+        else 
+            return v2.y;
+    }
+
+    public static int Min(this Vector2Int v2)
+    {
+        if (v2.x < v2.y)
+            return v2.x;
+        else
+            return v2.y;
+    }
+
+    public static float Max(this Vector2 v2)
+    {
+        if (v2.x > v2.y)
+            return v2.x;
+        else
+            return v2.y;
+    }
+
+    public static float Min(this Vector2 v2)
+    {
+        if (v2.x < v2.y)
+            return v2.x;
+        else
+            return v2.y;
+    }
+
     public static Vector3 LiftVectorOnXY(this Vector2 v2)
     {
         return new Vector3(v2.x, v2.y, 0);
+    }
+
+    public static Vector3 LiftVectorOnXY(this Vector2Int v2, int z = 0)
+    {
+        return new Vector3(v2.x, v2.y, z);
     }
 
     public static Vector3Int ToVector(int i, Vector3Int size)

@@ -10,21 +10,30 @@ public class MapGenerator : MonoBehaviour
 
     public MapOccupationObject finishObject;
 
+    public List<MapDesign> maps;
+
     public int startAreaIndex = 0;
     public int finishAreaIndex = 1;
 
     public BaseMap map;
 
-    public void Generate()
+    public void StartMap(int index)
     {
-        for (int i = 0; i < map.dimensions.x; i++)
+        if(index < 0)
+            GenerateGarbage();
+        else 
+            map.LoadMapDesign(maps[index]);
+    }
+
+    protected void GenerateGarbage()
+    {
+        for (int i = 0; i < map.Dimensions.x; i++)
         {
             map.PlaceGeneration(floorObjectIndex, i, 0, 0);
         }
         SetStart();
         SetFinish();
     }
-
 
     protected void SetStart()
     {
@@ -46,7 +55,7 @@ public class MapGenerator : MonoBehaviour
 
     protected Vector2Int DetermineFinishPoint()
     {
-        return new Vector2Int(map.dimensions.x - 4, 1);
+        return new Vector2Int(map.Dimensions.x - 4, 1);
     }
 
 }

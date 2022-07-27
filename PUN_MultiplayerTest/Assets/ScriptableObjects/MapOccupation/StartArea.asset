@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: StartArea
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6172914213526017663, guid: 38d1b562b962fc4428a948e08caf4f72, type: 3}
-  destroyable: 1
+  image: {fileID: 168165453, guid: 8ac7c32e61154534cba5b470c25c151e, type: 3}
+  isBomb: 0
+  type: 0
+  prefab: {fileID: 8388884692911181150, guid: 6e442f92f6804c44d9ad07c56785e9a1, type: 3}
+  mirrorInsteadOfRotate: 0
   localOccupationSpots:
   - {x: 1, y: 0}
   - {x: 0, y: 1}

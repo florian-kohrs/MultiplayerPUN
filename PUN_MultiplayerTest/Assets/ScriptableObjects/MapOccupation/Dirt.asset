@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
-  m_Name: WoodCube
+  m_Name: Dirt
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6555900473171233107, guid: a9726f1137cf90840803f2eba2a5f34c, type: 3}
+  image: {fileID: 21300000, guid: 6ea2e394319c4aa458504b47493ac868, type: 3}
+  isBomb: 0
+  type: 0
+  prefab: {fileID: 6555900473171233107, guid: 22cb529ac19ae9545bd1dd6805b792a1, type: 3}
+  mirrorInsteadOfRotate: 0
   localOccupationSpots: []

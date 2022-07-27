@@ -9,6 +9,8 @@ public class GameCycle : MonoBehaviourPun
 
     public static GameCycle instance;
 
+    public static Vector2Int MapSize => instance.map.Dimensions;
+
     public BaseMap map;
 
     public PlaceOnMap placeOnMap;
@@ -60,7 +62,7 @@ public class GameCycle : MonoBehaviourPun
     {
         startGameButton.SetActive(false);
         Broadcast.SafeRPC(photonView, nameof(StartGameBroadcast), RpcTarget.All, 
-            delegate { StartGameBroadcast(maxRounds, seed); }, 
+            delegate { StartGameBroadcast(maxRounds, seed,0); }, 
             maxRounds, seed);
     }
 
@@ -70,7 +72,7 @@ public class GameCycle : MonoBehaviourPun
     public System.Random rand;
 
     [PunRPC]
-    protected void StartGameBroadcast(int maxRounds, int seed)
+    protected void StartGameBroadcast(int maxRounds, int seed, int mapIndex)
     {
         this.seed = seed;
         rand = new System.Random(seed);
@@ -78,7 +80,7 @@ public class GameCycle : MonoBehaviourPun
         currentRound = 0;
         isInGame = true;
         OnGameStartCallback.ForEach(f => f());
-        mapGenerator.Generate();
+        mapGenerator.StartMap(mapIndex);
         BeginRound();
     }
 
@@ -133,7 +135,7 @@ public class GameCycle : MonoBehaviourPun
 
     protected void EnterObjectSelectingPhase()
     {
-        players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
+        //players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
         remainingSelecting = MaxPlayers;
         selectItem.StartSelection(selected => { selectedObjectIndex = selected; CallPlayerDoneSelecting(); }, rand);
     }
@@ -141,7 +143,7 @@ public class GameCycle : MonoBehaviourPun
     protected void EnterObjectPlacingPhase()
     {
         selectItem.DestroyAllButtons();
-        players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
+        //players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
         remainingPlacing = MaxPlayers;
         placeOnMap.BeginPlace(selectedObjectIndex, CallPlayerDonePlacing);
     }

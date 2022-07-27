@@ -8,7 +8,7 @@ public class PunLocalBehaviour : Photon.Pun.MonoBehaviourPun
 
     protected void Start()
     {
-        if(!photonView.IsMine && PhotonNetwork.IsConnected)
+        if(PhotonNetwork.IsConnected && !photonView.IsMine)
         {
             OnNotMine();
         }

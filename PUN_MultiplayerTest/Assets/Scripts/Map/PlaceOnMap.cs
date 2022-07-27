@@ -24,13 +24,24 @@ public class PlaceOnMap : MonoBehaviour
 
     public int activeObjectIndex;
 
-    public GameObject previewObject;
+    protected GameObject previewObject;
 
     protected int activeRotation;
 
     protected Action onDone;
 
-    protected List<MapOccupationObject> AllMapOccupations => map.randomReceivableMapOccupationObjects;
+    public bool useAllItems;
+
+    protected List<MapOccupationObject> AllMapOccupations
+    {
+        get
+        {
+            if (useAllItems)
+                return map.AllMapOccupationObjects;
+            else
+                return map.randomReceivableMapOccupationObjects;
+        }
+    }
 
     protected int ActiveRotation
     {
@@ -64,7 +75,7 @@ public class PlaceOnMap : MonoBehaviour
         this.onDone = onDone;
         RemovePreview();
         activeObjectIndex = mapObjectIndex;
-        previewObject = NetworkInstantiation.Instantiate(AllMapOccupations[activeObjectIndex].prefab);
+        previewObject = Instantiate(AllMapOccupations[activeObjectIndex].prefab);
         previewObject.GetComponentsInChildren<Behaviour>().ToList().ForEach((b) => b.enabled = false);
         UpdateObjectPreview();
         enabled = true;
@@ -92,12 +103,16 @@ public class PlaceOnMap : MonoBehaviour
 
         if (Mouse.current.leftButton.isPressed)
         {
-            if (map.PlaceDuringRounds(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation))
+            if(map is MapDesigner m)
+            {
+                m.PlaceForMapDesign(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation);
+            }
+            else if (map.PlaceDuringRounds(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation))
             {
                 RemovePreview();
                 CamMover.SetToGameView();
                 enabled = false;
-                onDone();
+                onDone?.Invoke();
             }
         }
     }
@@ -133,6 +148,7 @@ public class PlaceOnMap : MonoBehaviour
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = Camera.main.nearClipPlane;
         Vector3 worldSpace = Camera.main.ScreenToWorldPoint(mousePos);
+        Debug.Log(worldSpace);
         return worldSpace + new Vector3(BaseMap.HALF_SPACING, BaseMap.HALF_SPACING,0);
     }
 

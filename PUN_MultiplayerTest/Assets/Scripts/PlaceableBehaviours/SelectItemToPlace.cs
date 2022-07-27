@@ -88,7 +88,7 @@ public class SelectItemToPlace : MonoBehaviourPun
         GameObject g = Instantiate(itemSelectionPrefab, itemSelectionParent);
         SelectItemButton button = g.GetComponent<SelectItemButton>();
         buttons.Add(button);
-        button.CreateItemSelection(this, index, MapOccupationObjects[objectIndex], objectIndex, PlayerSelectedItem);
+        button.CreateItemSelection(index, MapOccupationObjects[objectIndex], objectIndex, PlayerSelectedItem);
         RectTransform rectTransform = g.GetComponent<RectTransform>();
         PositionImage(rectTransform,index);
         return g;
@@ -96,6 +96,7 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     protected void PlayerSelectedItem(int index)
     {
+        Broadcast.SafeRPC(photonView, nameof(DestroySeletionButton), RpcTarget.All, ()=>DestroySeletionButton(index), index);
         foreach (SelectItemButton button in buttons)
         {
             if(button != null)
@@ -104,7 +105,15 @@ public class SelectItemToPlace : MonoBehaviourPun
         objectSelectedCallback(index);
     }
 
-    protected void PositionImage(RectTransform t, int index)
+
+    [PunRPC]
+    protected void DestroySeletionButton(int index)
+    {
+        DestroyButton(index);
+    }
+
+
+protected void PositionImage(RectTransform t, int index)
     {
         Vector2Int pos = startPosition + itemOffset * index;
         t.localPosition = new Vector3(pos.x,pos.y,0);

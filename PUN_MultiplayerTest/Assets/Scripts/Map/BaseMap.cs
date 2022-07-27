@@ -28,18 +28,79 @@ public class BaseMap : MonoBehaviourPun
 
     public Vector2 Anchor2D => new Vector2(transform.position.x, transform.position.y);
 
-    public Vector2Int dimensions;
+    protected Vector2Int dimensions;
+
+    protected virtual bool BombsDestroyEverything => false;
+
+    public Vector2Int Dimensions
+    {
+        get { return dimensions; }
+        protected set
+        {
+            dimensions = value;
+            occupationMap = new MapOccupation[dimensions.x, dimensions.y];
+        }
+    }
+
+    //public virtual Vector2Int dimensions => dimensions;
 
     public MapOccupation[,] occupationMap;
+    public MapOccupation[,] OccupationMap
+    {
+        get
+        {
+            if (occupationMap == null)
+                occupationMap = new MapOccupation[Dimensions.x, Dimensions.y];
+            return occupationMap;
+        }
+    }
 
-    [SerializeField]
-    protected List<MapOccupationObject> allMapOccupationObjects;
+    public AllMapOccupationObjects mapOccupations;
+
+    public List<MapOccupationObject> AllMapOccupationObjects => mapOccupations.mapOccupations;
+
 
     public List<MapOccupationObject> randomReceivableMapOccupationObjects;
 
     protected Vector2Int startPoint;
 
+    public void SetStartPoint(Vector2Int startPoint)
+    {
+        this.startPoint = startPoint;
+    }
+
+
     protected readonly Vector3 PlayerOffset = new Vector3(0, 0.666f, 0);
+
+    public void ResetMap()
+    {
+        int xLength = OccupationMap.GetLength(0);
+        int yLength = OccupationMap.GetLength(1);
+        for (int x = 0; x < xLength; x++)
+        {
+            for (int y = 0; y < yLength; y++)
+            {
+                MapOccupation occ = OccupationMap[x, y];
+                if (occ == null)
+                    continue;
+
+                DestroyOccupations(occ);
+            }
+        }
+        occupationMap = new MapOccupation[Dimensions.x, Dimensions.y];
+    }
+
+    public void LoadMapDesign(MapDesign mapDesign)
+    {
+        ResetMap();
+        Dimensions = mapDesign.dimensions;
+        foreach (var item in mapDesign.GetMapDesign())
+        {
+            if (item.Element == null || item.Element.occupationObject == null)
+                continue;
+            Place(item.Element.occupationObject, item.Index, item.Element.orientation, false);
+        }
+    }
 
     public void SetStartPoint(Vector2Int start, int startAreaIndex)
     {
@@ -59,10 +120,6 @@ public class BaseMap : MonoBehaviourPun
         }
     }
 
-    private void Awake()
-    {
-        occupationMap = new MapOccupation[dimensions.x,dimensions.y];
-    }
 
     private void Start()
     {
@@ -72,7 +129,7 @@ public class BaseMap : MonoBehaviourPun
     protected List<MapOccupationObject> ListFromIndex(int index)
     {
         if (index == 0)
-            return allMapOccupationObjects;
+            return AllMapOccupationObjects;
         else
             return randomReceivableMapOccupationObjects;
     }
@@ -85,7 +142,7 @@ public class BaseMap : MonoBehaviourPun
         return Place(occupationIndex, originX, originY, rotationIndex, OccupationList.All, false);
     }
 
-    
+
     public bool PlaceDuringRounds(int occupationIndex, int originX, int originY, int rotationIndex)
     {
         bool canPlace = CanPlace(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation);
@@ -102,18 +159,30 @@ public class BaseMap : MonoBehaviourPun
     {
         MapOccupationObject occupation = ListFromIndex((int)listIndex)[occupationIndex];
         Vector2Int origin = new Vector2Int(originX, originY);
-        return AreAllInBounds(origin, rotationIndex, occupation) && IsSpaceNotOccupied(occupation, origin, rotationIndex);
+        return CanPlace(occupation, origin, rotationIndex);
     }
+
+    protected bool CanPlace(MapOccupationObject occupation, Vector2Int origin, int rotationIndex)
+    {
+        return AreAllInBounds(origin, rotationIndex, occupation) && (occupation.isBomb || IsSpaceNotOccupied(occupation, origin, rotationIndex));
+    }
+
+
 
     [PunRPC]
     protected bool Place(int occupationIndex, int originX, int originY, int rotationIndex, OccupationList listIndex, bool destroyable)
     {
         MapOccupationObject occupation = ListFromIndex((int)listIndex)[occupationIndex];
         Vector2Int origin = new Vector2Int(originX, originY);
-        bool result = AreAllInBounds(origin, rotationIndex, occupation) && (occupation.isBomb || IsSpaceNotOccupied(occupation,origin,rotationIndex));
-        if(result)
+        return Place(occupation, origin, rotationIndex, destroyable);
+    }
+
+    protected bool Place(MapOccupationObject occupation, Vector2Int origin, int rotationIndex, bool destroyable)
+    {
+        bool result = CanPlace(occupation, origin, rotationIndex);
+        if (result)
         {
-            MapOccupation mapOccupation = new MapOccupation(occupation,origin,rotationIndex, destroyable);
+            MapOccupation mapOccupation = new MapOccupation(occupation, origin, rotationIndex, destroyable);
             if (!occupation.isBomb)
             {
                 OccupySpace(mapOccupation);
@@ -121,7 +190,7 @@ public class BaseMap : MonoBehaviourPun
             Quaternion rotation = Quaternion.identity;
             Vector3 scale = Vector3.one;
 
-            if(occupation.mirrorInsteadOfRotate)
+            if (occupation.mirrorInsteadOfRotate)
                 scale = new Vector3(Mathf.Pow(-1, rotationIndex), 1, 1);
             else
                 rotation = GetObjectRotation(rotationIndex);
@@ -130,6 +199,7 @@ public class BaseMap : MonoBehaviourPun
         }
         return result;
     }
+
 
 
     protected GameObject Spawn(MapOccupation occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
@@ -151,8 +221,8 @@ public class BaseMap : MonoBehaviourPun
         {
             if (IsInBounds(spot))
             {
-                MapOccupation occ = occupationMap[spot.x, spot.y];
-                if (occ == null)
+                MapOccupation occ = OccupationMap[spot.x, spot.y];
+                if (occ == null || (!occ.destroyable && !BombsDestroyEverything))
                     continue;
 
                 ClearOccupation(occ);
@@ -167,12 +237,18 @@ public class BaseMap : MonoBehaviourPun
         {
             if (IsInBounds(spot))
             {
-                if (occupationMap[spot.x, spot.y] == null)
+                if (OccupationMap[spot.x, spot.y] == null)
                     Debug.LogError("Occupation map should have value here!");
 
-                occupationMap[spot.x, spot.y] = null;
+                OccupationMap[spot.x, spot.y] = null;
             }
         }
+        OnDestroyedOccupation(occupation.origin);
+    }
+
+    protected virtual void OnDestroyedOccupation(Vector2Int origin)
+    {
+
     }
 
     public Vector3 MapIndexToGlobalPosition(Vector2Int index)
@@ -202,7 +278,7 @@ public class BaseMap : MonoBehaviourPun
 
     protected bool IsInBounds(Vector2Int pos)
     {
-        return pos.x >= 0 && pos.y >= 0 && pos.x < dimensions.x && pos.y < dimensions.y;
+        return pos.x >= 0 && pos.y >= 0 && pos.x < Dimensions.x && pos.y < Dimensions.y;
     }
 
 
@@ -220,7 +296,7 @@ public class BaseMap : MonoBehaviourPun
         bool result = true;
         foreach(var spot in occupation.GetAllOccupations(origin,rotation))
         {
-            if(occupationMap[spot.x, spot.y] != null)
+            if(OccupationMap[spot.x, spot.y] != null)
             {
                 result = false;
                 break;
@@ -233,7 +309,7 @@ public class BaseMap : MonoBehaviourPun
     {
         foreach (var spot in occupation.GetAllOccupations())
         {
-            occupationMap[spot.x, spot.y] = occupation;
+            OccupationMap[spot.x, spot.y] = occupation;
         }
     }
 

@@ -1,24 +1,21 @@
-using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectItemButton : MonoBehaviourPun
+public class SelectItemButton : MonoBehaviour
 {
 
     protected Action<int> callback;
     protected int objectIndex;
     protected MapOccupationObject mapObject;
     protected int index;
-    protected SelectItemToPlace itemSelector;
 
     public bool canBeClicked = true;
 
-    public void CreateItemSelection(SelectItemToPlace itemSelector, int index, MapOccupationObject occupation, int occupationObjectIndex, Action<int> onItemSelected)
+    public void CreateItemSelection(int index, MapOccupationObject occupation, int occupationObjectIndex, Action<int> onItemSelected)
     {
-        this.itemSelector = itemSelector;
         callback = onItemSelected;
         mapObject = occupation; 
         GetComponent<Image>().sprite = occupation.image;
@@ -30,15 +27,8 @@ public class SelectItemButton : MonoBehaviourPun
     {
         if (canBeClicked)
         {
-            Broadcast.SafeRPC(photonView, nameof(Destroy), RpcTarget.All, Destroy);
             callback(objectIndex);
         }
-    }
-
-    [PunRPC]
-    protected void Destroy()
-    {
-        itemSelector.DestroyButton(index);
     }
 
 }

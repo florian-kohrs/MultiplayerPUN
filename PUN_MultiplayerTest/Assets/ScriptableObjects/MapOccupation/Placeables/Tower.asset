@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: Tower
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 17ada11133577154c849b26d65d367b5, type: 3}
   isBomb: 0
   type: 0
-  prefab: {fileID: 4652478302709642493, guid: 4beed850307d23e449bda23c75e34db6, type: 3}
+  prefab: {fileID: 1089778302743573726, guid: f771472f600b2824292fcdd55204d2f2, type: 3}
   mirrorInsteadOfRotate: 0
   localOccupationSpots:
   - {x: 0, y: 1}
   - {x: 0, y: 2}
+  - {x: 0, y: 3}

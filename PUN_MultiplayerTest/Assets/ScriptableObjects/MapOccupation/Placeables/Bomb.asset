@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Bomb
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: c242fdf21f424524c8a3ab0731c2cdf2, type: 3}
-  isBomb: 0
+  isBomb: 1
   type: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 4931527618399224498, guid: b35df5a1c6fd99a4a8194a74ea7f1430, type: 3}
   mirrorInsteadOfRotate: 0
   localOccupationSpots: []

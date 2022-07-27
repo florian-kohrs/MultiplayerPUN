@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class MapOccupation
 {
 
@@ -14,13 +15,14 @@ public class MapOccupation
 
     public MapOccupationObject occupationObject;
 
+    [System.NonSerialized]
     public GameObject gameObject;
 
     public bool MirrorInstead => occupationObject.mirrorInsteadOfRotate;
 
     public Vector2Int origin;
 
-    protected int orientation;
+    public int orientation;
 
     public bool destroyable;
 

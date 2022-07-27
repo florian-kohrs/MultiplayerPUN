@@ -21,6 +21,18 @@ public class AssetMenue : MonoBehaviour
         AssetCreator.CreateAsset<EquipableItemAsset>(BASE_FOLDER_NAME + "Accessoire");
     }
 
+    [MenuItem("Assets/Create/Custom/Map")]
+    public static void NewMap()
+    {
+        AssetCreator.CreateAsset<MapDesign>(BASE_FOLDER_NAME + "Map");
+    }
+
+    [MenuItem("Assets/Create/Custom/ItemList")]
+    public static void NewItemList()
+    {
+        AssetCreator.CreateAsset<AllMapOccupationObjects>(BASE_FOLDER_NAME + "ItemList");
+    }
+
 
 
 }

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class DeathCollision : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Player p = collision.gameObject.GetComponentInParent<Player>();
-        if (p != null && !p.KillPlayer())
+        if (p != null && (!PhotonNetwork.IsConnected || p.photonView.IsMine) && !p.KillPlayer())
         { 
             collision.rigidbody.AddForce(collision.relativeVelocity * impactForce, ForceMode2D.Impulse);
             Debug.Log($"Player {p.playerName} has died");

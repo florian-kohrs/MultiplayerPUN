@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 3313704050129365318, guid: 104178f46303d4943a5943985447dbf8, type: 3}
-  dispenserCooldown: 1
+  dispenserCooldown: 3
   dispensePower: 11
   rotateAnchor: {fileID: 388745422216775566}
   projectileParent: {fileID: 2898394184553864429}
