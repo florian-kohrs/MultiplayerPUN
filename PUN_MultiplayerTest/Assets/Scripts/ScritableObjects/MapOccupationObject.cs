@@ -16,6 +16,8 @@ public class MapOccupationObject : ScriptableObject
 
     public Sprite image;
 
+    public bool occupiesDefaultPosition = true;
+
     public bool isBomb;
     public enum OccupationType { Obstacle, Danger, Destruction}
 
@@ -30,7 +32,8 @@ public class MapOccupationObject : ScriptableObject
 
     public IEnumerable<Vector2Int> LocalOccupationSpots()
     {
-        yield return new Vector2Int(0, 0);
+        if(occupiesDefaultPosition)
+            yield return new Vector2Int(0, 0);
         foreach(var occ in localOccupationSpots)
             yield return occ;
     }
@@ -72,5 +75,7 @@ public class MapOccupationObject : ScriptableObject
             relative = new Vector2Int(-relative.y, relative.x);
         return relative + origin;
     }
+
+    public virtual void ApplyToObject(GameObject prefabInstace) { }
 
 }

@@ -39,7 +39,7 @@ public class PlaceOnMap : MonoBehaviour
             if (useAllItems)
                 return map.AllMapOccupationObjects;
             else
-                return map.randomReceivableMapOccupationObjects;
+                return map.randomReceivableMapOccupationObjects.MapOccupations;
         }
     }
 
@@ -76,6 +76,7 @@ public class PlaceOnMap : MonoBehaviour
         RemovePreview();
         activeObjectIndex = mapObjectIndex;
         previewObject = Instantiate(AllMapOccupations[activeObjectIndex].prefab);
+        AllMapOccupations[activeObjectIndex].ApplyToObject(previewObject);
         previewObject.GetComponentsInChildren<Behaviour>().ToList().ForEach((b) => b.enabled = false);
         UpdateObjectPreview();
         enabled = true;
@@ -148,7 +149,6 @@ public class PlaceOnMap : MonoBehaviour
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = Camera.main.nearClipPlane;
         Vector3 worldSpace = Camera.main.ScreenToWorldPoint(mousePos);
-        Debug.Log(worldSpace);
         return worldSpace + new Vector3(BaseMap.HALF_SPACING, BaseMap.HALF_SPACING,0);
     }
 

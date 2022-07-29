@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Katapult
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 3d33e481ad43af841a6d5f883111911c, type: 3}
+  occupiesDefaultPosition: 1
   isBomb: 0
-  type: 0
+  type: 1
   prefab: {fileID: 8465183281590610998, guid: 5fd5f448a2b437d46886fa8f49b32f19, type: 3}
   mirrorInsteadOfRotate: 1
   localOccupationSpots:

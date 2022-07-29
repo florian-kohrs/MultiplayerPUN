@@ -15,6 +15,12 @@ public class AssetMenue : MonoBehaviour
         AssetCreator.CreateAsset<MapOccupationObject>(BASE_FOLDER_NAME + "MapOccupation");
     }
 
+    [MenuItem("Assets/Create/Custom/CubeMapOccupation")]
+    public static void NewMapCubeOccupation()
+    {
+        AssetCreator.CreateAsset<MapCubeOccupationObject>(BASE_FOLDER_NAME + "MapOccupation/Cubes");
+    }
+
     [MenuItem("Assets/Create/Custom/Accessoire")]
     public static void NewAccessoire()
     {
@@ -30,7 +36,7 @@ public class AssetMenue : MonoBehaviour
     [MenuItem("Assets/Create/Custom/ItemList")]
     public static void NewItemList()
     {
-        AssetCreator.CreateAsset<AllMapOccupationObjects>(BASE_FOLDER_NAME + "ItemList");
+        AssetCreator.CreateAsset<MapOccupationList>(BASE_FOLDER_NAME + "ItemList");
     }
 
 

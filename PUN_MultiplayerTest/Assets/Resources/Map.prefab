@@ -177,13 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapOccupations: {fileID: 11400000, guid: 05f28ae64a922b04f898ea99d4fdcd4f, type: 2}
-  randomReceivableMapOccupationObjects:
-  - {fileID: 11400000, guid: b19afdd55c37be948b6ce58a02154831, type: 2}
-  - {fileID: 11400000, guid: 74563350d9c336242b76514605c701d2, type: 2}
-  - {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
-  - {fileID: 11400000, guid: 0268ca1fec134f54fa5b06684f11c0eb, type: 2}
-  - {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-  - {fileID: 11400000, guid: eeeaf2d6c88c031428980cc4caaf15a5, type: 2}
+  randomReceivableMapOccupationObjects: {fileID: 11400000, guid: c63116d36b9820c47acef40863faec91, type: 2}
 --- !u!114 &8059518751559146161
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
-  m_Name: Bomb
+  m_Name: Spikes
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: c242fdf21f424524c8a3ab0731c2cdf2, type: 3}
+  image: {fileID: 21300000, guid: 837a3c8bbd31ca6488572646e0d66675, type: 3}
   occupiesDefaultPosition: 1
-  isBomb: 1
-  type: 2
-  prefab: {fileID: 4931527618399224498, guid: b35df5a1c6fd99a4a8194a74ea7f1430, type: 3}
+  isBomb: 0
+  type: 1
+  prefab: {fileID: 3427985848486821572, guid: e5c46ae2a7558504ab4eef9ee0a6bb89, type: 3}
   mirrorInsteadOfRotate: 0
   localOccupationSpots: []

@@ -55,12 +55,12 @@ public class BaseMap : MonoBehaviourPun
         }
     }
 
-    public AllMapOccupationObjects mapOccupations;
+    public MapOccupationList mapOccupations;
 
-    public List<MapOccupationObject> AllMapOccupationObjects => mapOccupations.mapOccupations;
+    public List<MapOccupationObject> AllMapOccupationObjects => mapOccupations.MapOccupations;
 
 
-    public List<MapOccupationObject> randomReceivableMapOccupationObjects;
+    public MapOccupationList randomReceivableMapOccupationObjects;
 
     protected Vector2Int startPoint;
 
@@ -131,7 +131,7 @@ public class BaseMap : MonoBehaviourPun
         if (index == 0)
             return AllMapOccupationObjects;
         else
-            return randomReceivableMapOccupationObjects;
+            return randomReceivableMapOccupationObjects.MapOccupations;
     }
 
     protected enum OccupationList { All = 0, OnlyRandomRotation = 1}
@@ -212,6 +212,7 @@ public class BaseMap : MonoBehaviourPun
             placeableBehaviour.occupation = occupation;
             placeableBehaviour.OnPlace(this);
         }
+        occupation.occupationObject.ApplyToObject(g);
         return g;
     }
 

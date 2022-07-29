@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
-  m_Name: CastleCube
+  m_Script: {fileID: 11500000, guid: 3b5106664493da34d9753b67199f4ab6, type: 3}
+  m_Name: Castle
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: a978d9735a91e454fb764a239f8c6c5f, type: 3}
+  occupiesDefaultPosition: 1
   isBomb: 0
   type: 0
   prefab: {fileID: 6555900473171233107, guid: a9726f1137cf90840803f2eba2a5f34c, type: 3}
   mirrorInsteadOfRotate: 0
   localOccupationSpots: []
+  cubeSprite: {fileID: 21300000, guid: a978d9735a91e454fb764a239f8c6c5f, type: 3}
+  spriteColor: {r: 1, g: 1, b: 1, a: 1}

@@ -14,7 +14,7 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     protected List<int> availableRotation;
 
-    protected List<MapOccupationObject> MapOccupationObjects => baseMap.randomReceivableMapOccupationObjects;
+    protected List<MapOccupationObject> MapOccupationObjects => baseMap.randomReceivableMapOccupationObjects.MapOccupations;
 
     public int NumberItems => GameCycle.NumberPlayers + 2;
 

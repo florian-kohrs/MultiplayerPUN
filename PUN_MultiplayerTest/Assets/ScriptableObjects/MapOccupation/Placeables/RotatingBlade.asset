@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: RotatingBlade
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 33a6d83cfc149ed4ea5453a88b77493e, type: 3}
+  occupiesDefaultPosition: 1
   isBomb: 0
-  type: 0
+  type: 1
   prefab: {fileID: 2760899490436948470, guid: 86327c5ff98d0094da8162bd504178ae, type: 3}
   mirrorInsteadOfRotate: 1
   localOccupationSpots: []

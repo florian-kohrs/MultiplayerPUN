@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: MovingPlattform
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 4e285552c2d3d3a41a2af55caba94780, type: 3}
+  image: {fileID: 21300000, guid: e273578f3cea3284195a660401b649f3, type: 3}
+  occupiesDefaultPosition: 0
   isBomb: 0
   type: 0
-  prefab: {fileID: 0}
+  prefab: {fileID: 490776363658132317, guid: 2c04e51e9b5d78648bda135d97535f26, type: 3}
   mirrorInsteadOfRotate: 0
   localOccupationSpots: []
