@@ -21,19 +21,30 @@ public class PlayerDesigner : MonoBehaviourPun
 
     protected List<ListSelection> selections;
 
+    protected bool calledStart = false;
+
     protected void Start()
     {
+        if (calledStart)
+            return;
+
+        calledStart = true;
         bool show = !PhotonNetwork.IsConnected || photonView.IsMine;
         StartDesigner(show);
         if (show)
         {
             GameCycle.AddGameStartCallback(HideDesigners);
+            NetworkGameManager.AddPlayerJoinedListener(delegate { DesignChanged(); });
         }
+
     }
+
+
 
     [PunRPC]
     protected void UpdatePlayerLooks(int hatIndex, int hairIndex, int beardIndex, int otherIndex)
     {
+        Start();
         selections[0].UpdateSelection(hatIndex);
         selections[1].UpdateSelection(hairIndex);
         selections[2].UpdateSelection(beardIndex);

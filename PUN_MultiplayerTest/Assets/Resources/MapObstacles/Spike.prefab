@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da1ee2ff3fcd2947929495a9e03df23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placedByPlayerId: 0
   impactForce: 5
   breakOnCollision: 0
 --- !u!1001 &8806857455862737083

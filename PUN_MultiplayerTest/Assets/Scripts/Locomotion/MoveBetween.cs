@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveBetween : MonoBehaviour
+public class MoveBetween : BasePlaceableBehaviours
 {
     public Transform from;
     public Transform to;

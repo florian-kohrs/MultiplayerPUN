@@ -25,6 +25,11 @@ public class Katapult : ProjectileDispenser
     {
         projectileInstance = Instantiate(projectile,projectileParent, false);
         projectileInstance.GetComponent<Rigidbody2D>().gravityScale = 0;
+        IHasPlacedById placedBy = projectileInstance.GetComponentInChildren<IHasPlacedById>();
+        if (placedBy != null)
+        {
+            placedBy.PlacedByPlayerID = PlacedByPlayerID;
+        }
     }
 
     public override void Fire()

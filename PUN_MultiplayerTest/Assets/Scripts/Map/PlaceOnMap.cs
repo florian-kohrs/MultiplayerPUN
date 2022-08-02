@@ -111,7 +111,6 @@ public class PlaceOnMap : MonoBehaviour
             else if (map.PlaceDuringRounds(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation))
             {
                 RemovePreview();
-                CamMover.SetToGameView();
                 enabled = false;
                 onDone?.Invoke();
             }

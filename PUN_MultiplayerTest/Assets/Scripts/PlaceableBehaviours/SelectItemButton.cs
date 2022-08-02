@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class SelectItemButton : MonoBehaviour
 {
 
-    protected Action<int> callback;
+    protected Action<int, int> callback;
     protected int objectIndex;
     protected MapOccupationObject mapObject;
     protected int index;
 
     public bool canBeClicked = true;
 
-    public void CreateItemSelection(int index, MapOccupationObject occupation, int occupationObjectIndex, Action<int> onItemSelected)
+    public void CreateItemSelection(int index, MapOccupationObject occupation, int occupationObjectIndex, Action<int, int> onItemSelected)
     {
         callback = onItemSelected;
         mapObject = occupation; 
@@ -27,7 +27,7 @@ public class SelectItemButton : MonoBehaviour
     {
         if (canBeClicked)
         {
-            callback(objectIndex);
+            callback(objectIndex, index);
         }
     }
 

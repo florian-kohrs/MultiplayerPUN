@@ -94,20 +94,20 @@ public class SelectItemToPlace : MonoBehaviourPun
         return g;
     }
 
-    protected void PlayerSelectedItem(int index)
+    protected void PlayerSelectedItem(int objectIndex, int btnIndex)
     {
-        Broadcast.SafeRPC(photonView, nameof(DestroySeletionButton), RpcTarget.All, ()=>DestroySeletionButton(index), index);
+        Broadcast.SafeRPC(photonView, nameof(DestroySelectionButton), RpcTarget.All, ()=>DestroySelectionButton(btnIndex), btnIndex);
         foreach (SelectItemButton button in buttons)
         {
             if(button != null)
                 button.canBeClicked = false;
         }
-        objectSelectedCallback(index);
+        objectSelectedCallback(objectIndex);
     }
 
 
     [PunRPC]
-    protected void DestroySeletionButton(int index)
+    protected void DestroySelectionButton(int index)
     {
         DestroyButton(index);
     }

@@ -43,7 +43,7 @@ public class SelectAnyItemToPlace : MonoBehaviour
         return g;
     }
 
-    protected void SelectedItem(int index)
+    protected void SelectedItem(int index, int btnIndex)
     {
         currentSelectedItemUI.sprite = MapOccupationObjects[index].image;
         placer.BeginPlace(index, null);

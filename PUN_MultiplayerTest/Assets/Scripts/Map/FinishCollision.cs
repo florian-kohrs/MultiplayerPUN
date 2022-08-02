@@ -7,8 +7,8 @@ public class FinishCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Player p = collision.gameObject.GetComponentInParent<Player>();
-        if (p != null && p.SetPlayerReachedTarget())
+        PlayerState p = collision.gameObject.GetComponentInParent<PlayerState>();
+        if (p != null && p.SetPlayerReachedTarget(p.OwnerActorNumber))
         {
             Debug.Log($"Player {p.playerName} reached target");
         }

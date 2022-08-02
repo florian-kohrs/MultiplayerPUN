@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,22 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     public LevelSelection levelSelection;
 
+    protected static NetworkGameManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    protected List<Action<Photon.Realtime.Player>> OnPlayerConnected = new List<Action<Photon.Realtime.Player>>();
+
+    public static void AddPlayerJoinedListener(Action<Photon.Realtime.Player> callback)
+    {
+        instance.OnPlayerConnected.Add(callback);
+    }
+
+
+
     #region Photon Callbacks
 
 
@@ -27,19 +44,20 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     }
 
 
-    //public override void OnPlayerEnteredRoom(Player other)
-    //{
-    //    Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
+    public override void OnPlayerEnteredRoom(Player other)
+    {
+        OnPlayerConnected.ForEach(f => f(other));
+
+        //Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
 
 
-    //    if (PhotonNetwork.IsMasterClient)
-    //    {
-    //        Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
-
-    //        LoadArena();
-    //    }
-    //}
+        //    LoadArena();
+        //}
+    }
 
 
     //public override void OnPlayerLeftRoom(Player other)
@@ -69,7 +87,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        gameCycle.StartGame(10, Random.Range(0,999999), levelSelection.SelectedMap);
+        gameCycle.StartGame(10, UnityEngine.Random.Range(0,999999), levelSelection.SelectedMap);
         levelSelection.gameObject.SetActive(false);
     }
 

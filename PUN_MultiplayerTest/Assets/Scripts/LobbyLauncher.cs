@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LobbyLauncher : MonoBehaviourPunCallbacks
@@ -11,7 +12,9 @@ public class LobbyLauncher : MonoBehaviourPunCallbacks
 
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
     [SerializeField]
-    private byte maxPlayersPerRoom = 4;
+    private byte maxPlayersPerRoom = 8;
+
+    public TMP_InputField playerName;
 
     #endregion
 
@@ -69,6 +72,10 @@ public class LobbyLauncher : MonoBehaviourPunCallbacks
         }
     }
 
+    public void UpdateName()
+    {
+        PhotonNetwork.LocalPlayer.NickName = playerName.text;
+    }
 
     #endregion
 

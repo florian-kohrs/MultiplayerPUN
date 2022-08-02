@@ -98,7 +98,7 @@ public class BaseMap : MonoBehaviourPun
         {
             if (item.Element == null || item.Element.occupationObject == null)
                 continue;
-            Place(item.Element.occupationObject, item.Index, item.Element.orientation, false);
+            Place(-1,item.Element.occupationObject, item.Index, item.Element.orientation, false);
         }
     }
 
@@ -110,14 +110,13 @@ public class BaseMap : MonoBehaviourPun
 
     }
 
-    public void PositionPlayers(List<Player> players)
+    public void PositionPlayers()
     {
-        foreach (Player p in players)
+        GameCycle.IterateOverPlayers((p) =>
         {
             Vector3 pos = MapIndexToGlobalPosition(startPoint) + PlayerOffset;
             p.GetActualPlayer().position = pos;
-            //p.body.MovePosition(pos);
-        }
+        });
     }
 
 
@@ -139,7 +138,7 @@ public class BaseMap : MonoBehaviourPun
     public bool PlaceGeneration(int occupationIndex, int originX, int originY, int rotationIndex)
     {
         //Broadcast.SafeRPC(view, nameof(Place))
-        return Place(occupationIndex, originX, originY, rotationIndex, OccupationList.All, false);
+        return Place(-1, occupationIndex, originX, originY, rotationIndex, OccupationList.All, false);
     }
 
 
@@ -148,9 +147,10 @@ public class BaseMap : MonoBehaviourPun
         bool canPlace = CanPlace(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation);
         if (canPlace)
         {
+            int playerId = PhotonNetwork.IsConnected ? PhotonNetwork.LocalPlayer.ActorNumber : 0;
             Broadcast.SafeRPC(View, nameof(Place), RpcTarget.All,
-                () => { Place(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true); },
-                occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true);
+                () => { Place(playerId, occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true); },
+                playerId, occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true);
         }
         return canPlace;
     }
@@ -170,14 +170,14 @@ public class BaseMap : MonoBehaviourPun
 
 
     [PunRPC]
-    protected bool Place(int occupationIndex, int originX, int originY, int rotationIndex, OccupationList listIndex, bool destroyable)
+    protected bool Place(int playerId, int occupationIndex, int originX, int originY, int rotationIndex, OccupationList listIndex, bool destroyable)
     {
         MapOccupationObject occupation = ListFromIndex((int)listIndex)[occupationIndex];
         Vector2Int origin = new Vector2Int(originX, originY);
-        return Place(occupation, origin, rotationIndex, destroyable);
+        return Place(playerId, occupation, origin, rotationIndex, destroyable);
     }
 
-    protected bool Place(MapOccupationObject occupation, Vector2Int origin, int rotationIndex, bool destroyable)
+    protected bool Place(int playerId, MapOccupationObject occupation, Vector2Int origin, int rotationIndex, bool destroyable)
     {
         bool result = CanPlace(occupation, origin, rotationIndex);
         if (result)
@@ -195,14 +195,14 @@ public class BaseMap : MonoBehaviourPun
             else
                 rotation = GetObjectRotation(rotationIndex);
 
-            mapOccupation.gameObject = Spawn(mapOccupation, MapIndexToGlobalPosition(origin), rotation, scale);
+            mapOccupation.gameObject = Spawn(playerId, mapOccupation, MapIndexToGlobalPosition(origin), rotation, scale);
         }
         return result;
     }
 
 
 
-    protected GameObject Spawn(MapOccupation occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
+    protected GameObject Spawn(int playerId,MapOccupation occupation, Vector3 pos, Quaternion rotation, Vector3 scale)
     {
         GameObject g = Instantiate(occupation.occupationObject.prefab, pos, rotation);
         g.transform.localScale = scale;
@@ -212,6 +212,11 @@ public class BaseMap : MonoBehaviourPun
             placeableBehaviour.occupation = occupation;
             placeableBehaviour.OnPlace(this);
         }
+        IHasPlacedById placedBy = g.GetComponentInChildren<IHasPlacedById>();
+        if(placedBy != null)
+        {
+            placedBy.PlacedByPlayerID = playerId;
+        }    
         occupation.occupationObject.ApplyToObject(g);
         return g;
     }
@@ -265,7 +270,9 @@ public class BaseMap : MonoBehaviourPun
 
     protected bool AreAllInBounds(Vector2Int pos, int rotation, MapOccupationObject mapObject)
     {
-        bool result = true;
+        bool result = IsInBounds(pos);
+        if (!result)
+            return result;
         foreach (var spot in mapObject.GetAllOccupations(pos, rotation))
         {
             if (!IsInBounds(spot))

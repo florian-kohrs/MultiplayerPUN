@@ -7,6 +7,14 @@ using UnityEngine;
 public class GameCycle : MonoBehaviourPun
 {
 
+    public const int KILL_POINTS = 100;
+
+    public const int ANIMATE_POINTS_DURATION = 5; 
+
+    public const int FINISH_POINTS = 200;
+
+    public const float FINISH_FIRST_MULTIPLIER = 1.5f;
+
     public static GameCycle instance;
 
     public static Vector2Int MapSize => instance.map.Dimensions;
@@ -21,19 +29,32 @@ public class GameCycle : MonoBehaviourPun
 
     protected int selectedObjectIndex;
 
-    protected List<Player> players;
-
     public GameObject startGameButton;
 
     public List<Action> OnGameStartCallback = new List<Action>();
 
     protected bool isInGame = false;
 
+    public static bool IsFirst => instance.remainingPlayersInRound == instance.MaxPlayers;
+
+    public static float GetFinishReward()
+    {
+        if (IsFirst)
+            return FINISH_FIRST_MULTIPLIER;
+        else
+            return 1;
+    }
+
     private void Awake()
     {
         instance = this;
     }
 
+
+    public void AnimatePoints()
+    {
+
+    }
 
 
     public static void AddGameStartCallback(Action onStart)
@@ -43,13 +64,22 @@ public class GameCycle : MonoBehaviourPun
 
     public static bool GameStarted => instance.isInGame;
 
-    public int MaxPlayers => players.Count;
+    public int MaxPlayers => NumberPlayers;
 
     protected int remainingPlayersInRound;
     protected int remainingSelecting;
     protected int remainingPlacing;
 
-    public static int NumberPlayers => Player.playerCount;
+    public static int NumberPlayers
+    {
+        get
+        {
+            if (PhotonNetwork.IsConnected)
+                return PhotonNetwork.CurrentRoom.PlayerCount;
+            else
+                return 1;
+        }
+    }
 
     protected int maxRounds;
 
@@ -150,19 +180,52 @@ public class GameCycle : MonoBehaviourPun
 
     protected void BeginRound()
     {
-        players = Player.players;
         remainingPlayersInRound = MaxPlayers;
         ResetPlayers();
+        placeOnMap.CamMover.SetToGameView();
+    }
+
+    public static void IterateOverPlayers(Action<PlayerState> f)
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            foreach (var kv in PhotonNetwork.CurrentRoom.Players)
+            {
+                PlayerState p = kv.Value.TagObject as PlayerState;
+                if (p == null)
+                {
+                    Debug.LogWarning("Player is null! Propably shouldnt be!");
+                }
+                else
+                {
+                    f(p);
+                }
+            }
+        }
+        else
+        {
+            foreach (var p in FindObjectsOfType<PlayerState>())
+            {
+                if (p == null)
+                {
+                    Debug.LogWarning("Player is null! Propably shouldnt be!");
+                }
+                else
+                {
+                    f(p);
+                }
+            }
+        }
     }
 
     protected void ResetPlayers()
     {
-        map.PositionPlayers(players);
-        foreach (Player player in players)
+        map.PositionPlayers();
+        IterateOverPlayers((p) =>
         {
-            player.ResetValues();
-            player.GetActualPlayer().gameObject.SetActive(true);
-        }
+            p.ResetValues();
+            p.GetActualPlayer().gameObject.SetActive(true);
+        });
     }
 
 
