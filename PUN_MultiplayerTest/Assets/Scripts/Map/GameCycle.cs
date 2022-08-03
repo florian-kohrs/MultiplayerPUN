@@ -7,13 +7,15 @@ using UnityEngine;
 public class GameCycle : MonoBehaviourPun
 {
 
-    public const int KILL_POINTS = 100;
-
-    public const int ANIMATE_POINTS_DURATION = 5; 
+    public const int KILL_POINTS = 75;
 
     public const int FINISH_POINTS = 200;
 
     public const float FINISH_FIRST_MULTIPLIER = 1.5f;
+
+    public int maxPointsToFinish = 1200;
+
+    public static int MaxPointsToFinish => instance.maxPointsToFinish;
 
     public static GameCycle instance;
 
@@ -32,6 +34,8 @@ public class GameCycle : MonoBehaviourPun
     public GameObject startGameButton;
 
     public List<Action> OnGameStartCallback = new List<Action>();
+
+    public PlayerPoints playerPoints;
 
     protected bool isInGame = false;
 
@@ -53,7 +57,7 @@ public class GameCycle : MonoBehaviourPun
 
     public void AnimatePoints()
     {
-
+        playerPoints.AnimatePointsForRound(EnterObjectSelectingPhase);
     }
 
 
@@ -115,20 +119,31 @@ public class GameCycle : MonoBehaviourPun
     }
 
 
+
     public void PlayerDoneRunning()
     {
         remainingPlayersInRound--;
         if(remainingPlayersInRound <= 0)
         {
             currentRound++;
-            if(currentRound >= maxRounds)
+            if (currentRound >= maxRounds)
                 EndGame();
             else
-                EnterObjectSelectingPhase();
+                AnimatePoints();
         }
     }
 
+    protected void IsGameDone()
+    {
+
+    }
+
     protected void EndGame()
+    {
+        playerPoints.AnimatePointsForRound(WrapGameUp);
+    }
+
+    protected void WrapGameUp()
     {
 
     }
@@ -182,6 +197,7 @@ public class GameCycle : MonoBehaviourPun
     {
         remainingPlayersInRound = MaxPlayers;
         ResetPlayers();
+        map.StartNewRound();
         placeOnMap.CamMover.SetToGameView();
     }
 

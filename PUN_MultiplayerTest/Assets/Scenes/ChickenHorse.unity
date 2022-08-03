@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &52557781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 52557781, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
+  m_PrefabInstance: {fileID: 1385948292}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d4ac3c162a64c43abb94b426db9e6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &313440273 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 313440273, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
@@ -261,6 +272,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 52557779, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
+      propertyPath: m_Name
+      value: PlayersPointsPrefab
+      objectReference: {fileID: 0}
     - target: {fileID: 5872719454312077291, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
       propertyPath: gameCycle
       value: 
@@ -331,6 +346,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8059518750776171490, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: pointsGrid
+      value: 
+      objectReference: {fileID: 52557781}
     - target: {fileID: 8059518751559146158, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
       propertyPath: m_Name
       value: Map

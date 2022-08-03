@@ -14,4 +14,6 @@ public class BasePlaceableBehaviours : MonoBehaviour, IHasPlacedById
 
     public virtual void OnPlace(BaseMap map) { }
 
+    public virtual void ResetOnNewRound() { }
+
 }

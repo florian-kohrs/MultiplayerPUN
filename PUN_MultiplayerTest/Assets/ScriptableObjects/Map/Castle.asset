@@ -4693,8 +4693,8 @@ MonoBehaviour:
   - Index0: 22
     Index1: 8
     Element:
-      occupationObject: {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
-      origin: {x: 22, y: 8}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 22

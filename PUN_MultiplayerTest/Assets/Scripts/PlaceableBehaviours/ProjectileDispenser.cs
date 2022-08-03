@@ -15,6 +15,7 @@ public abstract class ProjectileDispenser : BasePlaceableBehaviours
 
     protected void Start()
     {
+        StopAllCoroutines();
         StartCoroutine(DispenseCoroutine());
     }
 

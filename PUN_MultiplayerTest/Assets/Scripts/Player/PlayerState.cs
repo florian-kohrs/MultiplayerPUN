@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,30 @@ using UnityEngine;
 public class PlayerState : MonoBehaviourPun
 {
 
-    public PlayerState GetPlayerFromId(int id)
+    public Player GetPlayerFromId(int id)
     {
         if (PhotonNetwork.IsConnected)
-            return (PlayerState)PhotonNetwork.CurrentRoom.Players[id].TagObject;
+            return PhotonNetwork.CurrentRoom.Players[id];
+        else
+            return null;
+    }
+
+    public PlayerState GetPlayerStateFromId(int id)
+    {
+        if (PhotonNetwork.IsConnected)
+            return (PlayerState)GetPlayerFromId(id).TagObject;
         else
             return this;
+    }
+
+    public Player GetPlayer(MonoBehaviourPun pun)
+    {
+        return GetPlayerFromId(pun.photonView.OwnerActorNr);
+    }
+
+    public PlayerState GetPlayerState(MonoBehaviourPun pun)
+    {
+        return (PlayerState)GetPlayer(pun).TagObject;
     }
 
     public int OwnerActorNumber
@@ -24,6 +43,10 @@ public class PlayerState : MonoBehaviourPun
                 return 0;
         }
     }
+        
+
+
+    public float pointMultiplier = 1;
 
     public Rigidbody2D body;
 
@@ -37,11 +60,15 @@ public class PlayerState : MonoBehaviourPun
 
     public bool FreezePlayer => !IsAlive || HasReachedTarget;
 
-    public int Points;
+    public int killedInRound = 0;
 
-    protected int killedInRound = 0;
+    public float arrivedPointsInRound = 0;
 
-    protected float arrivedPointsInRound = 0;
+    public void ResetRoundPoints()
+    {
+        killedInRound = 0;
+        arrivedPointsInRound = 0;
+    }
 
     public int KilledInRound
     {
@@ -58,8 +85,12 @@ public class PlayerState : MonoBehaviourPun
 
     private void Start()
     {
-        if(PhotonNetwork.IsConnected)
-            PhotonNetwork.CurrentRoom.Players[photonView.OwnerActorNr].TagObject = this;
+        if (PhotonNetwork.IsConnected)
+        {
+            Player p = GetPlayer(this);
+            p.TagObject = this;
+            playerName = p.NickName;
+        }
 
         transform.position = Vector3.zero;
 
@@ -77,10 +108,10 @@ public class PlayerState : MonoBehaviourPun
         if (!hasReachedTarget && isAlive)
         {
             int actorId = OwnerActorNumber;
-            bool selfKill = killeyById == actorId;
+            bool pointsForKill = killeyById > 0 && killeyById != actorId;
             isAlive = false;
             SwitchCameras();
-            Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerDied), RpcTarget.All, ()=>PlayerDied(actorId, selfKill), actorId, selfKill);
+            Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerDied), RpcTarget.All, ()=>PlayerDied(killeyById, pointsForKill), killeyById, pointsForKill);
         }
         return !isAlive;
     }
@@ -94,13 +125,13 @@ public class PlayerState : MonoBehaviourPun
     }
 
     [PunRPC]
-    protected void PlayerDied(int killedByPlayerID, bool killerGetsPoints)
+    protected void PlayerDied(int killedByPlayerID, bool pointsForKill)
     {
         isAlive = false;
-        if (killerGetsPoints)
+        if (pointsForKill && killedByPlayerID > 0)
         {
-            GetPlayerFromId(killedByPlayerID).killedInRound++;
-            Debug.Log(GetPlayerFromId(killedByPlayerID).playerName + " got points for a kill;");
+            GetPlayerStateFromId(killedByPlayerID).killedInRound++;
+            //Debug.Log(GetPlayerFromId(killedByPlayerID).playerName + " got points for a kill");
         }
             GameCycle.instance.PlayerDoneRunning();
     }
@@ -119,6 +150,7 @@ public class PlayerState : MonoBehaviourPun
 
     public void ResetValues()
     {
+        ResetRoundPoints();
         body.velocity = default;
         hasReachedTarget = false;
         isAlive = true;
@@ -142,7 +174,7 @@ public class PlayerState : MonoBehaviourPun
     {
         hasReachedTarget = true;
         body.velocity = default;
-        GetPlayerFromId(playerId).arrivedPointsInRound += GameCycle.GetFinishReward();
+        GetPlayerStateFromId(playerId).arrivedPointsInRound += GameCycle.GetFinishReward();
 
         GameCycle.instance.PlayerDoneRunning();
     }

@@ -14,10 +14,12 @@ public class Katapult : ProjectileDispenser
 
     protected Quaternion startRotation;
 
+    protected GameObject lastFlungProjectile;
+
     protected new void Start()
     {
-        CreateProjectile();
         startRotation = rotateAnchor.rotation;
+        ResetKatapult();
         base.Start();
     }
 
@@ -30,6 +32,17 @@ public class Katapult : ProjectileDispenser
         {
             placedBy.PlacedByPlayerID = PlacedByPlayerID;
         }
+    }
+
+
+    public override void ResetOnNewRound()
+    {
+        if (lastFlungProjectile != null)
+            Destroy(lastFlungProjectile);
+        if (projectileInstance != null)
+            Destroy(projectileInstance);
+
+        Start();
     }
 
     public override void Fire()
@@ -50,8 +63,13 @@ public class Katapult : ProjectileDispenser
         } while (rotateTime < rotateDuration);
         UpdateKatapult(1);
         ReleaseProjectile();
-        rotateAnchor.rotation = startRotation;
+        ResetKatapult();
+    }
+
+    protected void ResetKatapult()
+    {
         CreateProjectile();
+        rotateAnchor.rotation = startRotation;
     }
 
     protected void UpdateKatapult(float progress)
@@ -70,6 +88,7 @@ public class Katapult : ProjectileDispenser
         projectileInstance.GetComponentInChildren<CircleCollider2D>().enabled = true;
         body.gravityScale = 1;
         Destroy(projectileInstance, 10);
+        lastFlungProjectile = projectileInstance;
         projectileInstance = null;
     }
 

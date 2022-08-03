@@ -55,6 +55,8 @@ public class BaseMap : MonoBehaviourPun
         }
     }
 
+    protected List<BasePlaceableBehaviours> allPlacedBehaviours = new List<BasePlaceableBehaviours>();
+
     public MapOccupationList mapOccupations;
 
     public List<MapOccupationObject> AllMapOccupationObjects => mapOccupations.MapOccupations;
@@ -67,6 +69,11 @@ public class BaseMap : MonoBehaviourPun
     public void SetStartPoint(Vector2Int startPoint)
     {
         this.startPoint = startPoint;
+    }
+
+    public void StartNewRound()
+    {
+        allPlacedBehaviours.ForEach(b => b.ResetOnNewRound());
     }
 
 
@@ -87,6 +94,7 @@ public class BaseMap : MonoBehaviourPun
                 DestroyOccupations(occ);
             }
         }
+        allPlacedBehaviours.Clear();
         occupationMap = new MapOccupation[Dimensions.x, Dimensions.y];
     }
 
@@ -209,13 +217,14 @@ public class BaseMap : MonoBehaviourPun
         BasePlaceableBehaviours placeableBehaviour = g.GetComponent<BasePlaceableBehaviours>();
         if (placeableBehaviour != null)
         {
+            allPlacedBehaviours.Add(placeableBehaviour);
             placeableBehaviour.occupation = occupation;
             placeableBehaviour.OnPlace(this);
         }
-        IHasPlacedById placedBy = g.GetComponentInChildren<IHasPlacedById>();
+        IHasPlacedById[] placedBy = g.GetComponentsInChildren<IHasPlacedById>();
         if(placedBy != null)
         {
-            placedBy.PlacedByPlayerID = playerId;
+            placedBy.ToList().ForEach(p => p.PlacedByPlayerID = playerId);
         }    
         occupation.occupationObject.ApplyToObject(g);
         return g;
@@ -238,6 +247,7 @@ public class BaseMap : MonoBehaviourPun
 
     protected void ClearOccupation(MapOccupation occupation)
     {
+        allPlacedBehaviours.Remove(occupation.gameObject.GetComponent<BasePlaceableBehaviours>());
         Destroy(occupation.gameObject);
         foreach (var spot in occupation.GetAllOccupations())
         {

@@ -261,10 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3103e9dd77856514a8d7ba8284ba4a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointMultiplier: 1
   body: {fileID: 1121690301493637880}
   camMover: {fileID: 1997145625412938058}
   playerName: 
-  Points: 0
+  killedInRound: 0
+  arrivedPointsInRound: 0
 --- !u!114 &1513665899
 MonoBehaviour:
   m_ObjectHideFlags: 0
