@@ -54,6 +54,9 @@ public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
     {
         get
         {
+            if (didSlidingJump)
+                return 0;
+
             int sign = 0;
             if(IsSlidingRight && inputDir.x > 0)
                 sign = 1;

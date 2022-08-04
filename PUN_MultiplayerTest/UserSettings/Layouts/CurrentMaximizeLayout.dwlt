@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 49086
+  controlID: 464
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 49087
+  controlID: 465
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 49088
+  controlID: 443
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -227,7 +227,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: fc63fbff2465fbff2665fbffbcd1fbffc4d7fbffeed8fbffacd9fbff3e04fcfff404fcffe609fcfff009fcff0224fcffc024fcffb229fcffbc29fcfff232fcff8c33fcff9a33fcff1234fcff1a34fcff1c34fcffae47fcff6050fcff1051fcff8051fcff8851fcff8a51fcff805dfcff985efcfff05efcff405ffcff485ffcffb85ffcffc05ffcffc25ffcffc485fcff3c86fcff4486fcff4686fcff9695fcff9e95fcffa095fcffb8aefcffd2aefcffeaaffcff9ab0fcff0ab1fcff12b1fcff14b1fcff0ac9fcffbac9fcff2acafcff32cafcff34cafcfffedcfcff18ddfcff3addfcff60e0fcff08e1fcff10e1fcff80e1fcff88e1fcff8ae1fcff42e4fcfff8e4fcffeae9fcfff4e9fcff480afdff5a0bfdff0a0cfdff7a0cfdff820cfdff840cfdff802dfdff4e8afdffc68afdffe08afdffc226feffc426feffa829feff1c2bfeff562bfeff8c2bfeff942bfeff962bfeff2efbfffff4ffffff
+      m_ExpandedIDs: 64f2ffff1af3ffff64f7ffff6ef7ffff2efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -270,8 +270,8 @@ MonoBehaviour:
     y: 0
     width: 575
     height: 566
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -792,22 +792,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/MapObstacles
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 61
   m_LastFolders:
-  - Assets/Resources/MapObstacles
+  - Assets/Scenes
   m_LastFoldersGridSize: 61
   m_LastProjectPath: D:\User\Florian\Desktop\Programmieren\Unity Projekte\Games\Git\MultiplayerPUN\PUN_MultiplayerTest
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 124}
-    m_SelectedIDs: 84720000
-    m_LastClickedID: 29316
-    m_ExpandedIDs: 000000006472000066720000687200006a7200006c72000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 95}
+    m_SelectedIDs: 9a720000
+    m_LastClickedID: 29338
+    m_ExpandedIDs: 00000000727200007472000076720000787200007a72000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -835,7 +835,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006472000066720000687200006a7200006c72000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000727200007472000076720000787200007a72000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -860,10 +860,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: ec63fbff
-    m_LastClickedInstanceID: -302100
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c6230000ca9800006e76000084760000ba750000b4750000c0750000c675000030760000367300005a7a0000b884000000000000d68400002e8500001abc0000b66f00008c6f0000
+    m_ExpandedInstanceIDs: c6230000ca9800006e76000084760000ba750000b4750000c0750000c675000030760000367300005a7a0000b884000000000000d68400002e8500001abc0000b66f00008c6f00006a780000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -890,7 +890,7 @@ MonoBehaviour:
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 61
   m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 246
+  m_DirectoriesAreaWidth: 247
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -938,8 +938,8 @@ MonoBehaviour:
     y: 0
     width: 435
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -979,7 +979,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -302100
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

@@ -230,6 +230,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb9b306fa9fd93043b98654f050f5e08, type: 2}
   - {fileID: 11400000, guid: 1a1803e4ca2935e4587949157b12c067, type: 2}
   - {fileID: 11400000, guid: 2203a7824a886064ca7343a5ab9aa927, type: 2}
+  - {fileID: 11400000, guid: 9f53f5bc96faf2540828a67acce42ee4, type: 2}
   startAreaIndex: 0
   finishAreaIndex: 1
   map: {fileID: 8059518751559146159}

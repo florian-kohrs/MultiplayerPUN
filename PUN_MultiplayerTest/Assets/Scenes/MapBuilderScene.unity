@@ -801,7 +801,7 @@ MonoBehaviour:
   mapOccupations: {fileID: 11400000, guid: 05f28ae64a922b04f898ea99d4fdcd4f, type: 2}
   randomReceivableMapOccupationObjects: {fileID: 0}
   cam: {fileID: 2056452468}
-  currentMapDesign: {fileID: 11400000, guid: 2203a7824a886064ca7343a5ab9aa927, type: 2}
+  currentMapDesign: {fileID: 11400000, guid: 9f53f5bc96faf2540828a67acce42ee4, type: 2}
   mapMarker: {fileID: 812187347}
 --- !u!4 &2056452464
 Transform:
@@ -892,8 +892,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb242e1db77687c4d84227f850e9f295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPointsToFinish: 1200
   map: {fileID: 2056452463}
   placeOnMap: {fileID: 2056452466}
   mapGenerator: {fileID: 0}
   selectItem: {fileID: 0}
   startGameButton: {fileID: 0}
+  playerPoints: {fileID: 0}

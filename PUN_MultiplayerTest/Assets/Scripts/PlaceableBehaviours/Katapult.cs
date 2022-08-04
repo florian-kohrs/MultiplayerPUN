@@ -16,9 +16,14 @@ public class Katapult : ProjectileDispenser
 
     protected GameObject lastFlungProjectile;
 
+    protected bool calledStart = false;
+
     protected new void Start()
     {
-        startRotation = rotateAnchor.rotation;
+        if (!calledStart)
+            startRotation = rotateAnchor.rotation;
+
+        calledStart = true;
         ResetKatapult();
         base.Start();
     }
