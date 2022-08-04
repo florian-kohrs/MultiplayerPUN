@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
 {
@@ -138,6 +139,13 @@ public class Locomotion2D : PunLocalBehaviour, IVector2InputListener
     // Update is called once per frame
     void Update()
     {
+
+        if(Keyboard.current.rKey.isPressed)
+        {
+            //body.AddTorque(25 * Time.deltaTime);
+            body.transform.Rotate(0, 360 * Time.deltaTime, 0);
+        }
+
         if (GameCycle.GameStarted)
         {
             if (IsFalling)

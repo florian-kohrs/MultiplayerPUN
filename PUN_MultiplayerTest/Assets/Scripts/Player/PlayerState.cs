@@ -7,6 +7,19 @@ using UnityEngine;
 public class PlayerState : MonoBehaviourPun
 {
 
+    public static Transform GetLocalPlayerTransform()
+    {
+        return GetLocalPlayer().transform.GetChild(0);
+    }
+
+    public static PlayerState GetLocalPlayer()
+    {
+        if(PhotonNetwork.IsConnected)
+            return PhotonNetwork.LocalPlayer.TagObject as PlayerState;
+        else 
+            return FindObjectOfType<PlayerState>();
+    }
+
     public Player GetPlayerFromId(int id)
     {
         if (PhotonNetwork.IsConnected)
@@ -151,6 +164,7 @@ public class PlayerState : MonoBehaviourPun
     public void ResetValues()
     {
         ResetRoundPoints();
+        GetLocalPlayerTransform().localScale = new Vector3(0.95f, 0.95f, 0.95f);
         body.velocity = default;
         hasReachedTarget = false;
         isAlive = true;

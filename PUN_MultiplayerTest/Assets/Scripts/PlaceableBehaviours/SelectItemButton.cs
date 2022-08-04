@@ -9,8 +9,10 @@ public class SelectItemButton : MonoBehaviour
 
     protected Action<int, int> callback;
     protected int objectIndex;
+    public int ObjectIndex => objectIndex;
     protected MapOccupationObject mapObject;
     protected int index;
+    public int Index => index;
 
     public bool canBeClicked = true;
 

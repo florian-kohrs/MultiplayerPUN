@@ -6,7 +6,7 @@ using UnityEngine;
 public static class ExtensionEnumerable
 {
 
-    public static T GrabOne<T>(this IList<T> ts)
+    public static T TakeRandom<T>(this IList<T> ts)
     {
         return ts[RandomIndex(ts)];
     }

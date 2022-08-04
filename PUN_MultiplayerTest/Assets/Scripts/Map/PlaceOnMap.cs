@@ -32,7 +32,7 @@ public class PlaceOnMap : MonoBehaviour
 
     public bool useAllItems;
 
-    protected List<MapOccupationObject> AllMapOccupations
+    public List<MapOccupationObject> AllMapOccupations
     {
         get
         {
@@ -118,6 +118,7 @@ public class PlaceOnMap : MonoBehaviour
     }
 
 
+
     protected Vector3 GlobalPositionFromMouse()
     {
         Vector3 worldSpace = GetMouseWorldSpace();
@@ -128,6 +129,7 @@ public class PlaceOnMap : MonoBehaviour
     protected void UpdateObjectPreview()
     {
         previewObject.transform.position = GlobalPositionFromMouse();
+        PlayerState.GetLocalPlayerTransform().position = previewObject.transform.position + new Vector3(3,3,6);
         MapOccupationObject activeObject = AllMapOccupations[activeObjectIndex];
 
         if(activeObject.mirrorInsteadOfRotate)
@@ -143,7 +145,7 @@ public class PlaceOnMap : MonoBehaviour
     }
 
 
-    protected Vector3 GetMouseWorldSpace()
+    public static Vector3 GetMouseWorldSpace()
     {
         Vector3 mousePos = Mouse.current.position.ReadValue();
         mousePos.z = Camera.main.nearClipPlane;

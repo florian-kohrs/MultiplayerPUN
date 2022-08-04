@@ -2,11 +2,15 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SelectItemToPlace : MonoBehaviourPun
 {
+
+    public const int TIME_TO_SELECT_ITEM = 30;
 
     public PlaceOnMap placeOnMap;
 
@@ -16,7 +20,7 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     protected List<MapOccupationObject> MapOccupationObjects => baseMap.randomReceivableMapOccupationObjects.MapOccupations;
 
-    public int NumberItems => GameCycle.NumberPlayers + 2;
+    public int NumberItems { get { if (PhotonNetwork.IsConnected) return GameCycle.NumberPlayers + 2; else return 10; } }
 
     protected LayerMask layerMask;
 
@@ -29,20 +33,48 @@ public class SelectItemToPlace : MonoBehaviourPun
     public Vector2Int startPosition;
     public Vector2Int itemOffset;
 
+    protected Transform player;
+
+    public GameObject selectionUIParent;
+
+    public Image selectedItemImage;
+
+    public TextMeshProUGUI text;
+
+    public TextMeshProUGUI timer;
+
+    protected float currentTime;
+
+    protected bool selected = false;
 
     private void Start()
     {
-        //StartSelection(null, new System.Random());
-        //DetermineNextRotation();
+        selectionUIParent.SetActive(false);
+        enabled = false;
     }
 
     protected Action<int> objectSelectedCallback;
 
     public void StartSelection(Action<int> onDone, System.Random rand)
     {
-            //onDone(MapOccupationObjects.RandomIndex());
+        //onDone(MapOccupationObjects.RandomIndex());
+        enabled = true;
+        currentTime = 0;
+        selected = false;
+        selectionUIParent.SetActive(true);
+        selectedItemImage.sprite = null;
+        selectedItemImage.gameObject.SetActive(false);
+        text.text = "Select item";
+        player = PlayerState.GetLocalPlayerTransform();
+        PlayerState.GetLocalPlayer().body.simulated = false;
+        GameCycle.IterateOverPlayers(p => p.GetActualPlayer().localScale *= 5);
         objectSelectedCallback = onDone;
         DetermineNextRotation(rand);
+    }
+
+    protected void SetPlayerToMousePosition()
+    {
+        player.transform.position = PlaceOnMap.GetMouseWorldSpace() + new Vector3(0,0,6);
     }
 
     public void DestroyButton(int index)
@@ -53,6 +85,14 @@ public class SelectItemToPlace : MonoBehaviourPun
         Destroy(buttons[index].gameObject);
         buttons[index] = null;
     }
+
+    public void ClearUpOnAllSelected()
+    {
+        DestroyAllButtons();
+        selectionUIParent.SetActive(false);
+        enabled = false;
+    }
+
 
     public void DestroyAllButtons()
     {
@@ -94,8 +134,29 @@ public class SelectItemToPlace : MonoBehaviourPun
         return g;
     }
 
+    protected void SelectRandomItem()
+    {
+        SelectItemButton b = GetRandomAvailableItemButton();
+        PlayerSelectedItem(b.ObjectIndex, b.Index);
+    }
+
+    protected SelectItemButton GetRandomAvailableItemButton()
+    {
+        List<SelectItemButton> buttons = new List<SelectItemButton>();
+        foreach (SelectItemButton button in buttons)
+        {
+            if (button != null && button.canBeClicked)
+                buttons.Add(button);
+        }
+        return buttons.TakeRandom();
+    }
+
     protected void PlayerSelectedItem(int objectIndex, int btnIndex)
     {
+        selected = true;
+        selectedItemImage.sprite = placeOnMap.AllMapOccupations[objectIndex].image; 
+        selectedItemImage.gameObject.SetActive(true);
+        text.text = "Wait for other players";
         Broadcast.SafeRPC(photonView, nameof(DestroySelectionButton), RpcTarget.All, ()=>DestroySelectionButton(btnIndex), btnIndex);
         foreach (SelectItemButton button in buttons)
         {
@@ -113,10 +174,19 @@ public class SelectItemToPlace : MonoBehaviourPun
     }
 
 
-protected void PositionImage(RectTransform t, int index)
+    protected void PositionImage(RectTransform t, int index)
     {
         Vector2Int pos = startPosition + itemOffset * index;
         t.localPosition = new Vector3(pos.x,pos.y,0);
+    }
+
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+        timer.text = Mathf.RoundToInt(TIME_TO_SELECT_ITEM - currentTime).ToString();
+        SetPlayerToMousePosition();
+        if (currentTime > TIME_TO_SELECT_ITEM && !selected)
+            SelectRandomItem();
     }
 
     //private void Update()

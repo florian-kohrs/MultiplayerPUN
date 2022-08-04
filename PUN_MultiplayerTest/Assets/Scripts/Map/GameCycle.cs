@@ -187,7 +187,7 @@ public class GameCycle : MonoBehaviourPun
 
     protected void EnterObjectPlacingPhase()
     {
-        selectItem.DestroyAllButtons();
+        selectItem.ClearUpOnAllSelected();
         //players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
         remainingPlacing = MaxPlayers;
         placeOnMap.BeginPlace(selectedObjectIndex, CallPlayerDonePlacing);
@@ -195,6 +195,7 @@ public class GameCycle : MonoBehaviourPun
 
     protected void BeginRound()
     {
+        PlayerState.GetLocalPlayer().body.simulated = true;
         remainingPlayersInRound = MaxPlayers;
         ResetPlayers();
         map.StartNewRound();

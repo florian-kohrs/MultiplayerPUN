@@ -191,6 +191,7 @@ public class BaseMap : MonoBehaviourPun
         if (result)
         {
             MapOccupation mapOccupation = new MapOccupation(occupation, origin, rotationIndex, destroyable);
+            mapOccupation.destroyable = destroyable;
             if (!occupation.isBomb)
             {
                 OccupySpace(mapOccupation);
@@ -214,12 +215,15 @@ public class BaseMap : MonoBehaviourPun
     {
         GameObject g = Instantiate(occupation.occupationObject.prefab, pos, rotation);
         g.transform.localScale = scale;
-        BasePlaceableBehaviours placeableBehaviour = g.GetComponent<BasePlaceableBehaviours>();
-        if (placeableBehaviour != null)
+        BasePlaceableBehaviours[] placeableBehaviours = g.GetComponentsInChildren<BasePlaceableBehaviours>();
+        if (placeableBehaviours != null)
         {
-            allPlacedBehaviours.Add(placeableBehaviour);
-            placeableBehaviour.occupation = occupation;
-            placeableBehaviour.OnPlace(this);
+            foreach (var placeableBehaviour in placeableBehaviours)
+            {
+                allPlacedBehaviours.Add(placeableBehaviour);
+                placeableBehaviour.occupation = occupation;
+                placeableBehaviour.OnPlace(this);
+            }
         }
         IHasPlacedById[] placedBy = g.GetComponentsInChildren<IHasPlacedById>();
         if(placedBy != null)
