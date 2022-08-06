@@ -50,9 +50,10 @@ public class Katapult : ProjectileDispenser
         Start();
     }
 
-    public override void Fire()
+    public override GameObject Fire()
     {
         StartCoroutine(RotateAnimation());
+        return projectileInstance;
     }
 
     protected IEnumerator RotateAnimation()

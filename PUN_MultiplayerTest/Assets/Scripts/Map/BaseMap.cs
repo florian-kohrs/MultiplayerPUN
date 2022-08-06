@@ -32,6 +32,9 @@ public class BaseMap : MonoBehaviourPun
 
     protected virtual bool BombsDestroyEverything => false;
 
+    public Transform mapMarker;
+
+
     public Vector2Int Dimensions
     {
         get { return dimensions; }
@@ -39,6 +42,9 @@ public class BaseMap : MonoBehaviourPun
         {
             dimensions = value;
             occupationMap = new MapOccupation[dimensions.x, dimensions.y];
+
+            mapMarker.position = (dimensions / 2).LiftVectorOnXY() - new Vector3(0.5f,0.5f,0);
+            mapMarker.localScale = (dimensions).LiftVectorOnXY();
         }
     }
 
@@ -130,7 +136,13 @@ public class BaseMap : MonoBehaviourPun
 
     private void Start()
     {
+        ActivateMapMarker(false);
         view = PhotonView.Get(this);
+    }
+
+    public void ActivateMapMarker(bool active)
+    {
+        mapMarker.gameObject.SetActive(active);
     }
 
     protected List<MapOccupationObject> ListFromIndex(int index)
@@ -325,6 +337,11 @@ public class BaseMap : MonoBehaviourPun
             }
         }
         return result;
+    }
+
+    public bool IsSpaceFeasible(Vector2Int spot)
+    {
+        return IsInBounds(spot) && OccupationMap[spot.x, spot.y] == null;
     }
 
     protected void OccupySpace(MapOccupation occupation)

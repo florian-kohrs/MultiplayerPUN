@@ -12,6 +12,8 @@ public class PlayerState : MonoBehaviourPun
         return GetLocalPlayer().transform.GetChild(0);
     }
 
+    public static bool HasPlayer => GetLocalPlayer() != null;
+
     public static PlayerState GetLocalPlayer()
     {
         if(PhotonNetwork.IsConnected)

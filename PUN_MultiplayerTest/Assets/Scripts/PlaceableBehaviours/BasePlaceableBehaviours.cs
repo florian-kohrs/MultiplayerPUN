@@ -8,6 +8,7 @@ public class BasePlaceableBehaviours : MonoBehaviour, IHasPlacedById
     [HideInInspector]
     public MapOccupation occupation;
 
+    [HideInInspector]
     public int placedByPlayerId;
 
     public int PlacedByPlayerID { get => placedByPlayerId; set => placedByPlayerId = value; }

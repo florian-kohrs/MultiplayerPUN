@@ -20,6 +20,10 @@ public class PlaceOnMap : MonoBehaviour
         }
     }
 
+    public static readonly Color CAN_PLACE_COLOR = Color.green;
+
+    public static readonly Color CAN_NOT_PLACE_COLOR = Color.red;
+
     public BaseMap map;
 
     public int activeObjectIndex;
@@ -31,6 +35,12 @@ public class PlaceOnMap : MonoBehaviour
     protected Action onDone;
 
     public bool useAllItems;
+
+    public GameObject spriteMarker;
+
+    protected List<SpriteRenderer> activeSprites = new List<SpriteRenderer>();
+
+    protected MapOccupationObject SelectedMapOccupation => AllMapOccupations[activeObjectIndex];
 
     public List<MapOccupationObject> AllMapOccupations
     {
@@ -75,10 +85,11 @@ public class PlaceOnMap : MonoBehaviour
         this.onDone = onDone;
         RemovePreview();
         activeObjectIndex = mapObjectIndex;
-        previewObject = Instantiate(AllMapOccupations[activeObjectIndex].prefab);
+        previewObject = Instantiate(SelectedMapOccupation.prefab);
         AllMapOccupations[activeObjectIndex].ApplyToObject(previewObject);
         previewObject.GetComponentsInChildren<Behaviour>().ToList().ForEach((b) => b.enabled = false);
         UpdateObjectPreview();
+        CreateMarkersForObject();
         enabled = true;
     }
 
@@ -91,11 +102,59 @@ public class PlaceOnMap : MonoBehaviour
         }
     }
 
+    protected void ClearPreviewMarkers()
+    {
+        foreach (var sprite in activeSprites)
+            Destroy(sprite.gameObject);
+        activeSprites.Clear();
+    }
+
+    protected void CreateMarkersForObject()
+    {
+        ClearPreviewMarkers();
+        for(int i = 0; i < SelectedMapOccupation.OccupationCount; i++)
+        {
+            GameObject g = Instantiate(spriteMarker);
+            activeSprites.Add(g.GetComponent<SpriteRenderer>());
+        }
+    }
+
+    protected Color QuarterAlpha(Color c)
+    {
+        Color newC = c;
+        newC.a /= 4;
+        return newC;
+    }
+
+    protected void UpdatePreviewMarker(Vector2Int origin)
+    {
+        int count = 0;
+        foreach (var spot in SelectedMapOccupation.GetAllOccupations(origin, activeRotation))
+        {
+            SpriteRenderer r = activeSprites[count];
+            r.color = QuarterAlpha(GetColorForPlacingAt(spot));
+            r.transform.position = GetCenterFor(spot);
+            count++;
+        }
+    }
+
+    protected Vector3 GetCenterFor(Vector2Int index)
+    {
+        return map.MapIndexToGlobalPosition(index)/* + new Vector3(0.5f,0.5f,0)*/;
+    }
+
+    protected Color GetColorForPlacingAt(Vector2Int index)
+    {
+        if (map.IsSpaceFeasible(index))
+            return CAN_PLACE_COLOR;
+        else
+            return CAN_NOT_PLACE_COLOR;
+    }
+
     void Update()
     {
         if (activeObjectIndex < 0)
             return;
-
 
         UpdateObjectPreview();
 
@@ -111,9 +170,14 @@ public class PlaceOnMap : MonoBehaviour
             else if (map.PlaceDuringRounds(activeObjectIndex, mapIndex.x, mapIndex.y, activeRotation))
             {
                 RemovePreview();
+                ClearPreviewMarkers();
                 enabled = false;
                 onDone?.Invoke();
             }
+        }
+        else
+        {
+            UpdatePreviewMarker(mapIndex);
         }
     }
 
@@ -129,7 +193,9 @@ public class PlaceOnMap : MonoBehaviour
     protected void UpdateObjectPreview()
     {
         previewObject.transform.position = GlobalPositionFromMouse();
-        PlayerState.GetLocalPlayerTransform().position = previewObject.transform.position + new Vector3(3,3,6);
+        if(PlayerState.HasPlayer)
+            PlayerState.GetLocalPlayerTransform().position = previewObject.transform.position + new Vector3(3,3,6);
+
         MapOccupationObject activeObject = AllMapOccupations[activeObjectIndex];
 
         if(activeObject.mirrorInsteadOfRotate)

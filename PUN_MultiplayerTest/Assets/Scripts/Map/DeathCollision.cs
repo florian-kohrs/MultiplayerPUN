@@ -34,7 +34,7 @@ public class DeathCollision : MonoBehaviour, IHasPlacedById
             
             Debug.Log($"Player {p.playerName} has died");
         }
-        if (breakOnCollision)
+        if (breakOnCollision && collision.gameObject.GetComponent<Trampoline>() == null)
             Destroy(gameObject);
     }
 

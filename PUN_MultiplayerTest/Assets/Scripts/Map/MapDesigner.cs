@@ -9,7 +9,6 @@ public class MapDesigner : BaseMap
 
     public MapDesign currentMapDesign;
 
-    public Transform mapMarker;
 
     protected override bool BombsDestroyEverything => true;
 
@@ -23,8 +22,6 @@ public class MapDesigner : BaseMap
     {
         currentMapDesign = mapDesign;
         LoadMapDesign(mapDesign);
-        mapMarker.position = (mapDesign.dimensions / 2).LiftVectorOnXY();
-        mapMarker.localScale = (mapDesign.dimensions).LiftVectorOnXY();
     }
 
 

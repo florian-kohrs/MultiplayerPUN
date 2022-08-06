@@ -19,12 +19,17 @@ public abstract class ProjectileDispenser : BasePlaceableBehaviours
         StartCoroutine(DispenseCoroutine());
     }
 
-    public abstract void Fire();
+    public abstract GameObject Fire();
 
     protected IEnumerator DispenseCoroutine()
     {
         yield return new WaitForSeconds(dispenserCooldown);
-        Fire();
+        projectileInstance = Fire();
+        IHasPlacedById[] placed = projectileInstance.GetComponentsInChildren<IHasPlacedById>();
+        foreach (var item in placed)
+        {
+            item.PlacedByPlayerID = PlacedByPlayerID;
+        }
         yield return DispenseCoroutine();
     }
 

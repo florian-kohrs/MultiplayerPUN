@@ -9,7 +9,7 @@ public class Trampoline : BasePlaceableBehaviours
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.rigidbody.velocity += GetBounceDirection(collision.rigidbody.velocity);
+        collision.rigidbody.velocity = GetBounceDirection(collision.relativeVelocity);
     }
 
     protected Vector2 GetBounceDirection(Vector2 otherVelocity)
@@ -18,10 +18,10 @@ public class Trampoline : BasePlaceableBehaviours
         {
             case 0:
             case 2:
-                return new Vector2(0, -otherVelocity.y * bouncePower);
+                return new Vector2(otherVelocity.x, -otherVelocity.y * bouncePower);
             case 1:
             case 3:
-                return new Vector2(otherVelocity.x * bouncePower,0);
+                return new Vector2(-otherVelocity.x * bouncePower, otherVelocity.y);
             default: 
                 return default;
         }

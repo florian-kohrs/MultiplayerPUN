@@ -38,6 +38,16 @@ public class MapOccupationObject : ScriptableObject
             yield return occ;
     }
 
+    public int OccupationCount 
+    {
+        get 
+        {
+            int count = localOccupationSpots.Count;
+            if (occupiesDefaultPosition)
+                count++;
+            return Mathf.Max(1, count);
+        }
+    }
 
     public IEnumerable<Vector2Int> GetAllOccupations(Vector2Int origin, int orientation)
     {
