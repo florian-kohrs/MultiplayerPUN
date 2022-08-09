@@ -376,6 +376,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2051217795190718742, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513786493404366146, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: taskText
+      value: 
+      objectReference: {fileID: 1690332123}
+    - target: {fileID: 4513786493404366146, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 1554873908}
     - target: {fileID: 8059518750776171490, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
       propertyPath: pointsGrid
       value: 
@@ -428,14 +440,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8059518751559146162, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
-      propertyPath: text
-      value: 
-      objectReference: {fileID: 1690332123}
-    - target: {fileID: 8059518751559146162, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
-      propertyPath: timer
-      value: 
-      objectReference: {fileID: 1554873908}
     - target: {fileID: 8059518751559146162, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
       propertyPath: selectedItemImage
       value: 

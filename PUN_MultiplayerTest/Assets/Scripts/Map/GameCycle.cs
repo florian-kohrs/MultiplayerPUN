@@ -95,6 +95,10 @@ public class GameCycle : MonoBehaviourPun
     public void StartGame(int maxRounds, int seed, int selectedMapIndex)
     {
         startGameButton.SetActive(false);
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+        }
         Broadcast.SafeRPC(photonView, nameof(StartGameBroadcast), RpcTarget.All, 
             delegate { StartGameBroadcast(maxRounds, seed, selectedMapIndex); }, 
             maxRounds, seed, selectedMapIndex);
@@ -146,6 +150,11 @@ public class GameCycle : MonoBehaviourPun
     protected void WrapGameUp()
     {
 
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+        }
     }
 
     protected void CallPlayerDoneSelecting()

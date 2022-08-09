@@ -24,12 +24,18 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     }
 
     protected List<Action<Photon.Realtime.Player>> OnPlayerConnected = new List<Action<Photon.Realtime.Player>>();
+    protected List<Action<Photon.Realtime.Player>> OnPlayerDisconnected = new List<Action<Photon.Realtime.Player>>();
 
     public static void AddPlayerJoinedListener(Action<Photon.Realtime.Player> callback)
     {
         instance.OnPlayerConnected.Add(callback);
     }
 
+
+    public static void AddPlayerDisconnectedListener(Action<Photon.Realtime.Player> callback)
+    {
+        instance.OnPlayerDisconnected.Add(callback);
+    }
 
 
     #region Photon Callbacks
@@ -43,36 +49,17 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene(0);
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        OnPlayerDisconnected.ForEach(f => f(otherPlayer));
+    }
+
 
     public override void OnPlayerEnteredRoom(Player other)
     {
         OnPlayerConnected.ForEach(f => f(other));
-
-        //Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
-
-
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-        //    LoadArena();
-        //}
     }
 
-
-    //public override void OnPlayerLeftRoom(Player other)
-    //{
-    //    Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
-
-
-    //    if (PhotonNetwork.IsMasterClient)
-    //    {
-    //        Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-
-
-    //        LoadArena();
-    //    }
-    //}
 
 
     #endregion

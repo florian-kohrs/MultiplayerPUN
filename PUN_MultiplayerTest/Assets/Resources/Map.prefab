@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 8059518751559146164}
   - component: {fileID: 2051217795190718742}
   - component: {fileID: 8059518750776171490}
+  - component: {fileID: 4513786493404366146}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -282,6 +283,7 @@ MonoBehaviour:
   activeObjectIndex: 0
   useAllItems: 0
   spriteMarker: {fileID: 4835095671242025849, guid: 89ccf748968fd2240bb312516f9c6e9f, type: 3}
+  timeRestriction: {fileID: 4513786493404366146}
 --- !u!114 &8059518751559146162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,8 +304,7 @@ MonoBehaviour:
   itemOffset: {x: 120, y: 0}
   selectionUIParent: {fileID: 0}
   selectedItemImage: {fileID: 0}
-  text: {fileID: 0}
-  timer: {fileID: 0}
+  timeRestriction: {fileID: 4513786493404366146}
 --- !u!114 &8059518751559146163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,3 +382,17 @@ MonoBehaviour:
   pointsGrid: {fileID: 0}
   playerPointUI: {fileID: 360858279506260545, guid: 36f78ec72624e114fbdc3c2d129fe55d, type: 3}
   offset: 110
+--- !u!114 &4513786493404366146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35f9e9dbfcb1c145828be64549d9021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 0}
+  taskText: {fileID: 0}

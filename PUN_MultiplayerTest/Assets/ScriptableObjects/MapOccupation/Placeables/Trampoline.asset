@@ -20,3 +20,4 @@ MonoBehaviour:
   mirrorInsteadOfRotate: 0
   localOccupationSpots:
   - {x: 1, y: 0}
+  - {x: 2, y: 0}

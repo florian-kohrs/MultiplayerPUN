@@ -42,6 +42,8 @@ public class PlaceOnMap : MonoBehaviour
 
     protected MapOccupationObject SelectedMapOccupation => AllMapOccupations[activeObjectIndex];
 
+    public TimeRestricedTask timeRestriction;
+
     public List<MapOccupationObject> AllMapOccupations
     {
         get
@@ -90,7 +92,19 @@ public class PlaceOnMap : MonoBehaviour
         previewObject.GetComponentsInChildren<Behaviour>().ToList().ForEach((b) => b.enabled = false);
         UpdateObjectPreview();
         CreateMarkersForObject();
+        timeRestriction.StartTask(TimeToPlace, DiscardSelection, "Place item on map", "Wait for other players");
         enabled = true;
+    }
+
+    protected virtual float TimeToPlace
+    {
+        get
+        {
+            if (map is MapDesigner)
+                return Mathf.Infinity;
+            else
+                return 20;
+        }
     }
 
     protected void RemovePreview()
@@ -181,6 +195,13 @@ public class PlaceOnMap : MonoBehaviour
         }
     }
 
+    protected void DiscardSelection()
+    {
+        RemovePreview();
+        ClearPreviewMarkers();
+        enabled = false;
+        onDone?.Invoke();
+    }
 
 
     protected Vector3 GlobalPositionFromMouse()

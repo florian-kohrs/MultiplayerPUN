@@ -73,8 +73,6 @@ public class PlayerState : MonoBehaviourPun
 
     public bool CanPlayerMove => IsAlive && !HasReachedTarget;
 
-    public bool FreezePlayer => !IsAlive || HasReachedTarget;
-
     public int killedInRound = 0;
 
     public float arrivedPointsInRound = 0;
@@ -176,9 +174,10 @@ public class PlayerState : MonoBehaviourPun
     {
         if (isAlive && !hasReachedTarget)
         {
-            SwitchCameras();
             hasReachedTarget = true;
             body.velocity = default;
+            Debug.Log($"Player {GetPlayerStateFromId(playerId).playerName} has reached his target");
+            SwitchCameras();
             Broadcast.SafeRPC(PhotonView.Get(this), nameof(PlayerArrived), RpcTarget.All, delegate { PlayerArrived(playerId); },playerId);
             return true;
         }

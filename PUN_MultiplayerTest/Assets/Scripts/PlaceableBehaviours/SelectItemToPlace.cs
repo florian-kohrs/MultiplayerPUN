@@ -39,9 +39,7 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     public Image selectedItemImage;
 
-    public TextMeshProUGUI text;
-
-    public TextMeshProUGUI timer;
+    public TimeRestricedTask timeRestriction;
 
     protected float currentTime;
 
@@ -64,7 +62,7 @@ public class SelectItemToPlace : MonoBehaviourPun
         selectionUIParent.SetActive(true);
         selectedItemImage.sprite = null;
         selectedItemImage.gameObject.SetActive(false);
-        text.text = "Select item";
+        timeRestriction.StartTask(TIME_TO_SELECT_ITEM, SelectRandomItem, "Select item", "Wait for other players");
         player = PlayerState.GetLocalPlayerTransform();
         PlayerState.GetLocalPlayer().body.simulated = false;
         GameCycle.IterateOverPlayers(p => p.GetActualPlayer().localScale *= 5);
@@ -142,21 +140,21 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     protected SelectItemButton GetRandomAvailableItemButton()
     {
-        List<SelectItemButton> buttons = new List<SelectItemButton>();
+        List<SelectItemButton> availableButtons = new List<SelectItemButton>();
         foreach (SelectItemButton button in buttons)
         {
             if (button != null && button.canBeClicked)
-                buttons.Add(button);
+                availableButtons.Add(button);
         }
-        return buttons.TakeRandom();
+        return availableButtons.TakeRandom();
     }
 
     protected void PlayerSelectedItem(int objectIndex, int btnIndex)
     {
         selected = true;
+        timeRestriction.TaskDone();
         selectedItemImage.sprite = placeOnMap.AllMapOccupations[objectIndex].image; 
         selectedItemImage.gameObject.SetActive(true);
-        text.text = "Wait for other players";
         Broadcast.SafeRPC(photonView, nameof(DestroySelectionButton), RpcTarget.All, ()=>DestroySelectionButton(btnIndex), btnIndex);
         foreach (SelectItemButton button in buttons)
         {
@@ -182,11 +180,8 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     private void Update()
     {
-        currentTime += Time.deltaTime;
-        timer.text = Mathf.RoundToInt(TIME_TO_SELECT_ITEM - currentTime).ToString();
         SetPlayerToMousePosition();
-        if (currentTime > TIME_TO_SELECT_ITEM && !selected)
-            SelectRandomItem();
+      
     }
 
     //private void Update()
