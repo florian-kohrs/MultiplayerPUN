@@ -185,6 +185,7 @@ public class PlaceOnMap : MonoBehaviour
             {
                 RemovePreview();
                 ClearPreviewMarkers();
+                timeRestriction.TaskDone();
                 enabled = false;
                 onDone?.Invoke();
             }

@@ -288,6 +288,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 901714887, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 901714887, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 901714887, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 524
+      objectReference: {fileID: 0}
+    - target: {fileID: 901714887, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -180.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5872719454312077291, guid: 4c4b14d525227c1439d14d37808fb94e, type: 3}
       propertyPath: gameCycle
       value: 
@@ -388,6 +404,10 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 1554873908}
+    - target: {fileID: 4513786493404366146, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: timerUIParent
+      value: 
+      objectReference: {fileID: 901714886}
     - target: {fileID: 8059518750776171490, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
       propertyPath: pointsGrid
       value: 
@@ -444,10 +464,6 @@ PrefabInstance:
       propertyPath: selectedItemImage
       value: 
       objectReference: {fileID: 309544499}
-    - target: {fileID: 8059518751559146162, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
-      propertyPath: selectionUIParent
-      value: 
-      objectReference: {fileID: 901714886}
     - target: {fileID: 8059518751559146162, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
       propertyPath: itemSelectionParent
       value: 

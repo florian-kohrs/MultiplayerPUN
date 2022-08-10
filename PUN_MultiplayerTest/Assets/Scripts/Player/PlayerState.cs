@@ -22,7 +22,7 @@ public class PlayerState : MonoBehaviourPun
             return FindObjectOfType<PlayerState>();
     }
 
-    public Player GetPlayerFromId(int id)
+    public static Player GetPlayerFromId(int id)
     {
         if (PhotonNetwork.IsConnected)
             return PhotonNetwork.CurrentRoom.Players[id];
@@ -36,6 +36,14 @@ public class PlayerState : MonoBehaviourPun
             return (PlayerState)GetPlayerFromId(id).TagObject;
         else
             return this;
+    }
+
+    public static PlayerState GetPlayerStaticStateFromId(int id)
+    {
+        if (PhotonNetwork.IsConnected)
+            return (PlayerState)GetPlayerFromId(id).TagObject;
+        else
+            return FindObjectOfType<PlayerState>();
     }
 
     public Player GetPlayer(MonoBehaviourPun pun)
@@ -146,7 +154,7 @@ public class PlayerState : MonoBehaviourPun
             GetPlayerStateFromId(killedByPlayerID).killedInRound++;
             //Debug.Log(GetPlayerFromId(killedByPlayerID).playerName + " got points for a kill");
         }
-            GameCycle.instance.PlayerDoneRunning();
+            GameCycle.instance.PlayerDoneRunning(this);
     }
 
     public void RevivePlayer()
@@ -191,7 +199,7 @@ public class PlayerState : MonoBehaviourPun
         body.velocity = default;
         GetPlayerStateFromId(playerId).arrivedPointsInRound += GameCycle.GetFinishReward();
 
-        GameCycle.instance.PlayerDoneRunning();
+        GameCycle.instance.PlayerDoneRunning(this);
     }
 
     public bool HasReachedTarget

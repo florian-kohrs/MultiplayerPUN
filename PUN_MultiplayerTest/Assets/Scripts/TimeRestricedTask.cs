@@ -10,6 +10,9 @@ public class TimeRestricedTask : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI taskText;
 
+    public GameObject timerUIParent;
+
+
     protected float maxTime;
     protected float timeLeft;
     protected string onTaskDoneText;
@@ -25,17 +28,21 @@ public class TimeRestricedTask : MonoBehaviour
         onTimeRanOut = timeRanOut;
         taskText.text = taskDescription;
         enabled = true;
+        timerUIParent.SetActive(true);
     }
 
     public void TaskDone()
     {
         taskText.text = onTaskDoneText;
         enabled = false;
+        timerUIParent.SetActive(false);
     }
+
 
     void Start()
     {
         enabled = false;
+        timerUIParent.SetActive(false);
     }
 
     void Update()
@@ -46,7 +53,7 @@ public class TimeRestricedTask : MonoBehaviour
         if (timeLeft > 0)
             return;
 
-        onTimeRanOut();
         TaskDone();
+        onTimeRanOut();
     }
 }

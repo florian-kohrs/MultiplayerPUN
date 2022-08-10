@@ -302,7 +302,6 @@ MonoBehaviour:
   itemSelectionParent: {fileID: 0}
   startPosition: {x: 0, y: 0}
   itemOffset: {x: 120, y: 0}
-  selectionUIParent: {fileID: 0}
   selectedItemImage: {fileID: 0}
   timeRestriction: {fileID: 4513786493404366146}
 --- !u!114 &8059518751559146163
@@ -396,3 +395,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 0}
   taskText: {fileID: 0}
+  timerUIParent: {fileID: 0}

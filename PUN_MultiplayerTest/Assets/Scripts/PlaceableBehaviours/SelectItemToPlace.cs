@@ -35,8 +35,6 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     protected Transform player;
 
-    public GameObject selectionUIParent;
-
     public Image selectedItemImage;
 
     public TimeRestricedTask timeRestriction;
@@ -47,7 +45,6 @@ public class SelectItemToPlace : MonoBehaviourPun
 
     private void Start()
     {
-        selectionUIParent.SetActive(false);
         enabled = false;
     }
 
@@ -59,7 +56,6 @@ public class SelectItemToPlace : MonoBehaviourPun
         enabled = true;
         currentTime = 0;
         selected = false;
-        selectionUIParent.SetActive(true);
         selectedItemImage.sprite = null;
         selectedItemImage.gameObject.SetActive(false);
         timeRestriction.StartTask(TIME_TO_SELECT_ITEM, SelectRandomItem, "Select item", "Wait for other players");
@@ -87,7 +83,7 @@ public class SelectItemToPlace : MonoBehaviourPun
     public void ClearUpOnAllSelected()
     {
         DestroyAllButtons();
-        selectionUIParent.SetActive(false);
+        selectedItemImage.gameObject.SetActive(false);
         enabled = false;
     }
 

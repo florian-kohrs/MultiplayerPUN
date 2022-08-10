@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitForPlayersToFinish : MonoBehaviour
+public class WaitForPlayersToFinish
 {
 
     /// <summary>
@@ -14,27 +14,48 @@ public class WaitForPlayersToFinish : MonoBehaviour
 
     protected Action onAllPlayersDone;
 
-    public void StartWaitingForPlayers(Action onAllPlayersDone)
+    public bool isActive;
+
+    protected string taskName;
+
+    public WaitForPlayersToFinish(string taskName, Action onAllPlayersDone)
     {
+        this.taskName = taskName;
+        this.onAllPlayersDone = onAllPlayersDone;
+        NetworkGameManager.AddPlayerDisconnectedListener(OnPlayerDisconnect);
+    }
+
+    public void StartWaitingForPlayers()
+    {
+        isActive = true;
         activePlayers = new Dictionary<PlayerState, bool>();
         GameCycle.IterateOverPlayers(p => activePlayers.Add(p, false));
     }
 
     protected void OnPlayerDisconnect(Player p)
     {
-        p.tag
+        //if(isActive)
+        //    PlayerFinished(p.TagObject as PlayerState);
+        activePlayers.Remove(p.TagObject as PlayerState);
     }
 
-    protected bool AllDone => !activePlayers.ContainsValue(false);
 
-    private void Start()
-    {
-        
-    }
 
-    public void PlayerFinished(int playerId)
+    public bool AllDone => !activePlayers.ContainsValue(false);
+
+    public bool AnyDone => activePlayers.ContainsValue(true);
+
+    public void PlayerFinished(PlayerState player)
     {
-        activePlayers
+        if (!isActive)
+            throw new Exception($"Player {player.playerName} is done with an inactive task {taskName}");
+
+        activePlayers[player] = true;
+        if(AllDone)
+        {
+            isActive = false;
+            onAllPlayersDone();
+        }
     }
 
 }

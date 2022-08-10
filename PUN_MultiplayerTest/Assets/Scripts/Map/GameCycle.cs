@@ -37,9 +37,17 @@ public class GameCycle : MonoBehaviourPun
 
     public PlayerPoints playerPoints;
 
+    protected WaitForPlayersToFinish waitForPlayersRunning;
+    protected WaitForPlayersToFinish waitForPlayersSelecting;
+    protected WaitForPlayersToFinish waitForPlayersPlacing;
+
+
+
+
     protected bool isInGame = false;
 
-    public static bool IsFirst => instance.remainingPlayersInRound == instance.MaxPlayers;
+
+    public static bool IsFirst => !instance.waitForPlayersRunning.AnyDone;
 
     public static float GetFinishReward()
     {
@@ -52,8 +60,21 @@ public class GameCycle : MonoBehaviourPun
     private void Awake()
     {
         instance = this;
+        waitForPlayersRunning = new WaitForPlayersToFinish("Running", PlayersDoneRunning);
+        waitForPlayersSelecting = new WaitForPlayersToFinish("Selecting", EnterObjectPlacingPhase);
+        waitForPlayersPlacing = new WaitForPlayersToFinish("Placing", BeginRound);
     }
 
+    protected int ID
+    {
+        get
+        {
+            if (PhotonNetwork.IsConnected)
+                return photonView.OwnerActorNr;
+            else
+                return 0;
+        }
+    }
 
     public void AnimatePoints()
     {
@@ -69,10 +90,6 @@ public class GameCycle : MonoBehaviourPun
     public static bool GameStarted => instance.isInGame;
 
     public int MaxPlayers => NumberPlayers;
-
-    protected int remainingPlayersInRound;
-    protected int remainingSelecting;
-    protected int remainingPlacing;
 
     public static int NumberPlayers
     {
@@ -122,19 +139,18 @@ public class GameCycle : MonoBehaviourPun
         BeginRound();
     }
 
-
-
-    public void PlayerDoneRunning()
+    public void PlayerDoneRunning(PlayerState p)
     {
-        remainingPlayersInRound--;
-        if(remainingPlayersInRound <= 0)
-        {
-            currentRound++;
-            if (currentRound >= maxRounds)
-                EndGame();
-            else
-                AnimatePoints();
-        }
+        waitForPlayersRunning.PlayerFinished(p);
+    }
+
+    protected void PlayersDoneRunning()
+    {
+        currentRound++;
+        if (currentRound >= maxRounds)
+            EndGame();
+        else
+            AnimatePoints();
     }
 
     protected void IsGameDone()
@@ -159,38 +175,30 @@ public class GameCycle : MonoBehaviourPun
 
     protected void CallPlayerDoneSelecting()
     {
-        Broadcast.SafeRPC(photonView, nameof(PlayerDoneSelecting), RpcTarget.All, PlayerDoneSelecting);
+        Broadcast.SafeRPC(photonView, nameof(PlayerDoneSelecting), RpcTarget.All, ()=>PlayerDoneSelecting(ID), ID);
     }
 
     [PunRPC]
-    public void PlayerDoneSelecting()
+    public void PlayerDoneSelecting(int playerId)
     {
-        remainingSelecting--;
-        if (remainingSelecting <= 0)
-        {
-            EnterObjectPlacingPhase();
-        }
+        waitForPlayersSelecting.PlayerFinished(PlayerState.GetPlayerStaticStateFromId(playerId));
     }
 
     protected void CallPlayerDonePlacing()
     {
-        Broadcast.SafeRPC(photonView, nameof(PlayerDonePlacing), RpcTarget.All, PlayerDonePlacing);
+        Broadcast.SafeRPC(photonView, nameof(PlayerDonePlacing), RpcTarget.All, ()=>PlayerDonePlacing(ID), ID);
     }
 
     [PunRPC]
-    public void PlayerDonePlacing()
+    public void PlayerDonePlacing(int playerId)
     {
-        remainingPlacing--;
-        if (remainingPlacing <= 0)
-        {
-            BeginRound();
-        }
+        waitForPlayersPlacing.PlayerFinished(PlayerState.GetPlayerStaticStateFromId(playerId));
     }
 
     protected void EnterObjectSelectingPhase()
     {
         //players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
-        remainingSelecting = MaxPlayers;
+        waitForPlayersSelecting.StartWaitingForPlayers();
         selectItem.StartSelection(selected => { selectedObjectIndex = selected; CallPlayerDoneSelecting(); }, rand);
     }
 
@@ -199,7 +207,7 @@ public class GameCycle : MonoBehaviourPun
         map.ActivateMapMarker(true);
         selectItem.ClearUpOnAllSelected();
         //players.ForEach(p => p.GetActualPlayer().gameObject.SetActive(false));
-        remainingPlacing = MaxPlayers;
+        waitForPlayersPlacing.StartWaitingForPlayers();
         placeOnMap.BeginPlace(selectedObjectIndex, CallPlayerDonePlacing);
     }
 
@@ -207,7 +215,7 @@ public class GameCycle : MonoBehaviourPun
     {
         PlayerState.GetLocalPlayer().body.simulated = true;
         map.ActivateMapMarker(false);
-        remainingPlayersInRound = MaxPlayers;
+        waitForPlayersRunning.StartWaitingForPlayers();
         ResetPlayers();
         map.StartNewRound();
         placeOnMap.CamMover.SetToGameView();
