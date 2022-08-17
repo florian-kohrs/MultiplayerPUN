@@ -213,13 +213,19 @@ public class GameCycle : MonoBehaviourPun
 
     protected void BeginRound()
     {
-        PlayerState.GetLocalPlayer().body.simulated = true;
+        SimulatePlayerPhysics();
         map.ActivateMapMarker(false);
         waitForPlayersRunning.StartWaitingForPlayers();
         ResetPlayers();
         map.StartNewRound();
         placeOnMap.CamMover.SetToGameView();
     }
+
+    protected void SimulatePlayerPhysics()
+    {
+        PlayerState.GetLocalPlayer().body.simulated = true;
+    }
+
 
     public static void IterateOverPlayers(Action<PlayerState> f)
     {

@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 2051217795190718742}
   - component: {fileID: 8059518750776171490}
   - component: {fileID: 4513786493404366146}
+  - component: {fileID: 4658461916865236392}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -396,3 +397,15 @@ MonoBehaviour:
   timerText: {fileID: 0}
   taskText: {fileID: 0}
   timerUIParent: {fileID: 0}
+--- !u!114 &4658461916865236392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8059518751559146158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e08e50f30a304e48acde9cb674d6f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
