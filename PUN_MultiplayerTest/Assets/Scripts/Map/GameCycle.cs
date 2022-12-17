@@ -49,6 +49,8 @@ public class GameCycle : MonoBehaviourPun
 
     public static bool IsFirst => !instance.waitForPlayersRunning.AnyDone;
 
+    protected bool initialized = false;
+
     public static float GetFinishReward()
     {
         if (IsFirst)
@@ -60,6 +62,16 @@ public class GameCycle : MonoBehaviourPun
     private void Awake()
     {
         instance = this;
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        if (!NetworkGameManager.HasInstance || initialized)
+            return;
+
+        initialized = true;
+
         waitForPlayersRunning = new WaitForPlayersToFinish("Running", PlayersDoneRunning);
         waitForPlayersSelecting = new WaitForPlayersToFinish("Selecting", EnterObjectPlacingPhase);
         waitForPlayersPlacing = new WaitForPlayersToFinish("Placing", BeginRound);
@@ -70,7 +82,7 @@ public class GameCycle : MonoBehaviourPun
         get
         {
             if (PhotonNetwork.IsConnected)
-                return photonView.OwnerActorNr;
+                return PhotonNetwork.LocalPlayer.ActorNumber;
             else
                 return 0;
         }
@@ -213,10 +225,10 @@ public class GameCycle : MonoBehaviourPun
 
     protected void BeginRound()
     {
+        ResetPlayers();
         SimulatePlayerPhysics();
         map.ActivateMapMarker(false);
         waitForPlayersRunning.StartWaitingForPlayers();
-        ResetPlayers();
         map.StartNewRound();
         placeOnMap.CamMover.SetToGameView();
     }

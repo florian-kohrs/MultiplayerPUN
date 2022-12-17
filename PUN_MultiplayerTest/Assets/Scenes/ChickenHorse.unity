@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -468,6 +468,30 @@ PrefabInstance:
       propertyPath: itemSelectionParent
       value: 
       objectReference: {fileID: 313440273}
+    - target: {fileID: 8059518751559146163, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: maps.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8059518751559146163, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: maps.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: bc0ee4be69204d648b91b82e506e367e, type: 2}
+    - target: {fileID: 8059518751559146163, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: maps.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fb9b306fa9fd93043b98654f050f5e08, type: 2}
+    - target: {fileID: 8059518751559146163, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: maps.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a1803e4ca2935e4587949157b12c067, type: 2}
+    - target: {fileID: 8059518751559146163, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: maps.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2203a7824a886064ca7343a5ab9aa927, type: 2}
+    - target: {fileID: 8059518751559146163, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
+      propertyPath: maps.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f53f5bc96faf2540828a67acce42ee4, type: 2}
     - target: {fileID: 8059518751559146164, guid: b692aaae40e9b1140aa9a772e7f6fba1, type: 3}
       propertyPath: startGameButton
       value: 

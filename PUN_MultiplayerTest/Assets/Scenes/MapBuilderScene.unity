@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -802,7 +802,7 @@ MonoBehaviour:
   mapOccupations: {fileID: 11400000, guid: 05f28ae64a922b04f898ea99d4fdcd4f, type: 2}
   randomReceivableMapOccupationObjects: {fileID: 0}
   cam: {fileID: 2056452468}
-  currentMapDesign: {fileID: 11400000, guid: 9f53f5bc96faf2540828a67acce42ee4, type: 2}
+  currentMapDesign: {fileID: 11400000, guid: bc0ee4be69204d648b91b82e506e367e, type: 2}
 --- !u!4 &2056452464
 Transform:
   m_ObjectHideFlags: 0
@@ -852,6 +852,7 @@ MonoBehaviour:
   activeObjectIndex: 0
   useAllItems: 1
   spriteMarker: {fileID: 4835095671242025849, guid: 89ccf748968fd2240bb312516f9c6e9f, type: 3}
+  timeRestriction: {fileID: 0}
 --- !u!114 &2056452467
 MonoBehaviour:
   m_ObjectHideFlags: 0

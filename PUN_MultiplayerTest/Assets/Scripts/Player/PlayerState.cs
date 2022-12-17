@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerState : MonoBehaviourPun
@@ -25,7 +26,7 @@ public class PlayerState : MonoBehaviourPun
     public static Player GetPlayerFromId(int id)
     {
         if (PhotonNetwork.IsConnected)
-            return PhotonNetwork.CurrentRoom.Players[id];
+            return PhotonNetwork.CurrentRoom.Players.Values.Where(p => p.ActorNumber == id).FirstOrDefault();
         else
             return null;
     }
@@ -172,7 +173,7 @@ public class PlayerState : MonoBehaviourPun
     public void ResetValues()
     {
         ResetRoundPoints();
-        GetLocalPlayerTransform().localScale = new Vector3(0.95f, 0.95f, 0.95f);
+        GetActualPlayer().transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
         body.velocity = default;
         hasReachedTarget = false;
         isAlive = true;

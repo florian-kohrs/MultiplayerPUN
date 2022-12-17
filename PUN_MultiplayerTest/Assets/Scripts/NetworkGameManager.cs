@@ -18,9 +18,14 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 
     protected static NetworkGameManager instance;
 
+    public static bool HasInstance =>  instance != null;
+
     private void Awake()
     {
         instance = this;
+
+        if(GameCycle.instance != null)
+            GameCycle.instance.Initialize();
     }
 
     protected List<Action<Photon.Realtime.Player>> OnPlayerConnected = new List<Action<Photon.Realtime.Player>>();

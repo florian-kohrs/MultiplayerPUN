@@ -30,6 +30,8 @@ public class PlaceOnMap : MonoBehaviour
 
     protected GameObject previewObject;
 
+    public bool hasTimeRestriction;
+
     protected int activeRotation;
 
     protected Action onDone;
@@ -92,7 +94,8 @@ public class PlaceOnMap : MonoBehaviour
         previewObject.GetComponentsInChildren<Behaviour>().ToList().ForEach((b) => b.enabled = false);
         UpdateObjectPreview();
         CreateMarkersForObject();
-        timeRestriction.StartTask(TimeToPlace, DiscardSelection, "Place item on map", "Wait for other players");
+        if(hasTimeRestriction)
+            timeRestriction.StartTask(TimeToPlace, DiscardSelection, "Place item on map", "Wait for other players");
         enabled = true;
     }
 

@@ -22,14 +22,17 @@ public class WaitForPlayersToFinish
     {
         this.taskName = taskName;
         this.onAllPlayersDone = onAllPlayersDone;
+
+        Debug.Log("Reached here before netmanager");
         NetworkGameManager.AddPlayerDisconnectedListener(OnPlayerDisconnect);
+        Debug.Log("Reached after netmanager");
     }
 
     public void StartWaitingForPlayers()
     {
         isActive = true;
         activePlayers = new Dictionary<PlayerState, bool>();
-        GameCycle.IterateOverPlayers(p => activePlayers.Add(p, false));
+        GameCycle.IterateOverPlayers(p => activePlayers[p] = false);
     }
 
     protected void OnPlayerDisconnect(Player p)
