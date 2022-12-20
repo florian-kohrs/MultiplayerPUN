@@ -1,7 +1,10 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class GameCycle : MonoBehaviourPun
@@ -22,6 +25,8 @@ public class GameCycle : MonoBehaviourPun
     public static Vector2Int MapSize => instance.map.Dimensions;
 
     public BaseMap map;
+
+    public TextMeshProUGUI winnerText;
 
     public PlaceOnMap placeOnMap;
 
@@ -90,7 +95,19 @@ public class GameCycle : MonoBehaviourPun
 
     public void AnimatePoints()
     {
-        playerPoints.AnimatePointsForRound(EnterObjectSelectingPhase);
+        playerPoints.AnimatePointsForRound(CheckIfGameOver);
+    }
+
+    public void CheckIfGameOver()
+    {
+        if(playerPoints.HasPlayerWon())
+        {
+            WrapGameUp();
+        }
+        else
+        {
+            EnterObjectSelectingPhase();
+        }
     }
 
 
@@ -165,11 +182,6 @@ public class GameCycle : MonoBehaviourPun
             AnimatePoints();
     }
 
-    protected void IsGameDone()
-    {
-
-    }
-
     protected void EndGame()
     {
         playerPoints.AnimatePointsForRound(WrapGameUp);
@@ -177,11 +189,34 @@ public class GameCycle : MonoBehaviourPun
 
     protected void WrapGameUp()
     {
+        List<int> playersThatWon = playerPoints.GetPlayersWithMostPoints();
 
+        if (PhotonNetwork.IsConnected)
+        {
+            List<Player> v = playersThatWon.Select(PlayerState.GetPlayerFromId).ToList();
+            string text = "Players " + v.Aggregate("", (r, p) => r + p.NickName + ", ");
+            text = text.Remove(text.Length - 2);
+            text += " WON!";
+            winnerText.text = text;
+        }
+        else
+        {
+            winnerText.text = "Offline player won. WOW!";
+            
+        }
+        this.DoDelayed(5, ResetToLobby);
+     
+    }
 
+    protected void ResetToLobby()
+    {
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = true;
+        }
+        if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
+        {
+            LobbyLauncher.EnterChickenHorseLevel();
         }
     }
 

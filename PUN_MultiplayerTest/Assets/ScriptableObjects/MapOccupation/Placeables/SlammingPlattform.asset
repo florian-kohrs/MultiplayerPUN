@@ -10,32 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
-  m_Name: StartArea
+  m_Name: SlammingPlattform
   m_EditorClassIdentifier: 
-  image: {fileID: 168165453, guid: 8ac7c32e61154534cba5b470c25c151e, type: 3}
+  image: {fileID: 21300000, guid: 78ab89cce3a447a4e9d3a5ed82aef090, type: 3}
   occupiesDefaultPosition: 1
   isBomb: 0
-  type: 0
-  prefab: {fileID: 8388884692911181150, guid: 6e442f92f6804c44d9ad07c56785e9a1, type: 3}
+  type: 1
+  prefab: {fileID: 9154017222974776978, guid: adee892a55c609c46b5afce7afa2547a, type: 3}
   mirrorInsteadOfRotate: 0
   localOccupationSpots:
   - {x: 1, y: 0}
-  - {x: 0, y: 1}
   - {x: 1, y: 1}
-  - {x: -1, y: 0}
+  - {x: 1, y: -1}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
   - {x: -1, y: 1}
-  - {x: -2, y: 1}
-  - {x: -2, y: 0}
-  - {x: 2, y: 0}
-  - {x: 2, y: 1}
-  - {x: 1, y: 2}
-  - {x: 0, y: 2}
-  - {x: -1, y: 2}
-  - {x: -2, y: 2}
-  - {x: 2, y: 2}
-  - {x: 3, y: 2}
-  - {x: 3, y: 1}
-  - {x: 3, y: 0}
-  - {x: -3, y: 0}
-  - {x: -3, y: 1}
-  - {x: -3, y: 2}
+  - {x: -1, y: 0}
+  - {x: -1, y: -1}

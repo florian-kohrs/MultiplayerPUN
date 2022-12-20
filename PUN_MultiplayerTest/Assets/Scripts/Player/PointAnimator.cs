@@ -21,6 +21,8 @@ public class PointAnimator : MonoBehaviour
 
     protected PlayerState respectivePlayer;
 
+    public PlayerState RespectivePlayer => respectivePlayer;
+
     [SerializeField]
     protected RectTransform pointsParent;
 
@@ -34,6 +36,8 @@ public class PointAnimator : MonoBehaviour
     protected int maxPoints;
 
     protected int totalPoints;
+
+    public int TotalPoints => totalPoints;
 
     protected Action onDoneSingle;
     protected Action onDoneAllOfTask;

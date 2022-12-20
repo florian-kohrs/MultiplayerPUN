@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerPoints : MonoBehaviour
@@ -47,6 +48,11 @@ public class PlayerPoints : MonoBehaviour
         });
     }
 
+    public bool HasPlayerWon()
+    {
+        return animators.Any(a => a.HasWon);
+    }
+
     protected void DoForAllAndWaitForAll(Action<PointAnimator, Action> doStuff, Action onAllDone)
     {
         int count = animators.Count;
@@ -78,5 +84,9 @@ public class PlayerPoints : MonoBehaviour
         onAnimationDone();
     }
 
-
+    public List<int> GetPlayersWithMostPoints()
+    {
+        int maxPoints = animators.Max(a => a.TotalPoints);
+        return animators.Where(a => a.TotalPoints >= maxPoints).Select(a => a.RespectivePlayer.OwnerActorNumber).ToList();
+    }
 }

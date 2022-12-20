@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,7 +12,11 @@ public class LevelSelection : MonoBehaviour
 
     protected int selectedMap;
 
+    public MapDesign SelectedMapDesign => maps[selectedMap]; 
+
     public TextMeshProUGUI text;
+
+    public event Action<MapDesign> onSelectedMapChanged;
 
     public int SelectedMap
     {
@@ -26,6 +31,7 @@ public class LevelSelection : MonoBehaviour
             selectedMap += maps.Count;
             selectedMap %= maps.Count;
             text.text = "Map " + selectedMap;
+            onSelectedMapChanged?.Invoke(SelectedMapDesign);
         }
     }
 

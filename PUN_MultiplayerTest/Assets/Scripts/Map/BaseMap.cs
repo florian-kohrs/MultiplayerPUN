@@ -97,7 +97,7 @@ public class BaseMap : MonoBehaviourPun
                 if (occ == null)
                     continue;
 
-                DestroyOccupations(occ);
+                DestroyOccupations(occ, false);
             }
         }
         allPlacedBehaviours.Clear();
@@ -246,7 +246,7 @@ public class BaseMap : MonoBehaviourPun
         return g;
     }
 
-    public void DestroyOccupations(MapOccupation mapObject)
+    public void DestroyOccupations(MapOccupation mapObject, bool removeFromMapObject)
     {
         foreach (var spot in mapObject.GetAllOccupations())
         {
@@ -256,12 +256,12 @@ public class BaseMap : MonoBehaviourPun
                 if (occ == null || (!occ.destroyable && !BombsDestroyEverything))
                     continue;
 
-                ClearOccupation(occ);
+                ClearOccupation(occ, removeFromMapObject);
             }
         }
     }
 
-    protected void ClearOccupation(MapOccupation occupation)
+    protected void ClearOccupation(MapOccupation occupation, bool removeFromMapObject)
     {
         allPlacedBehaviours.Remove(occupation.gameObject.GetComponent<BasePlaceableBehaviours>());
         Destroy(occupation.gameObject);
@@ -275,10 +275,10 @@ public class BaseMap : MonoBehaviourPun
                 OccupationMap[spot.x, spot.y] = null;
             }
         }
-        OnDestroyedOccupation(occupation.origin);
+        OnDestroyedOccupation(occupation.origin, removeFromMapObject);
     }
 
-    protected virtual void OnDestroyedOccupation(Vector2Int origin)
+    protected virtual void OnDestroyedOccupation(Vector2Int origin, bool removeFromMapObject)
     {
 
     }

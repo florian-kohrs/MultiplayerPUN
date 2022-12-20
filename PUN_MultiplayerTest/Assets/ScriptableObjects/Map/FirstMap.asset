@@ -3643,9 +3643,9 @@ MonoBehaviour:
   - Index0: 25
     Index1: 18
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
-      orientation: 0
+      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
+      origin: {x: 25, y: 18}
+      orientation: 3
       destroyable: 0
   - Index0: 25
     Index1: 19
@@ -5652,8 +5652,8 @@ MonoBehaviour:
   - Index0: 40
     Index1: 5
     Element:
-      occupationObject: {fileID: 11400000, guid: 1d4ecbf5c844d344199fd26c9fbda30a, type: 2}
-      origin: {x: 40, y: 5}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 40
@@ -5792,8 +5792,8 @@ MonoBehaviour:
   - Index0: 41
     Index1: 5
     Element:
-      occupationObject: {fileID: 11400000, guid: 1d4ecbf5c844d344199fd26c9fbda30a, type: 2}
-      origin: {x: 41, y: 5}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 41
@@ -6317,8 +6317,8 @@ MonoBehaviour:
   - Index0: 45
     Index1: 0
     Element:
-      occupationObject: {fileID: 11400000, guid: 1d4ecbf5c844d344199fd26c9fbda30a, type: 2}
-      origin: {x: 45, y: 0}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 45
@@ -6457,8 +6457,8 @@ MonoBehaviour:
   - Index0: 46
     Index1: 0
     Element:
-      occupationObject: {fileID: 11400000, guid: 1d4ecbf5c844d344199fd26c9fbda30a, type: 2}
-      origin: {x: 46, y: 0}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 46
@@ -6597,8 +6597,8 @@ MonoBehaviour:
   - Index0: 47
     Index1: 0
     Element:
-      occupationObject: {fileID: 11400000, guid: 1d4ecbf5c844d344199fd26c9fbda30a, type: 2}
-      origin: {x: 47, y: 0}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 47
@@ -6737,8 +6737,8 @@ MonoBehaviour:
   - Index0: 48
     Index1: 0
     Element:
-      occupationObject: {fileID: 11400000, guid: 1d4ecbf5c844d344199fd26c9fbda30a, type: 2}
-      origin: {x: 48, y: 0}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 48

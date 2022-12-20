@@ -105,6 +105,11 @@ public class LobbyLauncher : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
+        EnterChickenHorseLevel();
+    }
+
+    public static void EnterChickenHorseLevel()
+    {
         PhotonNetwork.LoadLevel("ChickenHorse");
     }
 

@@ -7,21 +7,28 @@ public class MapDesigner : BaseMap
 
     public CameraMover cam;
 
-    public MapDesign currentMapDesign;
+    protected MapDesign currentMapDesign;
 
+    public LevelSelection levelSelection;
 
     protected override bool BombsDestroyEverything => true;
 
     private void Start()
     {
-        StartWithMapDesign(currentMapDesign);
+        StartWithMapDesign(levelSelection.SelectedMapDesign);
         cam.SetToSpectateView();
+        levelSelection.onSelectedMapChanged += LoadLevel;
+    }
+
+    public void LoadLevel(MapDesign mapDesign)
+    {
+        currentMapDesign = mapDesign;
+        LoadMapDesign(mapDesign);
     }
 
     public void StartWithMapDesign(MapDesign mapDesign)
     {
-        currentMapDesign = mapDesign;
-        LoadMapDesign(mapDesign);
+        LoadLevel(mapDesign);
     }
 
 
@@ -41,9 +48,10 @@ public class MapDesigner : BaseMap
 
     }
 
-    protected override void OnDestroyedOccupation(Vector2Int origin)
+    protected override void OnDestroyedOccupation(Vector2Int origin, bool removeFromMapObject)
     {
-        currentMapDesign.DestroyAt(origin);
+        if(removeFromMapObject)
+            currentMapDesign.DestroyAt(origin);
     }
 
 

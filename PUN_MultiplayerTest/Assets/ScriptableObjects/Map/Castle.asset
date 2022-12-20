@@ -234,8 +234,8 @@ MonoBehaviour:
   - Index0: 1
     Index1: 1
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4926dbdcd1a98e24485620de4258ad1a, type: 2}
+      origin: {x: 1, y: 1}
       orientation: 0
       destroyable: 0
   - Index0: 1
@@ -654,8 +654,8 @@ MonoBehaviour:
   - Index0: 3
     Index1: 1
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4926dbdcd1a98e24485620de4258ad1a, type: 2}
+      origin: {x: 3, y: 1}
       orientation: 0
       destroyable: 0
   - Index0: 3
@@ -1074,8 +1074,8 @@ MonoBehaviour:
   - Index0: 5
     Index1: 1
     Element:
-      occupationObject: {fileID: 11400000, guid: 4926dbdcd1a98e24485620de4258ad1a, type: 2}
-      origin: {x: 5, y: 1}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 5
@@ -4441,8 +4441,8 @@ MonoBehaviour:
   - Index0: 21
     Index1: 2
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 21, y: 2}
       orientation: 0
       destroyable: 0
   - Index0: 21
@@ -4651,36 +4651,36 @@ MonoBehaviour:
   - Index0: 22
     Index1: 2
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 22, y: 2}
       orientation: 0
       destroyable: 0
   - Index0: 22
     Index1: 3
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 22, y: 3}
       orientation: 0
       destroyable: 0
   - Index0: 22
     Index1: 4
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 22, y: 4}
       orientation: 0
       destroyable: 0
   - Index0: 22
     Index1: 5
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 22, y: 5}
       orientation: 0
       destroyable: 0
   - Index0: 22
     Index1: 6
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 22, y: 6}
       orientation: 0
       destroyable: 0
   - Index0: 22
@@ -4861,36 +4861,36 @@ MonoBehaviour:
   - Index0: 23
     Index1: 2
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 23, y: 2}
       orientation: 0
       destroyable: 0
   - Index0: 23
     Index1: 3
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 23, y: 3}
       orientation: 0
       destroyable: 0
   - Index0: 23
     Index1: 4
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 23, y: 4}
       orientation: 0
       destroyable: 0
   - Index0: 23
     Index1: 5
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 23, y: 5}
       orientation: 0
       destroyable: 0
   - Index0: 23
     Index1: 6
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 23, y: 6}
       orientation: 0
       destroyable: 0
   - Index0: 23
@@ -5071,36 +5071,36 @@ MonoBehaviour:
   - Index0: 24
     Index1: 2
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 24, y: 2}
       orientation: 0
       destroyable: 0
   - Index0: 24
     Index1: 3
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 24, y: 3}
       orientation: 0
       destroyable: 0
   - Index0: 24
     Index1: 4
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 24, y: 4}
       orientation: 0
       destroyable: 0
   - Index0: 24
     Index1: 5
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 24, y: 5}
       orientation: 0
       destroyable: 0
   - Index0: 24
     Index1: 6
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 24, y: 6}
       orientation: 0
       destroyable: 0
   - Index0: 24
@@ -8284,16 +8284,16 @@ MonoBehaviour:
   - Index0: 39
     Index1: 11
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 39, y: 11}
       orientation: 0
       destroyable: 0
   - Index0: 39
     Index1: 12
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
-      orientation: 0
+      occupationObject: {fileID: 11400000, guid: 01b147db88b24f44ebbce557922448d6, type: 2}
+      origin: {x: 39, y: 12}
+      orientation: 1
       destroyable: 0
   - Index0: 39
     Index1: 13
@@ -8487,15 +8487,15 @@ MonoBehaviour:
   - Index0: 40
     Index1: 10
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 40, y: 10}
       orientation: 0
       destroyable: 0
   - Index0: 40
     Index1: 11
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: 4c8062a0d779f184e8091bdcc4f19739, type: 2}
+      origin: {x: 40, y: 11}
       orientation: 0
       destroyable: 0
   - Index0: 40
@@ -10783,8 +10783,8 @@ MonoBehaviour:
   - Index0: 51
     Index1: 8
     Element:
-      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-      origin: {x: 51, y: 8}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 51
@@ -10951,8 +10951,8 @@ MonoBehaviour:
   - Index0: 52
     Index1: 2
     Element:
-      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-      origin: {x: 52, y: 2}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 52
@@ -11238,8 +11238,8 @@ MonoBehaviour:
   - Index0: 53
     Index1: 13
     Element:
-      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-      origin: {x: 53, y: 13}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 53
@@ -11784,8 +11784,8 @@ MonoBehaviour:
   - Index0: 56
     Index1: 1
     Element:
-      occupationObject: {fileID: 0}
-      origin: {x: 0, y: 0}
+      occupationObject: {fileID: 11400000, guid: bad12720d762c6c4db6af28868c737d3, type: 2}
+      origin: {x: 56, y: 1}
       orientation: 0
       destroyable: 0
   - Index0: 56
@@ -11812,8 +11812,8 @@ MonoBehaviour:
   - Index0: 56
     Index1: 5
     Element:
-      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-      origin: {x: 56, y: 5}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 56
@@ -11847,8 +11847,8 @@ MonoBehaviour:
   - Index0: 56
     Index1: 10
     Element:
-      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-      origin: {x: 56, y: 10}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 56
@@ -11994,8 +11994,8 @@ MonoBehaviour:
   - Index0: 57
     Index1: 1
     Element:
-      occupationObject: {fileID: 11400000, guid: bad12720d762c6c4db6af28868c737d3, type: 2}
-      origin: {x: 57, y: 1}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 57
@@ -12463,8 +12463,8 @@ MonoBehaviour:
   - Index0: 59
     Index1: 8
     Element:
-      occupationObject: {fileID: 11400000, guid: c60ff104fe0f1f242910ba60982b9b46, type: 2}
-      origin: {x: 59, y: 8}
+      occupationObject: {fileID: 0}
+      origin: {x: 0, y: 0}
       orientation: 0
       destroyable: 0
   - Index0: 59
