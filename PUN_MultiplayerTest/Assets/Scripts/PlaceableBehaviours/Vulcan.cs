@@ -21,7 +21,7 @@ public class Vulcan : ProjectileDispenser
         return dispensePower + powerVariation * power;
     }
 
-    public override void ResetOnNewRound()
+    public override void ResetOnNewRound(BaseMap map)
     {
         foreach (GameObject g in shotProjectiles)
             Destroy(g);

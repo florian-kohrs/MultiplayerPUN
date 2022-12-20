@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: Katapult
   m_EditorClassIdentifier: 
+  canBeGlued: 1
+  mustBePlacedOnOtherObject: 0
   image: {fileID: 21300000, guid: 3d33e481ad43af841a6d5f883111911c, type: 3}
   occupiesDefaultPosition: 1
   isBomb: 0

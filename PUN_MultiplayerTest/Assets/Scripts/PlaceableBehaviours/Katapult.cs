@@ -40,7 +40,7 @@ public class Katapult : ProjectileDispenser
     }
 
 
-    public override void ResetOnNewRound()
+    public override void ResetOnNewRound(BaseMap map)
     {
         if (lastFlungProjectile != null)
             Destroy(lastFlungProjectile);

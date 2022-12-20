@@ -143,13 +143,13 @@ public class PlaceOnMap : MonoBehaviour
         return newC;
     }
 
-    protected void UpdatePreviewMarker(Vector2Int origin)
+    protected void UpdatePreviewMarker(Vector2Int origin, MapOccupationObject placeable)
     {
         int count = 0;
-        foreach (var spot in SelectedMapOccupation.GetAllOccupations(origin, activeRotation))
+        foreach (var spot in placeable.GetAllOccupations(origin, activeRotation))
         {
             SpriteRenderer r = activeSprites[count];
-            r.color = QuarterAlpha(GetColorForPlacingAt(spot));
+            r.color = QuarterAlpha(GetColorForPlacingAt(spot, placeable));
             r.transform.position = GetCenterFor(spot);
             count++;
         }
@@ -160,9 +160,9 @@ public class PlaceOnMap : MonoBehaviour
         return map.MapIndexToGlobalPosition(index)/* + new Vector3(0.5f,0.5f,0)*/;
     }
 
-    protected Color GetColorForPlacingAt(Vector2Int index)
+    protected Color GetColorForPlacingAt(Vector2Int index, MapOccupationObject placeable)
     {
-        if (map.IsSpaceFeasible(index))
+        if (map.IsSpaceFeasible(index, ActiveRotation, placeable))
             return CAN_PLACE_COLOR;
         else
             return CAN_NOT_PLACE_COLOR;
@@ -195,7 +195,7 @@ public class PlaceOnMap : MonoBehaviour
         }
         else
         {
-            UpdatePreviewMarker(mapIndex);
+            UpdatePreviewMarker(mapIndex, SelectedMapOccupation);
         }
     }
 

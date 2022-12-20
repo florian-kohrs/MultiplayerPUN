@@ -18,6 +18,7 @@ public class MapOccupation
     [System.NonSerialized]
     public GameObject gameObject;
 
+    public bool CanBeGlued => occupationObject.canBeGlued;
     public bool MirrorInstead => occupationObject.mirrorInsteadOfRotate;
 
     public Vector2Int origin;

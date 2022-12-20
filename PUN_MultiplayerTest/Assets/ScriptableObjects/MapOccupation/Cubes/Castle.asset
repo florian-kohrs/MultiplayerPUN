@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5106664493da34d9753b67199f4ab6, type: 3}
   m_Name: Castle
   m_EditorClassIdentifier: 
+  canBeGlued: 0
+  mustBePlacedOnOtherObject: 0
   image: {fileID: 21300000, guid: a978d9735a91e454fb764a239f8c6c5f, type: 3}
   occupiesDefaultPosition: 1
   isBomb: 0

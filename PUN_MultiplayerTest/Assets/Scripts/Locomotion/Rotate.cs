@@ -19,7 +19,7 @@ public class Rotate : BasePlaceableBehaviours
         transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
     }
 
-    public override void ResetOnNewRound()
+    public override void ResetOnNewRound(BaseMap map)
     {
         transform.rotation = startRotation;
     }

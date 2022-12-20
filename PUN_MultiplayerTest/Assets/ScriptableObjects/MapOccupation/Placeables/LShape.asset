@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: LShape
   m_EditorClassIdentifier: 
+  canBeGlued: 1
+  mustBePlacedOnOtherObject: 0
   image: {fileID: 21300000, guid: d5258c6ccc69eab45863ae74c629385b, type: 3}
+  occupiesDefaultPosition: 1
   isBomb: 0
   type: 0
   prefab: {fileID: 8225868996810518040, guid: 30b3a91b61baab7499b3fee9a0d3eb28, type: 3}

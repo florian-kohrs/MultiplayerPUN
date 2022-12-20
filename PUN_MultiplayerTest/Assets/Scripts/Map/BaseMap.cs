@@ -61,6 +61,16 @@ public class BaseMap : MonoBehaviourPun
         }
     }
 
+    public bool TryGetOccupationAt(Vector2Int pos, out MapOccupation occ) 
+    {
+        occ = null;
+        if (!IsInBounds(pos))
+            return false;
+
+        occ = OccupationMap[pos.x, pos.y];
+        return true;
+    }
+
     protected List<BasePlaceableBehaviours> allPlacedBehaviours = new List<BasePlaceableBehaviours>();
 
     public MapOccupationList mapOccupations;
@@ -79,7 +89,7 @@ public class BaseMap : MonoBehaviourPun
 
     public void StartNewRound()
     {
-        allPlacedBehaviours.ForEach(b => b.ResetOnNewRound());
+        allPlacedBehaviours.ForEach(b => b.ResetOnNewRound(this));
     }
 
 
@@ -153,7 +163,7 @@ public class BaseMap : MonoBehaviourPun
             return randomReceivableMapOccupationObjects.MapOccupations;
     }
 
-    protected enum OccupationList { All = 0, OnlyRandomRotation = 1}
+    protected enum OccupationList { All = 0, OnlyRandomObjects = 1}
 
     public bool PlaceGeneration(int occupationIndex, int originX, int originY, int rotationIndex)
     {
@@ -164,13 +174,13 @@ public class BaseMap : MonoBehaviourPun
 
     public bool PlaceDuringRounds(int occupationIndex, int originX, int originY, int rotationIndex)
     {
-        bool canPlace = CanPlace(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation);
+        bool canPlace = CanPlace(occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomObjects);
         if (canPlace)
         {
             int playerId = PhotonNetwork.IsConnected ? PhotonNetwork.LocalPlayer.ActorNumber : 0;
             Broadcast.SafeRPC(View, nameof(Place), RpcTarget.All,
-                () => { Place(playerId, occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true); },
-                playerId, occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomRotation, true);
+                () => { Place(playerId, occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomObjects, true); },
+                playerId, occupationIndex, originX, originY, rotationIndex, OccupationList.OnlyRandomObjects, true);
         }
         return canPlace;
     }
@@ -184,7 +194,7 @@ public class BaseMap : MonoBehaviourPun
 
     protected bool CanPlace(MapOccupationObject occupation, Vector2Int origin, int rotationIndex)
     {
-        return AreAllInBounds(origin, rotationIndex, occupation) && (occupation.isBomb || IsSpaceNotOccupied(occupation, origin, rotationIndex));
+        return occupation.GetAllOccupations(origin, rotationIndex).All(v2 => IsSpaceFeasible(v2, rotationIndex, occupation));
     }
 
 
@@ -294,23 +304,7 @@ public class BaseMap : MonoBehaviourPun
         return Quaternion.Euler(0, 0, -rotation * 90);
     }
 
-    protected bool AreAllInBounds(Vector2Int pos, int rotation, MapOccupationObject mapObject)
-    {
-        bool result = IsInBounds(pos);
-        if (!result)
-            return result;
-        foreach (var spot in mapObject.GetAllOccupations(pos, rotation))
-        {
-            if (!IsInBounds(spot))
-            {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-    protected bool IsInBounds(Vector2Int pos)
+    public bool IsInBounds(Vector2Int pos)
     {
         return pos.x >= 0 && pos.y >= 0 && pos.x < Dimensions.x && pos.y < Dimensions.y;
     }
@@ -325,23 +319,10 @@ public class BaseMap : MonoBehaviourPun
         return index;
     }
 
-    protected bool IsSpaceNotOccupied(MapOccupationObject occupation, Vector2Int origin, int rotation)
+    public bool IsSpaceFeasible(Vector2Int spot, int rotationIndex, MapOccupationObject placeable)
     {
-        bool result = true;
-        foreach(var spot in occupation.GetAllOccupations(origin,rotation))
-        {
-            if(OccupationMap[spot.x, spot.y] != null)
-            {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public bool IsSpaceFeasible(Vector2Int spot)
-    {
-        return IsInBounds(spot) && OccupationMap[spot.x, spot.y] == null;
+        return (IsInBounds(spot))
+            && placeable.CanBePlacedWithFieldOccupied(OccupationMap[spot.x, spot.y], spot, rotationIndex, this);
     }
 
     protected void OccupySpace(MapOccupation occupation)

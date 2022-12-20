@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: Vulcan
   m_EditorClassIdentifier: 
+  canBeGlued: 1
+  mustBePlacedOnOtherObject: 0
   image: {fileID: 21300000, guid: 3ce3d6457da89764b9e86c9f79279bd6, type: 3}
   occupiesDefaultPosition: 1
   isBomb: 0

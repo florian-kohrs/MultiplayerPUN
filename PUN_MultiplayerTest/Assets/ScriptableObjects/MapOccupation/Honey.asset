@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
-  m_Name: RotatingBlade
+  m_Name: Honey
   m_EditorClassIdentifier: 
-  canBeGlued: 1
-  mustBePlacedOnOtherObject: 0
-  image: {fileID: 21300000, guid: 33a6d83cfc149ed4ea5453a88b77493e, type: 3}
+  canBeGlued: 0
+  mustBePlacedOnOtherObject: 1
+  image: {fileID: 21300000, guid: c9b5920947277d941a989fc75c2f2160, type: 3}
   occupiesDefaultPosition: 1
   isBomb: 0
-  type: 1
-  prefab: {fileID: 2760899490436948470, guid: 86327c5ff98d0094da8162bd504178ae, type: 3}
-  mirrorInsteadOfRotate: 1
+  type: 0
+  prefab: {fileID: 4580538864484641739, guid: 6c714f6a22d44f44cb337f82c36b198b, type: 3}
+  mirrorInsteadOfRotate: 0
   localOccupationSpots: []

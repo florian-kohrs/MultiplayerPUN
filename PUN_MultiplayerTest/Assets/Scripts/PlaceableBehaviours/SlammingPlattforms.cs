@@ -21,7 +21,7 @@ public class SlammingPlattforms : BasePlaceableBehaviours
         SetCompression();
     }
 
-    public override void ResetOnNewRound()
+    public override void ResetOnNewRound(BaseMap map)
     {
         time = 0;
     }

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
   m_Name: Dirt
   m_EditorClassIdentifier: 
+  canBeGlued: 0
+  mustBePlacedOnOtherObject: 0
   image: {fileID: 21300000, guid: 6ea2e394319c4aa458504b47493ac868, type: 3}
+  occupiesDefaultPosition: 1
   isBomb: 0
   type: 0
   prefab: {fileID: 6555900473171233107, guid: 22cb529ac19ae9545bd1dd6805b792a1, type: 3}
