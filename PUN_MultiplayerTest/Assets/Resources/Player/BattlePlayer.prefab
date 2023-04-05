@@ -336,8 +336,9 @@ GameObject:
   - component: {fileID: 2645203970803824905}
   - component: {fileID: 1724898434376698673}
   - component: {fileID: 1495497103}
-  - component: {fileID: 1495497098}
   - component: {fileID: 1495497102}
+  - component: {fileID: 5033237784739620206}
+  - component: {fileID: 7433271813022175879}
   m_Layer: 6
   m_Name: BattlePlayer
   m_TagString: Untagged
@@ -488,7 +489,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &1495497098
+--- !u!114 &1495497102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125984584506448665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
+--- !u!58 &5033237784739620206
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -504,7 +521,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1495497102
+--- !u!114 &7433271813022175879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -513,13 +530,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6125984584506448665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 219165dada91e26429da5b8b6d28b954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
+  forceThreshold: 10
+  raycastDistance: 0.1
+  playerState: {fileID: 0}
+  squashLayers:
+    serializedVersion: 2
+    m_Bits: 129
 --- !u!1 &6528980659735664446
 GameObject:
   m_ObjectHideFlags: 0
