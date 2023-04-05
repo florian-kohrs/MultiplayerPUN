@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PointAnimator : MonoBehaviour
+public class PointManager : MonoBehaviour
 {
 
     public const float POINTS_ANIMATION_TIME = 0.75f;
@@ -56,7 +56,7 @@ public class PointAnimator : MonoBehaviour
         return MaxPointsWidth * Mathf.InverseLerp(0, maxPoints, points);
     }
 
-    protected void AnimatePoints(int points, Color color, Action onDoneSingle)
+    protected void SetAndAnimatePoints(int points, Color color, Action onDoneSingle)
     {
         this.onDoneSingle = onDoneSingle;
         totalPoints += points;
@@ -70,7 +70,7 @@ public class PointAnimator : MonoBehaviour
         int pointsForFinish = (int)(GameCycle.FINISH_POINTS * respectivePlayer.arrivedPointsInRound);
         if (pointsForFinish > 0)
         {
-            AnimatePoints(pointsForFinish, FINISH_COLOR, onDone);
+            SetAndAnimatePoints(pointsForFinish, FINISH_COLOR, onDone);
         }
         else
         {
@@ -78,13 +78,13 @@ public class PointAnimator : MonoBehaviour
         }
     }
 
-    public void AnimateDeathPoints(Action onDone)
+    public void SetAndAnimateDeathPoints(Action onDone)
     {
         onDoneAllOfTask = onDone;
-        AnimateSingleDeathPoint();
+        SetAndAnimateSingleDeathPoint();
     }
 
-    protected void AnimateSingleDeathPoint()
+    protected void SetAndAnimateSingleDeathPoint()
     {
         if(respectivePlayer.killedInRound <= 0)
         {
@@ -92,7 +92,7 @@ public class PointAnimator : MonoBehaviour
             return;
         }    
         respectivePlayer.killedInRound--;
-        AnimatePoints(GameCycle.KILL_POINTS, DEATH_COLOR, AnimateSingleDeathPoint);
+        SetAndAnimatePoints(GameCycle.KILL_POINTS, DEATH_COLOR, SetAndAnimateSingleDeathPoint);
     }
 
 

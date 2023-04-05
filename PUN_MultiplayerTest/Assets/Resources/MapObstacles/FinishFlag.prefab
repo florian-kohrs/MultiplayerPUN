@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5376238330557905713}
   - component: {fileID: 504349229963691889}
   - component: {fileID: 9074524469070521555}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2963766498189954867}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5376238330557905713
 SpriteRenderer:

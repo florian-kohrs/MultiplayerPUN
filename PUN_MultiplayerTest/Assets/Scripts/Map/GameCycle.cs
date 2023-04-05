@@ -39,6 +39,7 @@ public class GameCycle : MonoBehaviourPun
     public GameObject startGameButton;
 
     public List<Action> OnGameStartCallback = new List<Action>();
+    public List<Action> OnRoundEndCallback = new List<Action>();
 
     public PlayerPoints playerPoints;
 
@@ -46,11 +47,10 @@ public class GameCycle : MonoBehaviourPun
     protected WaitForPlayersToFinish waitForPlayersSelecting;
     protected WaitForPlayersToFinish waitForPlayersPlacing;
 
-
+    public static bool AreRunning => instance.waitForPlayersRunning.isActive;
 
 
     protected bool isInGame = false;
-
 
     public static bool IsFirst => !instance.waitForPlayersRunning.AnyDone;
 
@@ -116,6 +116,11 @@ public class GameCycle : MonoBehaviourPun
         instance.OnGameStartCallback.Add(onStart);
     }
 
+    public static void AddOnRoundEndCallback(Action onStart)
+    {
+        instance.OnRoundEndCallback.Add(onStart);
+    }
+
     public static bool GameStarted => instance.isInGame;
 
     public int MaxPlayers => NumberPlayers;
@@ -175,6 +180,7 @@ public class GameCycle : MonoBehaviourPun
 
     protected void PlayersDoneRunning()
     {
+        OnRoundEndCallback.ForEach(f => f());
         currentRound++;
         if (currentRound >= maxRounds)
             EndGame();

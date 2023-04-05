@@ -31,6 +31,17 @@ public class PlayerState : MonoBehaviourPun
             return null;
     }
 
+    public static List<PlayerState> AllPlayers
+    {
+        get
+        {
+            if (PhotonNetwork.IsConnected)
+                return PhotonNetwork.CurrentRoom.Players.Values.Select(p => p.TagObject as PlayerState).ToList();
+            else
+                return new List<PlayerState>() { GetLocalPlayer() };
+        }
+    }
+
     public PlayerState GetPlayerStateFromId(int id)
     {
         if (PhotonNetwork.IsConnected)

@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerPoints : MonoBehaviour
 {
     
-    protected List<PointAnimator> animators;
+    protected List<PointManager> animators;
 
     public UIRowsOnlyGrid pointsGrid;
 
@@ -17,6 +17,12 @@ public class PlayerPoints : MonoBehaviour
 
     protected Action onAnimationDone;
 
+    protected const string ALL_ALIVE_TEXT = "No deaths? No Points!";
+
+    protected const string ALL_DEAD_TEXT = "No one of you imbeciles deserves any points!";
+
+    protected const float DISPLAY_DURATION = 3;
+
     private void Start()
     {
         pointsGrid.gameObject.SetActive(false);
@@ -25,7 +31,7 @@ public class PlayerPoints : MonoBehaviour
 
     protected void OnGameStarted()
     {
-        animators = new List<PointAnimator>();
+        animators = new List<PointManager>();
         GameCycle.IterateOverPlayers(CreateUIForPlayer);
     }
 
@@ -33,7 +39,7 @@ public class PlayerPoints : MonoBehaviour
     {
         GameObject playerUI = Instantiate(playerPointUI);
         pointsGrid.AddChildWithIndex(playerUI.transform, player.OwnerActorNumber);
-        PointAnimator animator = playerUI.GetComponent<PointAnimator>();
+        PointManager animator = playerUI.GetComponent<PointManager>();
         animators.Add(animator);
         animator.Initialize(player, GameCycle.MaxPointsToFinish);
     }
@@ -42,10 +48,30 @@ public class PlayerPoints : MonoBehaviour
     {
         pointsGrid.gameObject.SetActive(true);
         this.onAnimationDone = onDoneAnimating;
-        this.DoDelayed(1, () =>
+
+        if (PlayerState.AllPlayers.TrueForAll(p => p.IsAlive))
         {
-            AnimateDeath();
-        });
+            InfoTextDisplay.DisplayTextFor(ALL_ALIVE_TEXT, DISPLAY_DURATION);
+            this.DoDelayed(DISPLAY_DURATION, () =>
+            {
+                EndAnimation();
+            });
+        }
+        else if (PlayerState.AllPlayers.TrueForAll(p => !p.IsAlive))
+        {
+            InfoTextDisplay.DisplayTextFor(ALL_DEAD_TEXT, DISPLAY_DURATION);
+            this.DoDelayed(DISPLAY_DURATION, () =>
+            {
+                EndAnimation();
+            });
+        }
+        else
+        {
+            this.DoDelayed(1, () =>
+            {
+                AnimateKillPoints();
+            });
+        }
     }
 
     public bool HasPlayerWon()
@@ -53,11 +79,11 @@ public class PlayerPoints : MonoBehaviour
         return animators.Any(a => a.HasWon);
     }
 
-    protected void DoForAllAndWaitForAll(Action<PointAnimator, Action> doStuff, Action onAllDone)
+    protected void DoForAllAndWaitForAll(Action<PointManager, Action> doStuff, Action onAllDone)
     {
         int count = animators.Count;
         int doneCount = 0;
-        foreach (PointAnimator anim in animators)
+        foreach (PointManager anim in animators)
         {
             doStuff(anim, () =>
             {
@@ -68,9 +94,9 @@ public class PlayerPoints : MonoBehaviour
         }
     }
 
-    protected void AnimateDeath()
+    protected void AnimateKillPoints()
     {
-        DoForAllAndWaitForAll((anim, f) => anim.AnimateDeathPoints(f), AnimateFinishes);
+        DoForAllAndWaitForAll((anim, f) => anim.SetAndAnimateDeathPoints(f), AnimateFinishes);
     }
 
     protected void AnimateFinishes()
