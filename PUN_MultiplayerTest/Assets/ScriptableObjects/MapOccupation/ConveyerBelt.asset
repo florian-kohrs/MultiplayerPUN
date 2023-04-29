@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00a32bd6a3c090342873b5e3933790c3, type: 3}
-  m_Name: MovingPlattform
+  m_Name: ConveyerBelt
   m_EditorClassIdentifier: 
   canBeGlued: 0
   mustBePlacedOnOtherObject: 0
-  image: {fileID: 21300000, guid: e273578f3cea3284195a660401b649f3, type: 3}
+  image: {fileID: 21300000, guid: 036daa3697904f34aa25c21e3fa2f397, type: 3}
   occupiesDefaultPosition: 1
   isBomb: 0
   type: 0
-  prefab: {fileID: 490776363658132317, guid: 2c04e51e9b5d78648bda135d97535f26, type: 3}
-  mirrorInsteadOfRotate: 0
-  localOccupationSpots: []
+  prefab: {fileID: 7962000661436248936, guid: ba4e988e68d326b4ea22b4f58c1f78c8, type: 3}
+  mirrorInsteadOfRotate: 1
+  localOccupationSpots:
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}

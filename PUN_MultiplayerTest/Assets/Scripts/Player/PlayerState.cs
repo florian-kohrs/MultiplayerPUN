@@ -10,7 +10,7 @@ public class PlayerState : MonoBehaviourPun
 
     public static Transform GetLocalPlayerTransform()
     {
-        return GetLocalPlayer().transform.GetChild(0);
+        return GetLocalPlayer()?.transform.GetChild(0);
     }
 
     public static bool HasPlayer => GetLocalPlayer() != null;

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MapOccupationObject : ScriptableObject
 {
 
+
     private void OnValidate()
     {
         if (localOccupationSpots.Contains(new Vector2Int(0, 0)))
@@ -14,7 +15,7 @@ public class MapOccupationObject : ScriptableObject
         }
     }
 
-    public bool CanBePlacedWithFieldOccupied(MapOccupation currentOccupier, Vector2Int placePose, int rotation, BaseMap map)
+    public virtual bool CanBePlacedWithFieldOccupied(MapOccupation currentOccupier, Vector2Int placePose, int rotation, BaseMap map)
     {
 
         bool isFieldOccupied = currentOccupier != null;
@@ -44,6 +45,8 @@ public class MapOccupationObject : ScriptableObject
         }
         return result;
     }
+
+    //public int distanceFromStart = 1;
 
     public bool canBeGlued;
 

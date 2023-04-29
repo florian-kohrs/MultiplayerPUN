@@ -15,7 +15,7 @@ public class DetectPlayerSquash : MonoBehaviourPun
 
     public LayerMask squashLayers;
 
-    public float Size => transform.lossyScale.x - 0.3f;
+    public float Size => Mathf.Min(transform.lossyScale.x, transform.lossyScale.y) * 0.66666f;
 
     private void Start()
     {
@@ -43,7 +43,9 @@ public class DetectPlayerSquash : MonoBehaviourPun
         // Calculate the size of the object in the direction of the collision normal
         //float size = Vector2.Dot(rigidbody2D.transform.lossyScale, collision.contacts[0].normal);
 
-        // Cast a ray in the opposite direction of the collision normal to check for a collider on the other side
+        //rotate localscale to get scale in specific direction
+
+        // Cast a ray in the direction of the collision normal to check for a collider on the other side
         RaycastHit2D hit = Physics2D.Raycast(collision.contacts[0].point + collision.contacts[0].normal * Size, collision.contacts[0].normal, raycastDistance, squashLayers);
         if (hit.collider != null)
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGrounded : MonoBehaviour
+public class PlayerGrounded : PunLocalBehaviour
 {
 
     public Locomotion2D locomotion;
